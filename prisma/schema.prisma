@@ -19,6 +19,121 @@ model User {
   updatedAt    DateTime @updatedAt
 }
 
+model Tour {
+  id          String       @id @default(uuid()) @db.Uuid
+  destination Destination?
+  dates       String
+  duration    String
+  groupSize   String
+  price       String
+  title       String
+  intro       String
+  tourImage   String
+  included    String[]
+  excluded    String[]
+  activities  String[]
+  itinerary   Itinerary[]
+  bookings    Booking[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt()
+}
+
+model Destination {
+  id               String  @id @default(uuid()) @db.Uuid
+  name             String
+  tourId           String  @unique @db.Uuid
+  destinationImage String
+  tour             Tour    @relation(fields: [tourId], references: [id])
+  guide            Guide[]
+}
+
+model Guide {
+  id            Int         @id @default(autoincrement())
+  subtitle      String
+  content       String
+  destinationId String      @unique @db.Uuid
+  destination   Destination @relation(fields: [destinationId], references: [id], onDelete: Cascade)
+}
+
+model Itinerary {
+  id         String   @id @default(uuid()) @db.Uuid
+  day        String
+  title      String
+  activities String[]
+  dayImage   String
+  tourId     String   @unique @db.Uuid
+  tour       Tour     @relation(fields: [tourId], references: [id], onDelete: Cascade)
+}
+
+model Booking {
+  id        String   @id @default(uuid()) @db.Uuid
+  email     String
+  name      String
+  tourId    String   @unique @db.Uuid
+  tour      Tour     @relation(fields: [tourId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Blog {
+  id        String   @id @default(uuid()) @db.Uuid
+  title     String
+  date      String
+  blogImage String
+  excerpt   String
+  story     Story?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+}
+
+model Story {
+  id         String         @id @default(uuid()) @db.Uuid
+  intro      String
+  sections   StorySection[]
+  conclusion String
+  blogId     String         @unique @db.Uuid
+  blog       Blog           @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt()
+}
+
+model StorySection {
+  id        Int      @id @default(autoincrement())
+  subtitle  String
+  content   String
+  storyId   String   @unique @db.Uuid
+  story     Story    @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+}
+
+model TeamMember {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String
+  memberImage String
+  designation String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt()
+}
+
+model FAQ {
+  id        String   @id @default(uuid()) @db.Uuid
+  question  String
+  answer    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+}
+
+model Testimonial {
+  id               String   @id @default(uuid()) @db.Uuid
+  testimonialImage String
+  name             String
+  content          String
+  country          String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt()
+}
+
 enum UserRole {
   ADMIN
   SUPER_ADMIN

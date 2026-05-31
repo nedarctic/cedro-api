@@ -9,6 +9,14 @@ import { UsersModule } from './users/users.module';
 import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
 import { AuthModule } from './auth/auth.module';
+import { ToursModule } from './tours/tours.module';
+import { BlogsModule } from './blogs/blogs.module';
+import { R2Module } from './r2/r2.module';
+import { TestimonialsModule } from './testimonials/testimonials.module';
+import { FaqsModule } from './faqs/faqs.module';
+import { ItinerariesModule } from './itineraries/itineraries.module';
+import { TeamModule } from './team/team.module';
+import { BookingsModule } from './bookings/bookings.module';
 
 @Module({
   imports: [
@@ -25,6 +33,14 @@ import { AuthModule } from './auth/auth.module';
     UsersModule,
     PrismaModule,
     AuthModule,
+    ToursModule,
+    BlogsModule,
+    R2Module,
+    TestimonialsModule,
+    FaqsModule,
+    ItinerariesModule,
+    TeamModule,
+    BookingsModule,
   ],
   controllers: [AppController, UsersController],
   providers: [AppService, UsersService],
