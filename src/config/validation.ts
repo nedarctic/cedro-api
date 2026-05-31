@@ -8,5 +8,5 @@ export const validationSchema = Joi.object({
     R2_SECRET_ACCESS_KEY: Joi.string().required(),
     R2_BUCKET_NAME: Joi.string().required(),
     R2_PUBLIC_URL: Joi.string().uri().required(),
-    R2_S3_API_URL: Joi.string().uri().required(),
+    R2_S3_API: Joi.string().uri().required(),
 });

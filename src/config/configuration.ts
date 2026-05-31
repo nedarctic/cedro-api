@@ -6,5 +6,5 @@ export default () => ({
     R2_SECRET_ACCESS_KEY: process.env.R2_SECRET_ACCESS_KEY!,
     R2_BUCKET_NAME: process.env.R2_BUCKET_NAME!,
     R2_PUBLIC_URL: process.env.R2_PUBLIC_URL!,
-    R2_S3_API_URL: process.env.R2_S3_API_URL!,
+    R2_S3_API: process.env.R2_S3_API!,
 });
