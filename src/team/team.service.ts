@@ -14,7 +14,8 @@ export class TeamService {
                 name,
                 description,
                 designation,
-                memberImage: imageUrl.publicUrl
+                memberImage: imageUrl.publicUrl,
+                imageKey: imageUrl.key,
             }
         });
     }
@@ -40,6 +41,13 @@ export class TeamService {
         if (!member) {
             throw new MemberNotFoundException(id);
         }
+
+        // delete the image from R2
+        if (member.memberImage) {
+            const key = member.imageKey!;
+            await this.r2.deleteFile(key);
+        }
+
         return this.prisma.teamMember.delete({
             where: { id }
         });
@@ -63,10 +71,17 @@ export class TeamService {
         }
 
         let imageUrl: string | undefined;
+        let imageKey: string | undefined;
 
         if (data.image) {
             const uploaded = await this.r2.uploadFile(data.image, "members");
             imageUrl = uploaded.publicUrl;
+            imageKey = uploaded.key;
+
+            // delete old image if exists
+            if (member.memberImage) {
+                await this.r2.deleteFile(member.imageKey!);
+            }
         }
 
         return this.prisma.teamMember.update({
@@ -76,6 +91,7 @@ export class TeamService {
                 description: data.description,
                 designation: data.designation,
                 ...(imageUrl && { memberImage: imageUrl }),
+                ...(imageKey && { imageKey }),
             },
         });
     }

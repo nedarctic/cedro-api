@@ -28,6 +28,7 @@ export type TeamMemberMinAggregateOutputType = {
   id: string | null
   name: string | null
   memberImage: string | null
+  imageKey: string | null
   designation: string | null
   description: string | null
   createdAt: Date | null
@@ -38,6 +39,7 @@ export type TeamMemberMaxAggregateOutputType = {
   id: string | null
   name: string | null
   memberImage: string | null
+  imageKey: string | null
   designation: string | null
   description: string | null
   createdAt: Date | null
@@ -48,6 +50,7 @@ export type TeamMemberCountAggregateOutputType = {
   id: number
   name: number
   memberImage: number
+  imageKey: number
   designation: number
   description: number
   createdAt: number
@@ -60,6 +63,7 @@ export type TeamMemberMinAggregateInputType = {
   id?: true
   name?: true
   memberImage?: true
+  imageKey?: true
   designation?: true
   description?: true
   createdAt?: true
@@ -70,6 +74,7 @@ export type TeamMemberMaxAggregateInputType = {
   id?: true
   name?: true
   memberImage?: true
+  imageKey?: true
   designation?: true
   description?: true
   createdAt?: true
@@ -80,6 +85,7 @@ export type TeamMemberCountAggregateInputType = {
   id?: true
   name?: true
   memberImage?: true
+  imageKey?: true
   designation?: true
   description?: true
   createdAt?: true
@@ -163,6 +169,7 @@ export type TeamMemberGroupByOutputType = {
   id: string
   name: string
   memberImage: string
+  imageKey: string | null
   designation: string
   description: string
   createdAt: Date
@@ -194,6 +201,7 @@ export type TeamMemberWhereInput = {
   id?: Prisma.UuidFilter<"TeamMember"> | string
   name?: Prisma.StringFilter<"TeamMember"> | string
   memberImage?: Prisma.StringFilter<"TeamMember"> | string
+  imageKey?: Prisma.StringNullableFilter<"TeamMember"> | string | null
   designation?: Prisma.StringFilter<"TeamMember"> | string
   description?: Prisma.StringFilter<"TeamMember"> | string
   createdAt?: Prisma.DateTimeFilter<"TeamMember"> | Date | string
@@ -204,6 +212,7 @@ export type TeamMemberOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   memberImage?: Prisma.SortOrder
+  imageKey?: Prisma.SortOrderInput | Prisma.SortOrder
   designation?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -217,6 +226,7 @@ export type TeamMemberWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.TeamMemberWhereInput | Prisma.TeamMemberWhereInput[]
   name?: Prisma.StringFilter<"TeamMember"> | string
   memberImage?: Prisma.StringFilter<"TeamMember"> | string
+  imageKey?: Prisma.StringNullableFilter<"TeamMember"> | string | null
   designation?: Prisma.StringFilter<"TeamMember"> | string
   description?: Prisma.StringFilter<"TeamMember"> | string
   createdAt?: Prisma.DateTimeFilter<"TeamMember"> | Date | string
@@ -227,6 +237,7 @@ export type TeamMemberOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   memberImage?: Prisma.SortOrder
+  imageKey?: Prisma.SortOrderInput | Prisma.SortOrder
   designation?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -243,6 +254,7 @@ export type TeamMemberScalarWhereWithAggregatesInput = {
   id?: Prisma.UuidWithAggregatesFilter<"TeamMember"> | string
   name?: Prisma.StringWithAggregatesFilter<"TeamMember"> | string
   memberImage?: Prisma.StringWithAggregatesFilter<"TeamMember"> | string
+  imageKey?: Prisma.StringNullableWithAggregatesFilter<"TeamMember"> | string | null
   designation?: Prisma.StringWithAggregatesFilter<"TeamMember"> | string
   description?: Prisma.StringWithAggregatesFilter<"TeamMember"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TeamMember"> | Date | string
@@ -253,6 +265,7 @@ export type TeamMemberCreateInput = {
   id?: string
   name: string
   memberImage: string
+  imageKey?: string | null
   designation: string
   description: string
   createdAt?: Date | string
@@ -263,6 +276,7 @@ export type TeamMemberUncheckedCreateInput = {
   id?: string
   name: string
   memberImage: string
+  imageKey?: string | null
   designation: string
   description: string
   createdAt?: Date | string
@@ -273,6 +287,7 @@ export type TeamMemberUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   memberImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   designation?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -283,6 +298,7 @@ export type TeamMemberUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   memberImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   designation?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -293,6 +309,7 @@ export type TeamMemberCreateManyInput = {
   id?: string
   name: string
   memberImage: string
+  imageKey?: string | null
   designation: string
   description: string
   createdAt?: Date | string
@@ -303,6 +320,7 @@ export type TeamMemberUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   memberImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   designation?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -313,6 +331,7 @@ export type TeamMemberUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   memberImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   designation?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -323,6 +342,7 @@ export type TeamMemberCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   memberImage?: Prisma.SortOrder
+  imageKey?: Prisma.SortOrder
   designation?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -333,6 +353,7 @@ export type TeamMemberMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   memberImage?: Prisma.SortOrder
+  imageKey?: Prisma.SortOrder
   designation?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -343,6 +364,7 @@ export type TeamMemberMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   memberImage?: Prisma.SortOrder
+  imageKey?: Prisma.SortOrder
   designation?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -355,6 +377,7 @@ export type TeamMemberSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   id?: boolean
   name?: boolean
   memberImage?: boolean
+  imageKey?: boolean
   designation?: boolean
   description?: boolean
   createdAt?: boolean
@@ -365,6 +388,7 @@ export type TeamMemberSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   id?: boolean
   name?: boolean
   memberImage?: boolean
+  imageKey?: boolean
   designation?: boolean
   description?: boolean
   createdAt?: boolean
@@ -375,6 +399,7 @@ export type TeamMemberSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   id?: boolean
   name?: boolean
   memberImage?: boolean
+  imageKey?: boolean
   designation?: boolean
   description?: boolean
   createdAt?: boolean
@@ -385,13 +410,14 @@ export type TeamMemberSelectScalar = {
   id?: boolean
   name?: boolean
   memberImage?: boolean
+  imageKey?: boolean
   designation?: boolean
   description?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TeamMemberOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "memberImage" | "designation" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["teamMember"]>
+export type TeamMemberOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "memberImage" | "imageKey" | "designation" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["teamMember"]>
 
 export type $TeamMemberPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "TeamMember"
@@ -400,6 +426,7 @@ export type $TeamMemberPayload<ExtArgs extends runtime.Types.Extensions.Internal
     id: string
     name: string
     memberImage: string
+    imageKey: string | null
     designation: string
     description: string
     createdAt: Date
@@ -830,6 +857,7 @@ export interface TeamMemberFieldRefs {
   readonly id: Prisma.FieldRef<"TeamMember", 'String'>
   readonly name: Prisma.FieldRef<"TeamMember", 'String'>
   readonly memberImage: Prisma.FieldRef<"TeamMember", 'String'>
+  readonly imageKey: Prisma.FieldRef<"TeamMember", 'String'>
   readonly designation: Prisma.FieldRef<"TeamMember", 'String'>
   readonly description: Prisma.FieldRef<"TeamMember", 'String'>
   readonly createdAt: Prisma.FieldRef<"TeamMember", 'DateTime'>

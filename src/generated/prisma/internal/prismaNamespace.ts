@@ -1459,6 +1459,7 @@ export const TeamMemberScalarFieldEnum = {
   id: 'id',
   name: 'name',
   memberImage: 'memberImage',
+  imageKey: 'imageKey',
   designation: 'designation',
   description: 'description',
   createdAt: 'createdAt',

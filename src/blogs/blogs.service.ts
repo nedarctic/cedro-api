@@ -10,7 +10,7 @@ export class BlogsService {
         private r2Service: R2Service
     ) {}
 
-    async createBlog(title: string, date: string, content: string, excerpt: string, image: Express.Multer.File) {
+    async createBlog(title: string, date: string, excerpt: string, image: Express.Multer.File) {
         const imageUrl = await this.r2Service.uploadFile(image, 'blogs');
         return this.prismaService.blog.create({
             data: {
@@ -34,7 +34,11 @@ export class BlogsService {
         const blog = await this.prismaService.blog.findUnique({
             where: { id },
             include: {
-                story: true
+                story: {
+                    include: {
+                        sections: true
+                    }
+                }
             }
         });
         
@@ -99,6 +103,21 @@ export class BlogsService {
                 blogId
             }
         });
+    }
+
+    async getStoryByBlogId(blogId: string) {
+        const blog = await this.prismaService.blog.findUnique({
+            where: { id: blogId },
+            include: {
+                story: true
+            }
+        });
+        
+        if (!blog) {
+            throw new BlogNotFoundException(blogId);
+        }
+
+        return blog.story;
     }
 
     async updateBlogStory(storyId: string, data: { intro?: string; conclusion?: string }) {

@@ -16,10 +16,10 @@ export class BlogsController {
     @UseInterceptors(FileInterceptor('image'))
     async createBlog(
         @UploadedFile() image: Express.Multer.File,
-        @Body() body: { title: string; date: string; content: string; excerpt: string }
+        @Body() body: { title: string; date: string; excerpt: string }
     ) {
-        const { title, date, content, excerpt } = body;
-        return this.blogsService.createBlog(title, date, content, excerpt, image);
+        const { title, date, excerpt } = body;
+        return this.blogsService.createBlog(title, date, excerpt, image);
     }
 
     @Get()
@@ -52,6 +52,11 @@ export class BlogsController {
     async createStoryForBlog(@Param('id') id: string, @Body() body: { intro: string; conclusion: string }) {
         const { intro, conclusion } = body;
         return this.blogsService.addStoryToBlog(id, intro, conclusion);
+    }
+
+    @Get(':id/story')
+    async getStoryByBlogId(@Param('id') id: string) {
+        return this.blogsService.getStoryByBlogId(id);
     }
 
     @Patch('story/:id')

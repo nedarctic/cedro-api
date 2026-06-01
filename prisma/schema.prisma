@@ -110,6 +110,7 @@ model TeamMember {
   id          String   @id @default(uuid()) @db.Uuid
   name        String
   memberImage String
+  imageKey    String?
   designation String
   description String
   createdAt   DateTime @default(now())
