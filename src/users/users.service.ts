@@ -5,8 +5,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
-export class UsersService { 
-    constructor(private prisma: PrismaService) {}
+export class UsersService {
+    constructor(private prisma: PrismaService) { }
 
     async findUsers() {
         return this.prisma.user.findMany();
@@ -36,12 +36,12 @@ export class UsersService {
         const hashedPassword = await bcrypt.hash(dto.password, 10);
         dto.password = hashedPassword;
         return await this.prisma.user.create({
-            data: {...dto}
+            data: { ...dto }
         })
     }
 
     async deleteUser(id: string) {
-        const user = await this.findUserById(id); 
+        const user = await this.findUserById(id);
 
         if (!user) {
             throw new UserNotFoundException();
@@ -75,5 +75,19 @@ export class UsersService {
             where: { id },
             data: { refreshToken: hashedToken },
         });
+    }
+
+    async getProfileInfo(userId: string) {
+        const user = await this.prisma.user.findUnique({
+            where: { id: userId },
+        });
+
+        if (!user) {
+            throw new UserNotFoundException();
+        }
+
+        const { password, refreshToken, ...safeUser } = user;
+
+        return safeUser;
     }
 }

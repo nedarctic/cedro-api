@@ -59,7 +59,7 @@ export class BlogsService {
         });
     }
 
-    async updateBlog(id: string, data: { title?: string; content?: string; excerpt?: string; image?: Express.Multer.File }) {
+    async updateBlog(id: string, data: { title?: string; date?: string; excerpt?: string; image?: Express.Multer.File }) {
         const blog = await this.prismaService.blog.findUnique({
             where: { id }
         });
@@ -76,7 +76,7 @@ export class BlogsService {
             where: { id },
             data: {
                 title: data.title,
-                content: data.content,
+                date: data.date,
                 excerpt: data.excerpt,
                 blogImage: imageUrl ? imageUrl.publicUrl : undefined
             }

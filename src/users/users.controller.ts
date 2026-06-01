@@ -1,20 +1,32 @@
-import { Controller, Get, Post, Body, Param, Delete, Patch, UseGuards } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Request, UseGuards } from '@nestjs/common';
+import { Roles } from '../auth/decorators/roles.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
-import { Roles } from '../auth/decorators/roles.decorator';
 import { UserRole } from '../generated/prisma/enums';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UsersService } from './users.service';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) { }
 
-    @Roles(UserRole.SUPER_ADMIN)
+    @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
     @Get()
     async findUsers() {
         return this.usersService.findUsers();
+    }
+
+    @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
+    @Post()
+    async createUser(@Body() dto: CreateUserDto) {
+        return this.usersService.createUser(dto);
+    }
+
+    @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
+    @Get('profile')
+    async getProfile(@Request() req: any) {
+        return this.usersService.getProfileInfo(req.user?.userId);
     }
 
     @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
@@ -23,13 +35,7 @@ export class UsersController {
         return this.usersService.findUserById(id);
     }
 
-    @Roles(UserRole.SUPER_ADMIN)
-    @Post()
-    async createUser(@Body() dto: CreateUserDto) {
-        return this.usersService.createUser(dto);
-    }
-
-    @Roles(UserRole.SUPER_ADMIN)
+    @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
     @Delete(':id')
     async deleteUser(@Param('id') id: string) {
         return this.usersService.deleteUser(id);

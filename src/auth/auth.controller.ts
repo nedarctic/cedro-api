@@ -16,14 +16,8 @@ export class AuthController {
     @Post('login')
     async login(@Request() req, @Res({ passthrough: true }) res: Response) {
         const { access_token, refresh_token } = await this.authService.login(req.user);
-        res.cookie('refresh_token', refresh_token, {
-            httpOnly: true,
-            secure: this.configService.get('node_env') === 'production',
-            sameSite: 'strict',
-            maxAge: 7 * 24 * 60 * 60 * 1000,
-        });
-
-        return { access_token };
+        
+        return { access_token, refresh_token };
     }
 
     @UseGuards(JwtAuthGuard)

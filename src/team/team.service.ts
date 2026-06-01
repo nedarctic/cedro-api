@@ -5,7 +5,7 @@ import { MemberNotFoundException } from './exceptions/member-not-found.exception
 
 @Injectable()
 export class TeamService {
-    constructor(private prisma: PrismaService, private r2: R2Service) {}
+    constructor(private prisma: PrismaService, private r2: R2Service) { }
 
     async createTeam(name: string, description: string, designation: string, image: Express.Multer.File) {
         const imageUrl = await this.r2.uploadFile(image, 'members');
@@ -45,26 +45,38 @@ export class TeamService {
         });
     }
 
-    async updateTeam(id: string, data: { name?: string; description?: string; image?: Express.Multer.File }) {
+    async updateTeam(
+        id: string,
+        data: {
+            name?: string;
+            description?: string;
+            designation?: string;
+            image?: Express.Multer.File;
+        },
+    ) {
         const member = await this.prisma.teamMember.findUnique({
-            where: { id }
+            where: { id },
         });
-        
+
         if (!member) {
             throw new MemberNotFoundException(id);
         }
-        
-        let imageUrl;
+
+        let imageUrl: string | undefined;
+
         if (data.image) {
-            imageUrl = await this.r2.uploadFile(data.image, 'members');
+            const uploaded = await this.r2.uploadFile(data.image, "members");
+            imageUrl = uploaded.publicUrl;
         }
+
         return this.prisma.teamMember.update({
             where: { id },
             data: {
                 name: data.name,
                 description: data.description,
-                memberImage: imageUrl.publicUrl
-            }
+                designation: data.designation,
+                ...(imageUrl && { memberImage: imageUrl }),
+            },
         });
     }
 }

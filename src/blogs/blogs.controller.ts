@@ -42,10 +42,10 @@ export class BlogsController {
     async updateBlog(
         @Param('id') id: string,
         @UploadedFile() image: Express.Multer.File,
-        @Body() body: { title?: string; content?: string; excerpt?: string }
+        @Body() body: { title?: string; date?: string; excerpt?: string }
     ) {
-        const { title, content, excerpt } = body;
-        return this.blogsService.updateBlog(id, { title, content, excerpt, image });
+        const { title, date, excerpt } = body;
+        return this.blogsService.updateBlog(id, { title, date, excerpt, image });
     }
 
     @Post(':id/story')

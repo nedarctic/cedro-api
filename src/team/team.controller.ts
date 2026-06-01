@@ -7,13 +7,13 @@ import { Roles } from '../auth/decorators/roles.decorator';
 import { UserRole } from '../generated/prisma/enums';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
-@Roles(UserRole.SUPER_ADMIN)
+@Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
 @Controller('team')
 export class TeamController {
     constructor(private teamService: TeamService) {}
 
     @Post()
-    @UseInterceptors(FileInterceptor('memberImage'))
+    @UseInterceptors(FileInterceptor('image'))
     async createTeam(
         @UploadedFile() image: Express.Multer.File,
         @Body() body: { name: string; description: string; designation: string }
@@ -38,13 +38,13 @@ export class TeamController {
     }
 
     @Patch(':id')
-    @UseInterceptors(FileInterceptor('memberImage'))
+    @UseInterceptors(FileInterceptor('image'))
     async updateTeam(
         @Param('id') id: string,
         @UploadedFile() image: Express.Multer.File,
-        @Body() body: { name?: string; description?: string }
+        @Body() body: { name?: string; description?: string; designation?: string }
     ) {
-        const { name, description } = body;
-        return this.teamService.updateTeam(id, { name, description, image });
+        const { name, description, designation } = body;
+        return this.teamService.updateTeam(id, { name, description, designation, image });
     }
 }
