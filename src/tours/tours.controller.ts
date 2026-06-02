@@ -25,7 +25,7 @@ export class ToursController {
     constructor(private readonly toursService: ToursService) {}
 
     @Post()
-    @UseInterceptors(FileInterceptor('tourImage'))
+    @UseInterceptors(FileInterceptor('image'))
     async createTour(@Body() createTourDto: CreateTourDto, @UploadedFile() file: Express.Multer.File) {
         return this.toursService.createTour(createTourDto, file);
     }
@@ -40,9 +40,10 @@ export class ToursController {
         return this.toursService.getTourById(id);
     }
 
+    @UseInterceptors(FileInterceptor('image'))
     @Patch(':id')
-    async updateTour(@Param('id') id: string, @Body() updateTourDto: CreateTourDto) {
-        return this.toursService.updateTour(id, updateTourDto);
+    async updateTour(@Param('id') id: string, @Body() updateTourDto: CreateTourDto, @UploadedFile() image: Express.Multer.File) {
+        return this.toursService.updateTour(id, updateTourDto, image);
     }
 
     @Delete(':id')

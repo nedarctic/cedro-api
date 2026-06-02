@@ -30,6 +30,8 @@ export type ItineraryMinAggregateOutputType = {
   title: string | null
   dayImage: string | null
   tourId: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type ItineraryMaxAggregateOutputType = {
@@ -38,6 +40,8 @@ export type ItineraryMaxAggregateOutputType = {
   title: string | null
   dayImage: string | null
   tourId: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type ItineraryCountAggregateOutputType = {
@@ -47,6 +51,8 @@ export type ItineraryCountAggregateOutputType = {
   activities: number
   dayImage: number
   tourId: number
+  createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -57,6 +63,8 @@ export type ItineraryMinAggregateInputType = {
   title?: true
   dayImage?: true
   tourId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type ItineraryMaxAggregateInputType = {
@@ -65,6 +73,8 @@ export type ItineraryMaxAggregateInputType = {
   title?: true
   dayImage?: true
   tourId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type ItineraryCountAggregateInputType = {
@@ -74,6 +84,8 @@ export type ItineraryCountAggregateInputType = {
   activities?: true
   dayImage?: true
   tourId?: true
+  createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -156,6 +168,8 @@ export type ItineraryGroupByOutputType = {
   activities: string[]
   dayImage: string
   tourId: string
+  createdAt: Date
+  updatedAt: Date
   _count: ItineraryCountAggregateOutputType | null
   _min: ItineraryMinAggregateOutputType | null
   _max: ItineraryMaxAggregateOutputType | null
@@ -186,6 +200,8 @@ export type ItineraryWhereInput = {
   activities?: Prisma.StringNullableListFilter<"Itinerary">
   dayImage?: Prisma.StringFilter<"Itinerary"> | string
   tourId?: Prisma.UuidFilter<"Itinerary"> | string
+  createdAt?: Prisma.DateTimeFilter<"Itinerary"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Itinerary"> | Date | string
   tour?: Prisma.XOR<Prisma.TourScalarRelationFilter, Prisma.TourWhereInput>
 }
 
@@ -196,12 +212,13 @@ export type ItineraryOrderByWithRelationInput = {
   activities?: Prisma.SortOrder
   dayImage?: Prisma.SortOrder
   tourId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   tour?: Prisma.TourOrderByWithRelationInput
 }
 
 export type ItineraryWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  tourId?: string
   AND?: Prisma.ItineraryWhereInput | Prisma.ItineraryWhereInput[]
   OR?: Prisma.ItineraryWhereInput[]
   NOT?: Prisma.ItineraryWhereInput | Prisma.ItineraryWhereInput[]
@@ -209,8 +226,11 @@ export type ItineraryWhereUniqueInput = Prisma.AtLeast<{
   title?: Prisma.StringFilter<"Itinerary"> | string
   activities?: Prisma.StringNullableListFilter<"Itinerary">
   dayImage?: Prisma.StringFilter<"Itinerary"> | string
+  tourId?: Prisma.UuidFilter<"Itinerary"> | string
+  createdAt?: Prisma.DateTimeFilter<"Itinerary"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Itinerary"> | Date | string
   tour?: Prisma.XOR<Prisma.TourScalarRelationFilter, Prisma.TourWhereInput>
-}, "id" | "tourId">
+}, "id">
 
 export type ItineraryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -219,6 +239,8 @@ export type ItineraryOrderByWithAggregationInput = {
   activities?: Prisma.SortOrder
   dayImage?: Prisma.SortOrder
   tourId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.ItineraryCountOrderByAggregateInput
   _max?: Prisma.ItineraryMaxOrderByAggregateInput
   _min?: Prisma.ItineraryMinOrderByAggregateInput
@@ -234,6 +256,8 @@ export type ItineraryScalarWhereWithAggregatesInput = {
   activities?: Prisma.StringNullableListFilter<"Itinerary">
   dayImage?: Prisma.StringWithAggregatesFilter<"Itinerary"> | string
   tourId?: Prisma.UuidWithAggregatesFilter<"Itinerary"> | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Itinerary"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Itinerary"> | Date | string
 }
 
 export type ItineraryCreateInput = {
@@ -242,6 +266,8 @@ export type ItineraryCreateInput = {
   title: string
   activities?: Prisma.ItineraryCreateactivitiesInput | string[]
   dayImage: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
   tour: Prisma.TourCreateNestedOneWithoutItineraryInput
 }
 
@@ -252,6 +278,8 @@ export type ItineraryUncheckedCreateInput = {
   activities?: Prisma.ItineraryCreateactivitiesInput | string[]
   dayImage: string
   tourId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ItineraryUpdateInput = {
@@ -260,6 +288,8 @@ export type ItineraryUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   activities?: Prisma.ItineraryUpdateactivitiesInput | string[]
   dayImage?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tour?: Prisma.TourUpdateOneRequiredWithoutItineraryNestedInput
 }
 
@@ -270,6 +300,8 @@ export type ItineraryUncheckedUpdateInput = {
   activities?: Prisma.ItineraryUpdateactivitiesInput | string[]
   dayImage?: Prisma.StringFieldUpdateOperationsInput | string
   tourId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ItineraryCreateManyInput = {
@@ -279,6 +311,8 @@ export type ItineraryCreateManyInput = {
   activities?: Prisma.ItineraryCreateactivitiesInput | string[]
   dayImage: string
   tourId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ItineraryUpdateManyMutationInput = {
@@ -287,6 +321,8 @@ export type ItineraryUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   activities?: Prisma.ItineraryUpdateactivitiesInput | string[]
   dayImage?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ItineraryUncheckedUpdateManyInput = {
@@ -296,6 +332,8 @@ export type ItineraryUncheckedUpdateManyInput = {
   activities?: Prisma.ItineraryUpdateactivitiesInput | string[]
   dayImage?: Prisma.StringFieldUpdateOperationsInput | string
   tourId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ItineraryListRelationFilter = {
@@ -315,6 +353,8 @@ export type ItineraryCountOrderByAggregateInput = {
   activities?: Prisma.SortOrder
   dayImage?: Prisma.SortOrder
   tourId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type ItineraryMaxOrderByAggregateInput = {
@@ -323,6 +363,8 @@ export type ItineraryMaxOrderByAggregateInput = {
   title?: Prisma.SortOrder
   dayImage?: Prisma.SortOrder
   tourId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type ItineraryMinOrderByAggregateInput = {
@@ -331,6 +373,8 @@ export type ItineraryMinOrderByAggregateInput = {
   title?: Prisma.SortOrder
   dayImage?: Prisma.SortOrder
   tourId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type ItineraryCreateNestedManyWithoutTourInput = {
@@ -390,6 +434,8 @@ export type ItineraryCreateWithoutTourInput = {
   title: string
   activities?: Prisma.ItineraryCreateactivitiesInput | string[]
   dayImage: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ItineraryUncheckedCreateWithoutTourInput = {
@@ -398,6 +444,8 @@ export type ItineraryUncheckedCreateWithoutTourInput = {
   title: string
   activities?: Prisma.ItineraryCreateactivitiesInput | string[]
   dayImage: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ItineraryCreateOrConnectWithoutTourInput = {
@@ -436,6 +484,8 @@ export type ItineraryScalarWhereInput = {
   activities?: Prisma.StringNullableListFilter<"Itinerary">
   dayImage?: Prisma.StringFilter<"Itinerary"> | string
   tourId?: Prisma.UuidFilter<"Itinerary"> | string
+  createdAt?: Prisma.DateTimeFilter<"Itinerary"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Itinerary"> | Date | string
 }
 
 export type ItineraryCreateManyTourInput = {
@@ -444,6 +494,8 @@ export type ItineraryCreateManyTourInput = {
   title: string
   activities?: Prisma.ItineraryCreateactivitiesInput | string[]
   dayImage: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ItineraryUpdateWithoutTourInput = {
@@ -452,6 +504,8 @@ export type ItineraryUpdateWithoutTourInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   activities?: Prisma.ItineraryUpdateactivitiesInput | string[]
   dayImage?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ItineraryUncheckedUpdateWithoutTourInput = {
@@ -460,6 +514,8 @@ export type ItineraryUncheckedUpdateWithoutTourInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   activities?: Prisma.ItineraryUpdateactivitiesInput | string[]
   dayImage?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ItineraryUncheckedUpdateManyWithoutTourInput = {
@@ -468,6 +524,8 @@ export type ItineraryUncheckedUpdateManyWithoutTourInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   activities?: Prisma.ItineraryUpdateactivitiesInput | string[]
   dayImage?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -479,6 +537,8 @@ export type ItinerarySelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   activities?: boolean
   dayImage?: boolean
   tourId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   tour?: boolean | Prisma.TourDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["itinerary"]>
 
@@ -489,6 +549,8 @@ export type ItinerarySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   activities?: boolean
   dayImage?: boolean
   tourId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   tour?: boolean | Prisma.TourDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["itinerary"]>
 
@@ -499,6 +561,8 @@ export type ItinerarySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   activities?: boolean
   dayImage?: boolean
   tourId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   tour?: boolean | Prisma.TourDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["itinerary"]>
 
@@ -509,9 +573,11 @@ export type ItinerarySelectScalar = {
   activities?: boolean
   dayImage?: boolean
   tourId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type ItineraryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "day" | "title" | "activities" | "dayImage" | "tourId", ExtArgs["result"]["itinerary"]>
+export type ItineraryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "day" | "title" | "activities" | "dayImage" | "tourId" | "createdAt" | "updatedAt", ExtArgs["result"]["itinerary"]>
 export type ItineraryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tour?: boolean | Prisma.TourDefaultArgs<ExtArgs>
 }
@@ -534,6 +600,8 @@ export type $ItineraryPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     activities: string[]
     dayImage: string
     tourId: string
+    createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["itinerary"]>
   composites: {}
 }
@@ -964,6 +1032,8 @@ export interface ItineraryFieldRefs {
   readonly activities: Prisma.FieldRef<"Itinerary", 'String[]'>
   readonly dayImage: Prisma.FieldRef<"Itinerary", 'String'>
   readonly tourId: Prisma.FieldRef<"Itinerary", 'String'>
+  readonly createdAt: Prisma.FieldRef<"Itinerary", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Itinerary", 'DateTime'>
 }
     
 

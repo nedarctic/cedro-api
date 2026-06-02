@@ -87,7 +87,8 @@ export class ToursService {
         }
 
         let imageUrl;
-        if (imageFile) {
+
+        if (imageFile && imageFile.size > 0) {
             imageUrl = await this.r2Service.uploadFile(imageFile, 'tours');
         }
 

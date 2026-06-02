@@ -16,24 +16,18 @@ export class AuthController {
     @Post('login')
     async login(@Request() req, @Res({ passthrough: true }) res: Response) {
         const { access_token, refresh_token } = await this.authService.login(req.user);
-        
+
         return { access_token, refresh_token };
     }
 
-    @UseGuards(JwtAuthGuard)
     @Post('refresh')
-    async refresh(@Req() req: ExpressRequest, @Res({ passthrough: true }) res: Response) {
-        const refreshToken = req.cookies['refresh_token'];
-        if (!refreshToken) {
+    async refresh(@Body() body: { refresh_token: string } ) {
+        
+        if (!body.refresh_token) {
             throw new UnauthorizedException('No refresh token provided');
         }
-        const { access_token, refresh_token: newRefreshToken } = await this.authService.refreshToken(refreshToken);
-        res.cookie('refresh_token', newRefreshToken, {
-            httpOnly: true,
-            secure: this.configService.get('node_env') === 'production',
-            sameSite: 'strict',
-            maxAge: 7 * 24 * 60 * 60 * 1000,
-        });
-        return { access_token };
+        const { access_token, refresh_token: newRefreshToken } = await this.authService.refreshToken(body.refresh_token);
+        
+        return { access_token, newRefreshToken };
     }
- }
+}

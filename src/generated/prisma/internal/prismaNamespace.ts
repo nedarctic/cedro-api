@@ -1379,7 +1379,9 @@ export const DestinationScalarFieldEnum = {
   id: 'id',
   name: 'name',
   tourId: 'tourId',
-  destinationImage: 'destinationImage'
+  destinationImage: 'destinationImage',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type DestinationScalarFieldEnum = (typeof DestinationScalarFieldEnum)[keyof typeof DestinationScalarFieldEnum]
@@ -1389,7 +1391,9 @@ export const GuideScalarFieldEnum = {
   id: 'id',
   subtitle: 'subtitle',
   content: 'content',
-  destinationId: 'destinationId'
+  destinationId: 'destinationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type GuideScalarFieldEnum = (typeof GuideScalarFieldEnum)[keyof typeof GuideScalarFieldEnum]
@@ -1401,7 +1405,9 @@ export const ItineraryScalarFieldEnum = {
   title: 'title',
   activities: 'activities',
   dayImage: 'dayImage',
-  tourId: 'tourId'
+  tourId: 'tourId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type ItineraryScalarFieldEnum = (typeof ItineraryScalarFieldEnum)[keyof typeof ItineraryScalarFieldEnum]
@@ -1412,7 +1418,8 @@ export const BookingScalarFieldEnum = {
   email: 'email',
   name: 'name',
   tourId: 'tourId',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type BookingScalarFieldEnum = (typeof BookingScalarFieldEnum)[keyof typeof BookingScalarFieldEnum]

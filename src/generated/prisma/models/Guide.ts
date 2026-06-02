@@ -39,6 +39,8 @@ export type GuideMinAggregateOutputType = {
   subtitle: string | null
   content: string | null
   destinationId: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type GuideMaxAggregateOutputType = {
@@ -46,6 +48,8 @@ export type GuideMaxAggregateOutputType = {
   subtitle: string | null
   content: string | null
   destinationId: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type GuideCountAggregateOutputType = {
@@ -53,6 +57,8 @@ export type GuideCountAggregateOutputType = {
   subtitle: number
   content: number
   destinationId: number
+  createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -70,6 +76,8 @@ export type GuideMinAggregateInputType = {
   subtitle?: true
   content?: true
   destinationId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type GuideMaxAggregateInputType = {
@@ -77,6 +85,8 @@ export type GuideMaxAggregateInputType = {
   subtitle?: true
   content?: true
   destinationId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type GuideCountAggregateInputType = {
@@ -84,6 +94,8 @@ export type GuideCountAggregateInputType = {
   subtitle?: true
   content?: true
   destinationId?: true
+  createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -178,6 +190,8 @@ export type GuideGroupByOutputType = {
   subtitle: string
   content: string
   destinationId: string
+  createdAt: Date
+  updatedAt: Date
   _count: GuideCountAggregateOutputType | null
   _avg: GuideAvgAggregateOutputType | null
   _sum: GuideSumAggregateOutputType | null
@@ -208,6 +222,8 @@ export type GuideWhereInput = {
   subtitle?: Prisma.StringFilter<"Guide"> | string
   content?: Prisma.StringFilter<"Guide"> | string
   destinationId?: Prisma.UuidFilter<"Guide"> | string
+  createdAt?: Prisma.DateTimeFilter<"Guide"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Guide"> | Date | string
   destination?: Prisma.XOR<Prisma.DestinationScalarRelationFilter, Prisma.DestinationWhereInput>
 }
 
@@ -216,25 +232,31 @@ export type GuideOrderByWithRelationInput = {
   subtitle?: Prisma.SortOrder
   content?: Prisma.SortOrder
   destinationId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   destination?: Prisma.DestinationOrderByWithRelationInput
 }
 
 export type GuideWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  destinationId?: string
   AND?: Prisma.GuideWhereInput | Prisma.GuideWhereInput[]
   OR?: Prisma.GuideWhereInput[]
   NOT?: Prisma.GuideWhereInput | Prisma.GuideWhereInput[]
   subtitle?: Prisma.StringFilter<"Guide"> | string
   content?: Prisma.StringFilter<"Guide"> | string
+  destinationId?: Prisma.UuidFilter<"Guide"> | string
+  createdAt?: Prisma.DateTimeFilter<"Guide"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Guide"> | Date | string
   destination?: Prisma.XOR<Prisma.DestinationScalarRelationFilter, Prisma.DestinationWhereInput>
-}, "id" | "destinationId">
+}, "id">
 
 export type GuideOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   subtitle?: Prisma.SortOrder
   content?: Prisma.SortOrder
   destinationId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.GuideCountOrderByAggregateInput
   _avg?: Prisma.GuideAvgOrderByAggregateInput
   _max?: Prisma.GuideMaxOrderByAggregateInput
@@ -250,11 +272,15 @@ export type GuideScalarWhereWithAggregatesInput = {
   subtitle?: Prisma.StringWithAggregatesFilter<"Guide"> | string
   content?: Prisma.StringWithAggregatesFilter<"Guide"> | string
   destinationId?: Prisma.UuidWithAggregatesFilter<"Guide"> | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Guide"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Guide"> | Date | string
 }
 
 export type GuideCreateInput = {
   subtitle: string
   content: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
   destination: Prisma.DestinationCreateNestedOneWithoutGuideInput
 }
 
@@ -263,11 +289,15 @@ export type GuideUncheckedCreateInput = {
   subtitle: string
   content: string
   destinationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type GuideUpdateInput = {
   subtitle?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   destination?: Prisma.DestinationUpdateOneRequiredWithoutGuideNestedInput
 }
 
@@ -276,6 +306,8 @@ export type GuideUncheckedUpdateInput = {
   subtitle?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type GuideCreateManyInput = {
@@ -283,11 +315,15 @@ export type GuideCreateManyInput = {
   subtitle: string
   content: string
   destinationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type GuideUpdateManyMutationInput = {
   subtitle?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type GuideUncheckedUpdateManyInput = {
@@ -295,6 +331,8 @@ export type GuideUncheckedUpdateManyInput = {
   subtitle?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type GuideListRelationFilter = {
@@ -312,6 +350,8 @@ export type GuideCountOrderByAggregateInput = {
   subtitle?: Prisma.SortOrder
   content?: Prisma.SortOrder
   destinationId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type GuideAvgOrderByAggregateInput = {
@@ -323,6 +363,8 @@ export type GuideMaxOrderByAggregateInput = {
   subtitle?: Prisma.SortOrder
   content?: Prisma.SortOrder
   destinationId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type GuideMinOrderByAggregateInput = {
@@ -330,6 +372,8 @@ export type GuideMinOrderByAggregateInput = {
   subtitle?: Prisma.SortOrder
   content?: Prisma.SortOrder
   destinationId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type GuideSumOrderByAggregateInput = {
@@ -389,12 +433,16 @@ export type IntFieldUpdateOperationsInput = {
 export type GuideCreateWithoutDestinationInput = {
   subtitle: string
   content: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type GuideUncheckedCreateWithoutDestinationInput = {
   id?: number
   subtitle: string
   content: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type GuideCreateOrConnectWithoutDestinationInput = {
@@ -431,29 +479,39 @@ export type GuideScalarWhereInput = {
   subtitle?: Prisma.StringFilter<"Guide"> | string
   content?: Prisma.StringFilter<"Guide"> | string
   destinationId?: Prisma.UuidFilter<"Guide"> | string
+  createdAt?: Prisma.DateTimeFilter<"Guide"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Guide"> | Date | string
 }
 
 export type GuideCreateManyDestinationInput = {
   id?: number
   subtitle: string
   content: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type GuideUpdateWithoutDestinationInput = {
   subtitle?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type GuideUncheckedUpdateWithoutDestinationInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   subtitle?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type GuideUncheckedUpdateManyWithoutDestinationInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   subtitle?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -463,6 +521,8 @@ export type GuideSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   subtitle?: boolean
   content?: boolean
   destinationId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   destination?: boolean | Prisma.DestinationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["guide"]>
 
@@ -471,6 +531,8 @@ export type GuideSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   subtitle?: boolean
   content?: boolean
   destinationId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   destination?: boolean | Prisma.DestinationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["guide"]>
 
@@ -479,6 +541,8 @@ export type GuideSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   subtitle?: boolean
   content?: boolean
   destinationId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   destination?: boolean | Prisma.DestinationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["guide"]>
 
@@ -487,9 +551,11 @@ export type GuideSelectScalar = {
   subtitle?: boolean
   content?: boolean
   destinationId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type GuideOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "subtitle" | "content" | "destinationId", ExtArgs["result"]["guide"]>
+export type GuideOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "subtitle" | "content" | "destinationId" | "createdAt" | "updatedAt", ExtArgs["result"]["guide"]>
 export type GuideInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   destination?: boolean | Prisma.DestinationDefaultArgs<ExtArgs>
 }
@@ -510,6 +576,8 @@ export type $GuidePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     subtitle: string
     content: string
     destinationId: string
+    createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["guide"]>
   composites: {}
 }
@@ -938,6 +1006,8 @@ export interface GuideFieldRefs {
   readonly subtitle: Prisma.FieldRef<"Guide", 'String'>
   readonly content: Prisma.FieldRef<"Guide", 'String'>
   readonly destinationId: Prisma.FieldRef<"Guide", 'String'>
+  readonly createdAt: Prisma.FieldRef<"Guide", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Guide", 'DateTime'>
 }
     
 

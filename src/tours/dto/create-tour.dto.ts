@@ -27,10 +27,4 @@ export class CreateTourDto {
     
     @IsArray()
     activities!: string[];
-    
-    @IsString()
-    createdAt!: Date;
-    
-    @IsString()
-    updatedAt!: Date;
 }
