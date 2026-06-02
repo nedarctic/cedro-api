@@ -239,16 +239,16 @@ export type StorySectionOrderByWithRelationInput = {
 
 export type StorySectionWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  storyId?: string
   AND?: Prisma.StorySectionWhereInput | Prisma.StorySectionWhereInput[]
   OR?: Prisma.StorySectionWhereInput[]
   NOT?: Prisma.StorySectionWhereInput | Prisma.StorySectionWhereInput[]
   subtitle?: Prisma.StringFilter<"StorySection"> | string
   content?: Prisma.StringFilter<"StorySection"> | string
+  storyId?: Prisma.UuidFilter<"StorySection"> | string
   createdAt?: Prisma.DateTimeFilter<"StorySection"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StorySection"> | Date | string
   story?: Prisma.XOR<Prisma.StoryScalarRelationFilter, Prisma.StoryWhereInput>
-}, "id" | "storyId">
+}, "id">
 
 export type StorySectionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
