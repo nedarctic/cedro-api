@@ -76,14 +76,14 @@ export class BlogsController {
         return this.blogsService.addSectionToStory(id, subtitle, content);
     }
 
-    @Patch('story/section/:id')
-    async updateStorySection(@Param('id') id: number, @Body() body: { subtitle?: string; content?: string }) {
+    @Patch('story/:storyId/section/:sectionId')
+    async updateStorySection(@Param('storyId') storyId: string, @Param('sectionId') sectionId: string, @Body() body: { subtitle?: string; content?: string }) {
         const { subtitle, content } = body;
-        return this.blogsService.updateStorySection(id, { subtitle, content });
+        return this.blogsService.updateStorySection(storyId, sectionId, { subtitle, content });
     }
 
-    @Delete('story/section/:id')
-    async deleteStorySection(@Param('id') id: number) {
-        return this.blogsService.deleteStorySection(id);
+    @Delete('story/:storyId/section/:sectionId')
+    async deleteStorySection(@Param('storyId') storyId: string, @Param('sectionId') sectionId: string) {
+        return this.blogsService.deleteStorySection(storyId, sectionId);
     }
 }
