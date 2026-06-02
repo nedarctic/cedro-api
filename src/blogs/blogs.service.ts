@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { R2Service } from '../r2/r2.service';
 import { BlogNotFoundException } from './exceptions/blog-not-found.exception';
+import { StoryNotFoundException } from './exceptions/story-not-found.exception';
 
 @Injectable()
 export class BlogsService {
@@ -126,7 +127,7 @@ export class BlogsService {
         });
         
         if (!story) {
-            throw new BlogNotFoundException(storyId);
+            throw new StoryNotFoundException(storyId);
         }
 
         return this.prismaService.story.update({
@@ -141,7 +142,7 @@ export class BlogsService {
         });
         
         if (!story) {
-            throw new BlogNotFoundException(storyId);
+            throw new StoryNotFoundException(storyId);
         }
 
         return this.prismaService.story.delete({
@@ -155,7 +156,7 @@ export class BlogsService {
         });
         
         if (!story) {
-            throw new BlogNotFoundException(storyId);
+            throw new StoryNotFoundException(storyId);
         }
 
         return this.prismaService.storySection.create({
@@ -167,33 +168,33 @@ export class BlogsService {
         });
     }
 
-    async updateStorySection(sectionId: number, data: { subtitle?: string; content?: string }) {
-        
+    async updateStorySection(storyId: string, sectionId: string, data: { subtitle?: string; content?: string }) {
+
         const section = await this.prismaService.storySection.findUnique({
-            where: { id: sectionId }
+            where: { id: parseInt(sectionId, 10), storyId }
         });
         
         if (!section) {
-            throw new BlogNotFoundException(sectionId);
+            throw new StoryNotFoundException(sectionId);
         }
 
         return this.prismaService.storySection.update({
-            where: { id: sectionId },
+            where: { id: parseInt(sectionId, 10), storyId },
             data
         });
     }
 
-    async deleteStorySection(sectionId: number) {
+    async deleteStorySection(storyId: string, sectionId: string) {
         const section = await this.prismaService.storySection.findUnique({
-            where: { id: sectionId }
+            where: { id: parseInt(sectionId, 10), storyId }
         });
         
         if (!section) {
-            throw new BlogNotFoundException(sectionId);
+            throw new StoryNotFoundException(sectionId);
         }
 
         return this.prismaService.storySection.delete({
-            where: { id: sectionId }
+            where: { id: parseInt(sectionId, 10), storyId }
         });
     }
 }
