@@ -12,13 +12,14 @@ import { UserRole } from '../generated/prisma/enums';
 export class ItinerariesController {
     constructor(private readonly itinerariesService: ItinerariesService) {}
 
-    @Post()
+    @Post(':tourId')
     @UseInterceptors(FileInterceptor('dayImage'))
     async createItinerary(
-        @Body() createItineraryDto: { tourId: string; day: string; title: string; activities: string[] },
+        @Param('tourId') tourId: string,
+        @Body() createItineraryDto: { day: string; title: string; activities: string[] },
         @UploadedFile() dayImage: Express.Multer.File
     ) {
-        const { tourId, day, title, activities } = createItineraryDto;
+        const { day, title, activities } = createItineraryDto;
         return this.itinerariesService.createItinerary(tourId, day, title, activities, dayImage);
     }
 
