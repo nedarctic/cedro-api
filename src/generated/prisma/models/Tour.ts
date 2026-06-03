@@ -33,6 +33,7 @@ export type TourMinAggregateOutputType = {
   title: string | null
   intro: string | null
   tourImage: string | null
+  imageKey: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -46,6 +47,7 @@ export type TourMaxAggregateOutputType = {
   title: string | null
   intro: string | null
   tourImage: string | null
+  imageKey: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -59,6 +61,7 @@ export type TourCountAggregateOutputType = {
   title: number
   intro: number
   tourImage: number
+  imageKey: number
   included: number
   excluded: number
   activities: number
@@ -77,6 +80,7 @@ export type TourMinAggregateInputType = {
   title?: true
   intro?: true
   tourImage?: true
+  imageKey?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -90,6 +94,7 @@ export type TourMaxAggregateInputType = {
   title?: true
   intro?: true
   tourImage?: true
+  imageKey?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -103,6 +108,7 @@ export type TourCountAggregateInputType = {
   title?: true
   intro?: true
   tourImage?: true
+  imageKey?: true
   included?: true
   excluded?: true
   activities?: true
@@ -192,6 +198,7 @@ export type TourGroupByOutputType = {
   title: string
   intro: string
   tourImage: string
+  imageKey: string | null
   included: string[]
   excluded: string[]
   activities: string[]
@@ -229,6 +236,7 @@ export type TourWhereInput = {
   title?: Prisma.StringFilter<"Tour"> | string
   intro?: Prisma.StringFilter<"Tour"> | string
   tourImage?: Prisma.StringFilter<"Tour"> | string
+  imageKey?: Prisma.StringNullableFilter<"Tour"> | string | null
   included?: Prisma.StringNullableListFilter<"Tour">
   excluded?: Prisma.StringNullableListFilter<"Tour">
   activities?: Prisma.StringNullableListFilter<"Tour">
@@ -248,6 +256,7 @@ export type TourOrderByWithRelationInput = {
   title?: Prisma.SortOrder
   intro?: Prisma.SortOrder
   tourImage?: Prisma.SortOrder
+  imageKey?: Prisma.SortOrderInput | Prisma.SortOrder
   included?: Prisma.SortOrder
   excluded?: Prisma.SortOrder
   activities?: Prisma.SortOrder
@@ -270,6 +279,7 @@ export type TourWhereUniqueInput = Prisma.AtLeast<{
   title?: Prisma.StringFilter<"Tour"> | string
   intro?: Prisma.StringFilter<"Tour"> | string
   tourImage?: Prisma.StringFilter<"Tour"> | string
+  imageKey?: Prisma.StringNullableFilter<"Tour"> | string | null
   included?: Prisma.StringNullableListFilter<"Tour">
   excluded?: Prisma.StringNullableListFilter<"Tour">
   activities?: Prisma.StringNullableListFilter<"Tour">
@@ -289,6 +299,7 @@ export type TourOrderByWithAggregationInput = {
   title?: Prisma.SortOrder
   intro?: Prisma.SortOrder
   tourImage?: Prisma.SortOrder
+  imageKey?: Prisma.SortOrderInput | Prisma.SortOrder
   included?: Prisma.SortOrder
   excluded?: Prisma.SortOrder
   activities?: Prisma.SortOrder
@@ -311,6 +322,7 @@ export type TourScalarWhereWithAggregatesInput = {
   title?: Prisma.StringWithAggregatesFilter<"Tour"> | string
   intro?: Prisma.StringWithAggregatesFilter<"Tour"> | string
   tourImage?: Prisma.StringWithAggregatesFilter<"Tour"> | string
+  imageKey?: Prisma.StringNullableWithAggregatesFilter<"Tour"> | string | null
   included?: Prisma.StringNullableListFilter<"Tour">
   excluded?: Prisma.StringNullableListFilter<"Tour">
   activities?: Prisma.StringNullableListFilter<"Tour">
@@ -327,6 +339,7 @@ export type TourCreateInput = {
   title: string
   intro: string
   tourImage: string
+  imageKey?: string | null
   included?: Prisma.TourCreateincludedInput | string[]
   excluded?: Prisma.TourCreateexcludedInput | string[]
   activities?: Prisma.TourCreateactivitiesInput | string[]
@@ -346,6 +359,7 @@ export type TourUncheckedCreateInput = {
   title: string
   intro: string
   tourImage: string
+  imageKey?: string | null
   included?: Prisma.TourCreateincludedInput | string[]
   excluded?: Prisma.TourCreateexcludedInput | string[]
   activities?: Prisma.TourCreateactivitiesInput | string[]
@@ -365,6 +379,7 @@ export type TourUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   intro?: Prisma.StringFieldUpdateOperationsInput | string
   tourImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   included?: Prisma.TourUpdateincludedInput | string[]
   excluded?: Prisma.TourUpdateexcludedInput | string[]
   activities?: Prisma.TourUpdateactivitiesInput | string[]
@@ -384,6 +399,7 @@ export type TourUncheckedUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   intro?: Prisma.StringFieldUpdateOperationsInput | string
   tourImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   included?: Prisma.TourUpdateincludedInput | string[]
   excluded?: Prisma.TourUpdateexcludedInput | string[]
   activities?: Prisma.TourUpdateactivitiesInput | string[]
@@ -403,6 +419,7 @@ export type TourCreateManyInput = {
   title: string
   intro: string
   tourImage: string
+  imageKey?: string | null
   included?: Prisma.TourCreateincludedInput | string[]
   excluded?: Prisma.TourCreateexcludedInput | string[]
   activities?: Prisma.TourCreateactivitiesInput | string[]
@@ -419,6 +436,7 @@ export type TourUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   intro?: Prisma.StringFieldUpdateOperationsInput | string
   tourImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   included?: Prisma.TourUpdateincludedInput | string[]
   excluded?: Prisma.TourUpdateexcludedInput | string[]
   activities?: Prisma.TourUpdateactivitiesInput | string[]
@@ -435,6 +453,7 @@ export type TourUncheckedUpdateManyInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   intro?: Prisma.StringFieldUpdateOperationsInput | string
   tourImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   included?: Prisma.TourUpdateincludedInput | string[]
   excluded?: Prisma.TourUpdateexcludedInput | string[]
   activities?: Prisma.TourUpdateactivitiesInput | string[]
@@ -459,6 +478,7 @@ export type TourCountOrderByAggregateInput = {
   title?: Prisma.SortOrder
   intro?: Prisma.SortOrder
   tourImage?: Prisma.SortOrder
+  imageKey?: Prisma.SortOrder
   included?: Prisma.SortOrder
   excluded?: Prisma.SortOrder
   activities?: Prisma.SortOrder
@@ -475,6 +495,7 @@ export type TourMaxOrderByAggregateInput = {
   title?: Prisma.SortOrder
   intro?: Prisma.SortOrder
   tourImage?: Prisma.SortOrder
+  imageKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -488,6 +509,7 @@ export type TourMinOrderByAggregateInput = {
   title?: Prisma.SortOrder
   intro?: Prisma.SortOrder
   tourImage?: Prisma.SortOrder
+  imageKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -575,6 +597,7 @@ export type TourCreateWithoutDestinationInput = {
   title: string
   intro: string
   tourImage: string
+  imageKey?: string | null
   included?: Prisma.TourCreateincludedInput | string[]
   excluded?: Prisma.TourCreateexcludedInput | string[]
   activities?: Prisma.TourCreateactivitiesInput | string[]
@@ -593,6 +616,7 @@ export type TourUncheckedCreateWithoutDestinationInput = {
   title: string
   intro: string
   tourImage: string
+  imageKey?: string | null
   included?: Prisma.TourCreateincludedInput | string[]
   excluded?: Prisma.TourCreateexcludedInput | string[]
   activities?: Prisma.TourCreateactivitiesInput | string[]
@@ -627,6 +651,7 @@ export type TourUpdateWithoutDestinationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   intro?: Prisma.StringFieldUpdateOperationsInput | string
   tourImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   included?: Prisma.TourUpdateincludedInput | string[]
   excluded?: Prisma.TourUpdateexcludedInput | string[]
   activities?: Prisma.TourUpdateactivitiesInput | string[]
@@ -645,6 +670,7 @@ export type TourUncheckedUpdateWithoutDestinationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   intro?: Prisma.StringFieldUpdateOperationsInput | string
   tourImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   included?: Prisma.TourUpdateincludedInput | string[]
   excluded?: Prisma.TourUpdateexcludedInput | string[]
   activities?: Prisma.TourUpdateactivitiesInput | string[]
@@ -663,6 +689,7 @@ export type TourCreateWithoutItineraryInput = {
   title: string
   intro: string
   tourImage: string
+  imageKey?: string | null
   included?: Prisma.TourCreateincludedInput | string[]
   excluded?: Prisma.TourCreateexcludedInput | string[]
   activities?: Prisma.TourCreateactivitiesInput | string[]
@@ -681,6 +708,7 @@ export type TourUncheckedCreateWithoutItineraryInput = {
   title: string
   intro: string
   tourImage: string
+  imageKey?: string | null
   included?: Prisma.TourCreateincludedInput | string[]
   excluded?: Prisma.TourCreateexcludedInput | string[]
   activities?: Prisma.TourCreateactivitiesInput | string[]
@@ -715,6 +743,7 @@ export type TourUpdateWithoutItineraryInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   intro?: Prisma.StringFieldUpdateOperationsInput | string
   tourImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   included?: Prisma.TourUpdateincludedInput | string[]
   excluded?: Prisma.TourUpdateexcludedInput | string[]
   activities?: Prisma.TourUpdateactivitiesInput | string[]
@@ -733,6 +762,7 @@ export type TourUncheckedUpdateWithoutItineraryInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   intro?: Prisma.StringFieldUpdateOperationsInput | string
   tourImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   included?: Prisma.TourUpdateincludedInput | string[]
   excluded?: Prisma.TourUpdateexcludedInput | string[]
   activities?: Prisma.TourUpdateactivitiesInput | string[]
@@ -751,6 +781,7 @@ export type TourCreateWithoutBookingsInput = {
   title: string
   intro: string
   tourImage: string
+  imageKey?: string | null
   included?: Prisma.TourCreateincludedInput | string[]
   excluded?: Prisma.TourCreateexcludedInput | string[]
   activities?: Prisma.TourCreateactivitiesInput | string[]
@@ -769,6 +800,7 @@ export type TourUncheckedCreateWithoutBookingsInput = {
   title: string
   intro: string
   tourImage: string
+  imageKey?: string | null
   included?: Prisma.TourCreateincludedInput | string[]
   excluded?: Prisma.TourCreateexcludedInput | string[]
   activities?: Prisma.TourCreateactivitiesInput | string[]
@@ -803,6 +835,7 @@ export type TourUpdateWithoutBookingsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   intro?: Prisma.StringFieldUpdateOperationsInput | string
   tourImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   included?: Prisma.TourUpdateincludedInput | string[]
   excluded?: Prisma.TourUpdateexcludedInput | string[]
   activities?: Prisma.TourUpdateactivitiesInput | string[]
@@ -821,6 +854,7 @@ export type TourUncheckedUpdateWithoutBookingsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   intro?: Prisma.StringFieldUpdateOperationsInput | string
   tourImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   included?: Prisma.TourUpdateincludedInput | string[]
   excluded?: Prisma.TourUpdateexcludedInput | string[]
   activities?: Prisma.TourUpdateactivitiesInput | string[]
@@ -879,6 +913,7 @@ export type TourSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   title?: boolean
   intro?: boolean
   tourImage?: boolean
+  imageKey?: boolean
   included?: boolean
   excluded?: boolean
   activities?: boolean
@@ -899,6 +934,7 @@ export type TourSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   title?: boolean
   intro?: boolean
   tourImage?: boolean
+  imageKey?: boolean
   included?: boolean
   excluded?: boolean
   activities?: boolean
@@ -915,6 +951,7 @@ export type TourSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   title?: boolean
   intro?: boolean
   tourImage?: boolean
+  imageKey?: boolean
   included?: boolean
   excluded?: boolean
   activities?: boolean
@@ -931,6 +968,7 @@ export type TourSelectScalar = {
   title?: boolean
   intro?: boolean
   tourImage?: boolean
+  imageKey?: boolean
   included?: boolean
   excluded?: boolean
   activities?: boolean
@@ -938,7 +976,7 @@ export type TourSelectScalar = {
   updatedAt?: boolean
 }
 
-export type TourOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "dates" | "duration" | "groupSize" | "price" | "title" | "intro" | "tourImage" | "included" | "excluded" | "activities" | "createdAt" | "updatedAt", ExtArgs["result"]["tour"]>
+export type TourOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "dates" | "duration" | "groupSize" | "price" | "title" | "intro" | "tourImage" | "imageKey" | "included" | "excluded" | "activities" | "createdAt" | "updatedAt", ExtArgs["result"]["tour"]>
 export type TourInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   destination?: boolean | Prisma.Tour$destinationArgs<ExtArgs>
   itinerary?: boolean | Prisma.Tour$itineraryArgs<ExtArgs>
@@ -964,6 +1002,7 @@ export type $TourPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     title: string
     intro: string
     tourImage: string
+    imageKey: string | null
     included: string[]
     excluded: string[]
     activities: string[]
@@ -1403,6 +1442,7 @@ export interface TourFieldRefs {
   readonly title: Prisma.FieldRef<"Tour", 'String'>
   readonly intro: Prisma.FieldRef<"Tour", 'String'>
   readonly tourImage: Prisma.FieldRef<"Tour", 'String'>
+  readonly imageKey: Prisma.FieldRef<"Tour", 'String'>
   readonly included: Prisma.FieldRef<"Tour", 'String[]'>
   readonly excluded: Prisma.FieldRef<"Tour", 'String[]'>
   readonly activities: Prisma.FieldRef<"Tour", 'String[]'>

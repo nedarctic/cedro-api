@@ -29,6 +29,7 @@ export type DestinationMinAggregateOutputType = {
   name: string | null
   tourId: string | null
   destinationImage: string | null
+  imageKey: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -38,6 +39,7 @@ export type DestinationMaxAggregateOutputType = {
   name: string | null
   tourId: string | null
   destinationImage: string | null
+  imageKey: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -47,6 +49,7 @@ export type DestinationCountAggregateOutputType = {
   name: number
   tourId: number
   destinationImage: number
+  imageKey: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -58,6 +61,7 @@ export type DestinationMinAggregateInputType = {
   name?: true
   tourId?: true
   destinationImage?: true
+  imageKey?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -67,6 +71,7 @@ export type DestinationMaxAggregateInputType = {
   name?: true
   tourId?: true
   destinationImage?: true
+  imageKey?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -76,6 +81,7 @@ export type DestinationCountAggregateInputType = {
   name?: true
   tourId?: true
   destinationImage?: true
+  imageKey?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -158,6 +164,7 @@ export type DestinationGroupByOutputType = {
   name: string
   tourId: string
   destinationImage: string
+  imageKey: string | null
   createdAt: Date
   updatedAt: Date
   _count: DestinationCountAggregateOutputType | null
@@ -188,6 +195,7 @@ export type DestinationWhereInput = {
   name?: Prisma.StringFilter<"Destination"> | string
   tourId?: Prisma.UuidFilter<"Destination"> | string
   destinationImage?: Prisma.StringFilter<"Destination"> | string
+  imageKey?: Prisma.StringNullableFilter<"Destination"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Destination"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Destination"> | Date | string
   tour?: Prisma.XOR<Prisma.TourScalarRelationFilter, Prisma.TourWhereInput>
@@ -199,6 +207,7 @@ export type DestinationOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   tourId?: Prisma.SortOrder
   destinationImage?: Prisma.SortOrder
+  imageKey?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   tour?: Prisma.TourOrderByWithRelationInput
@@ -213,6 +222,7 @@ export type DestinationWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.DestinationWhereInput | Prisma.DestinationWhereInput[]
   name?: Prisma.StringFilter<"Destination"> | string
   destinationImage?: Prisma.StringFilter<"Destination"> | string
+  imageKey?: Prisma.StringNullableFilter<"Destination"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Destination"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Destination"> | Date | string
   tour?: Prisma.XOR<Prisma.TourScalarRelationFilter, Prisma.TourWhereInput>
@@ -224,6 +234,7 @@ export type DestinationOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   tourId?: Prisma.SortOrder
   destinationImage?: Prisma.SortOrder
+  imageKey?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.DestinationCountOrderByAggregateInput
@@ -239,6 +250,7 @@ export type DestinationScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Destination"> | string
   tourId?: Prisma.UuidWithAggregatesFilter<"Destination"> | string
   destinationImage?: Prisma.StringWithAggregatesFilter<"Destination"> | string
+  imageKey?: Prisma.StringNullableWithAggregatesFilter<"Destination"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Destination"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Destination"> | Date | string
 }
@@ -247,6 +259,7 @@ export type DestinationCreateInput = {
   id?: string
   name: string
   destinationImage: string
+  imageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   tour: Prisma.TourCreateNestedOneWithoutDestinationInput
@@ -258,6 +271,7 @@ export type DestinationUncheckedCreateInput = {
   name: string
   tourId: string
   destinationImage: string
+  imageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guide?: Prisma.GuideUncheckedCreateNestedManyWithoutDestinationInput
@@ -267,6 +281,7 @@ export type DestinationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   destinationImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tour?: Prisma.TourUpdateOneRequiredWithoutDestinationNestedInput
@@ -278,6 +293,7 @@ export type DestinationUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   tourId?: Prisma.StringFieldUpdateOperationsInput | string
   destinationImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guide?: Prisma.GuideUncheckedUpdateManyWithoutDestinationNestedInput
@@ -288,6 +304,7 @@ export type DestinationCreateManyInput = {
   name: string
   tourId: string
   destinationImage: string
+  imageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -296,6 +313,7 @@ export type DestinationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   destinationImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -305,6 +323,7 @@ export type DestinationUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   tourId?: Prisma.StringFieldUpdateOperationsInput | string
   destinationImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -319,6 +338,7 @@ export type DestinationCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   tourId?: Prisma.SortOrder
   destinationImage?: Prisma.SortOrder
+  imageKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -328,6 +348,7 @@ export type DestinationMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   tourId?: Prisma.SortOrder
   destinationImage?: Prisma.SortOrder
+  imageKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -337,6 +358,7 @@ export type DestinationMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   tourId?: Prisma.SortOrder
   destinationImage?: Prisma.SortOrder
+  imageKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -396,6 +418,7 @@ export type DestinationCreateWithoutTourInput = {
   id?: string
   name: string
   destinationImage: string
+  imageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guide?: Prisma.GuideCreateNestedManyWithoutDestinationInput
@@ -405,6 +428,7 @@ export type DestinationUncheckedCreateWithoutTourInput = {
   id?: string
   name: string
   destinationImage: string
+  imageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guide?: Prisma.GuideUncheckedCreateNestedManyWithoutDestinationInput
@@ -430,6 +454,7 @@ export type DestinationUpdateWithoutTourInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   destinationImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guide?: Prisma.GuideUpdateManyWithoutDestinationNestedInput
@@ -439,6 +464,7 @@ export type DestinationUncheckedUpdateWithoutTourInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   destinationImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guide?: Prisma.GuideUncheckedUpdateManyWithoutDestinationNestedInput
@@ -448,6 +474,7 @@ export type DestinationCreateWithoutGuideInput = {
   id?: string
   name: string
   destinationImage: string
+  imageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   tour: Prisma.TourCreateNestedOneWithoutDestinationInput
@@ -458,6 +485,7 @@ export type DestinationUncheckedCreateWithoutGuideInput = {
   name: string
   tourId: string
   destinationImage: string
+  imageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -482,6 +510,7 @@ export type DestinationUpdateWithoutGuideInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   destinationImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tour?: Prisma.TourUpdateOneRequiredWithoutDestinationNestedInput
@@ -492,6 +521,7 @@ export type DestinationUncheckedUpdateWithoutGuideInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   tourId?: Prisma.StringFieldUpdateOperationsInput | string
   destinationImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -532,6 +562,7 @@ export type DestinationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   name?: boolean
   tourId?: boolean
   destinationImage?: boolean
+  imageKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   tour?: boolean | Prisma.TourDefaultArgs<ExtArgs>
@@ -544,6 +575,7 @@ export type DestinationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   name?: boolean
   tourId?: boolean
   destinationImage?: boolean
+  imageKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   tour?: boolean | Prisma.TourDefaultArgs<ExtArgs>
@@ -554,6 +586,7 @@ export type DestinationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   name?: boolean
   tourId?: boolean
   destinationImage?: boolean
+  imageKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   tour?: boolean | Prisma.TourDefaultArgs<ExtArgs>
@@ -564,11 +597,12 @@ export type DestinationSelectScalar = {
   name?: boolean
   tourId?: boolean
   destinationImage?: boolean
+  imageKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type DestinationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "tourId" | "destinationImage" | "createdAt" | "updatedAt", ExtArgs["result"]["destination"]>
+export type DestinationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "tourId" | "destinationImage" | "imageKey" | "createdAt" | "updatedAt", ExtArgs["result"]["destination"]>
 export type DestinationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tour?: boolean | Prisma.TourDefaultArgs<ExtArgs>
   guide?: boolean | Prisma.Destination$guideArgs<ExtArgs>
@@ -592,6 +626,7 @@ export type $DestinationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     name: string
     tourId: string
     destinationImage: string
+    imageKey: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["destination"]>
@@ -1023,6 +1058,7 @@ export interface DestinationFieldRefs {
   readonly name: Prisma.FieldRef<"Destination", 'String'>
   readonly tourId: Prisma.FieldRef<"Destination", 'String'>
   readonly destinationImage: Prisma.FieldRef<"Destination", 'String'>
+  readonly imageKey: Prisma.FieldRef<"Destination", 'String'>
   readonly createdAt: Prisma.FieldRef<"Destination", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Destination", 'DateTime'>
 }

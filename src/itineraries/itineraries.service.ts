@@ -20,6 +20,7 @@ export class ItinerariesService {
                 title,
                 activities,
                 dayImage: imageUrl.publicUrl,
+                imageKey: imageUrl.key,
             },
         });
     }
@@ -44,6 +45,7 @@ export class ItinerariesService {
                 title,
                 activities,
                 dayImage: imageUrl ? imageUrl.publicUrl : undefined,
+                imageKey: imageUrl ? imageUrl.key : undefined,
             },
         });
     }
@@ -57,6 +59,8 @@ export class ItinerariesService {
 
         // create uploaded file key field in model
         // ensure to delete it as well
+
+        this.r2Service.deleteFile(itinerary.imageKey!)
 
         return this.prismaService.itinerary.delete({
             where: { id: itineraryId },

@@ -18,7 +18,8 @@ export class BlogsService {
                 title,
                 date,
                 excerpt,
-                blogImage: imageUrl.publicUrl
+                blogImage: imageUrl.publicUrl,
+                imageKey: imageUrl.key,
             }
         });
     }
@@ -59,6 +60,8 @@ export class BlogsService {
             throw new BlogNotFoundException(id);
         }
 
+        this.r2Service.deleteFile(blog.imageKey!)
+
         return this.prismaService.blog.delete({
             where: { id }
         });
@@ -77,13 +80,15 @@ export class BlogsService {
         if (data.image) {
             imageUrl = await this.r2Service.uploadFile(data.image, 'blogs');
         }
+
         return this.prismaService.blog.update({
             where: { id },
             data: {
                 title: data.title,
                 date: data.date,
                 excerpt: data.excerpt,
-                blogImage: imageUrl ? imageUrl.publicUrl : undefined
+                blogImage: imageUrl ? imageUrl.publicUrl : undefined,
+                imageKey: imageUrl ? imageUrl.key : undefined,
             }
         });
     }

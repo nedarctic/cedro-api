@@ -104,6 +104,7 @@ export const TourScalarFieldEnum = {
   title: 'title',
   intro: 'intro',
   tourImage: 'tourImage',
+  imageKey: 'imageKey',
   included: 'included',
   excluded: 'excluded',
   activities: 'activities',
@@ -119,6 +120,7 @@ export const DestinationScalarFieldEnum = {
   name: 'name',
   tourId: 'tourId',
   destinationImage: 'destinationImage',
+  imageKey: 'imageKey',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -144,6 +146,7 @@ export const ItineraryScalarFieldEnum = {
   title: 'title',
   activities: 'activities',
   dayImage: 'dayImage',
+  imageKey: 'imageKey',
   tourId: 'tourId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -169,6 +172,7 @@ export const BlogScalarFieldEnum = {
   title: 'title',
   date: 'date',
   blogImage: 'blogImage',
+  imageKey: 'imageKey',
   excerpt: 'excerpt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
