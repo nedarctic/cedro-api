@@ -1370,7 +1370,8 @@ export const TourScalarFieldEnum = {
   excluded: 'excluded',
   activities: 'activities',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  destinationId: 'destinationId'
 } as const
 
 export type TourScalarFieldEnum = (typeof TourScalarFieldEnum)[keyof typeof TourScalarFieldEnum]
@@ -1494,6 +1495,7 @@ export type FAQScalarFieldEnum = (typeof FAQScalarFieldEnum)[keyof typeof FAQSca
 export const TestimonialScalarFieldEnum = {
   id: 'id',
   testimonialImage: 'testimonialImage',
+  imageKey: 'imageKey',
   name: 'name',
   content: 'content',
   country: 'country',

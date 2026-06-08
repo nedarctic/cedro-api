@@ -27,6 +27,7 @@ export type AggregateTestimonial = {
 export type TestimonialMinAggregateOutputType = {
   id: string | null
   testimonialImage: string | null
+  imageKey: string | null
   name: string | null
   content: string | null
   country: string | null
@@ -37,6 +38,7 @@ export type TestimonialMinAggregateOutputType = {
 export type TestimonialMaxAggregateOutputType = {
   id: string | null
   testimonialImage: string | null
+  imageKey: string | null
   name: string | null
   content: string | null
   country: string | null
@@ -47,6 +49,7 @@ export type TestimonialMaxAggregateOutputType = {
 export type TestimonialCountAggregateOutputType = {
   id: number
   testimonialImage: number
+  imageKey: number
   name: number
   content: number
   country: number
@@ -59,6 +62,7 @@ export type TestimonialCountAggregateOutputType = {
 export type TestimonialMinAggregateInputType = {
   id?: true
   testimonialImage?: true
+  imageKey?: true
   name?: true
   content?: true
   country?: true
@@ -69,6 +73,7 @@ export type TestimonialMinAggregateInputType = {
 export type TestimonialMaxAggregateInputType = {
   id?: true
   testimonialImage?: true
+  imageKey?: true
   name?: true
   content?: true
   country?: true
@@ -79,6 +84,7 @@ export type TestimonialMaxAggregateInputType = {
 export type TestimonialCountAggregateInputType = {
   id?: true
   testimonialImage?: true
+  imageKey?: true
   name?: true
   content?: true
   country?: true
@@ -162,6 +168,7 @@ export type TestimonialGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 export type TestimonialGroupByOutputType = {
   id: string
   testimonialImage: string
+  imageKey: string | null
   name: string
   content: string
   country: string
@@ -193,6 +200,7 @@ export type TestimonialWhereInput = {
   NOT?: Prisma.TestimonialWhereInput | Prisma.TestimonialWhereInput[]
   id?: Prisma.UuidFilter<"Testimonial"> | string
   testimonialImage?: Prisma.StringFilter<"Testimonial"> | string
+  imageKey?: Prisma.StringNullableFilter<"Testimonial"> | string | null
   name?: Prisma.StringFilter<"Testimonial"> | string
   content?: Prisma.StringFilter<"Testimonial"> | string
   country?: Prisma.StringFilter<"Testimonial"> | string
@@ -203,6 +211,7 @@ export type TestimonialWhereInput = {
 export type TestimonialOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   testimonialImage?: Prisma.SortOrder
+  imageKey?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   content?: Prisma.SortOrder
   country?: Prisma.SortOrder
@@ -216,6 +225,7 @@ export type TestimonialWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.TestimonialWhereInput[]
   NOT?: Prisma.TestimonialWhereInput | Prisma.TestimonialWhereInput[]
   testimonialImage?: Prisma.StringFilter<"Testimonial"> | string
+  imageKey?: Prisma.StringNullableFilter<"Testimonial"> | string | null
   name?: Prisma.StringFilter<"Testimonial"> | string
   content?: Prisma.StringFilter<"Testimonial"> | string
   country?: Prisma.StringFilter<"Testimonial"> | string
@@ -226,6 +236,7 @@ export type TestimonialWhereUniqueInput = Prisma.AtLeast<{
 export type TestimonialOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   testimonialImage?: Prisma.SortOrder
+  imageKey?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   content?: Prisma.SortOrder
   country?: Prisma.SortOrder
@@ -242,6 +253,7 @@ export type TestimonialScalarWhereWithAggregatesInput = {
   NOT?: Prisma.TestimonialScalarWhereWithAggregatesInput | Prisma.TestimonialScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"Testimonial"> | string
   testimonialImage?: Prisma.StringWithAggregatesFilter<"Testimonial"> | string
+  imageKey?: Prisma.StringNullableWithAggregatesFilter<"Testimonial"> | string | null
   name?: Prisma.StringWithAggregatesFilter<"Testimonial"> | string
   content?: Prisma.StringWithAggregatesFilter<"Testimonial"> | string
   country?: Prisma.StringWithAggregatesFilter<"Testimonial"> | string
@@ -252,6 +264,7 @@ export type TestimonialScalarWhereWithAggregatesInput = {
 export type TestimonialCreateInput = {
   id?: string
   testimonialImage: string
+  imageKey?: string | null
   name: string
   content: string
   country: string
@@ -262,6 +275,7 @@ export type TestimonialCreateInput = {
 export type TestimonialUncheckedCreateInput = {
   id?: string
   testimonialImage: string
+  imageKey?: string | null
   name: string
   content: string
   country: string
@@ -272,6 +286,7 @@ export type TestimonialUncheckedCreateInput = {
 export type TestimonialUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   testimonialImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
@@ -282,6 +297,7 @@ export type TestimonialUpdateInput = {
 export type TestimonialUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   testimonialImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
@@ -292,6 +308,7 @@ export type TestimonialUncheckedUpdateInput = {
 export type TestimonialCreateManyInput = {
   id?: string
   testimonialImage: string
+  imageKey?: string | null
   name: string
   content: string
   country: string
@@ -302,6 +319,7 @@ export type TestimonialCreateManyInput = {
 export type TestimonialUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   testimonialImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
@@ -312,6 +330,7 @@ export type TestimonialUpdateManyMutationInput = {
 export type TestimonialUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   testimonialImage?: Prisma.StringFieldUpdateOperationsInput | string
+  imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
@@ -322,6 +341,7 @@ export type TestimonialUncheckedUpdateManyInput = {
 export type TestimonialCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   testimonialImage?: Prisma.SortOrder
+  imageKey?: Prisma.SortOrder
   name?: Prisma.SortOrder
   content?: Prisma.SortOrder
   country?: Prisma.SortOrder
@@ -332,6 +352,7 @@ export type TestimonialCountOrderByAggregateInput = {
 export type TestimonialMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   testimonialImage?: Prisma.SortOrder
+  imageKey?: Prisma.SortOrder
   name?: Prisma.SortOrder
   content?: Prisma.SortOrder
   country?: Prisma.SortOrder
@@ -342,6 +363,7 @@ export type TestimonialMaxOrderByAggregateInput = {
 export type TestimonialMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   testimonialImage?: Prisma.SortOrder
+  imageKey?: Prisma.SortOrder
   name?: Prisma.SortOrder
   content?: Prisma.SortOrder
   country?: Prisma.SortOrder
@@ -354,6 +376,7 @@ export type TestimonialMinOrderByAggregateInput = {
 export type TestimonialSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   testimonialImage?: boolean
+  imageKey?: boolean
   name?: boolean
   content?: boolean
   country?: boolean
@@ -364,6 +387,7 @@ export type TestimonialSelect<ExtArgs extends runtime.Types.Extensions.InternalA
 export type TestimonialSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   testimonialImage?: boolean
+  imageKey?: boolean
   name?: boolean
   content?: boolean
   country?: boolean
@@ -374,6 +398,7 @@ export type TestimonialSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
 export type TestimonialSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   testimonialImage?: boolean
+  imageKey?: boolean
   name?: boolean
   content?: boolean
   country?: boolean
@@ -384,6 +409,7 @@ export type TestimonialSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
 export type TestimonialSelectScalar = {
   id?: boolean
   testimonialImage?: boolean
+  imageKey?: boolean
   name?: boolean
   content?: boolean
   country?: boolean
@@ -391,7 +417,7 @@ export type TestimonialSelectScalar = {
   updatedAt?: boolean
 }
 
-export type TestimonialOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "testimonialImage" | "name" | "content" | "country" | "createdAt" | "updatedAt", ExtArgs["result"]["testimonial"]>
+export type TestimonialOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "testimonialImage" | "imageKey" | "name" | "content" | "country" | "createdAt" | "updatedAt", ExtArgs["result"]["testimonial"]>
 
 export type $TestimonialPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Testimonial"
@@ -399,6 +425,7 @@ export type $TestimonialPayload<ExtArgs extends runtime.Types.Extensions.Interna
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     testimonialImage: string
+    imageKey: string | null
     name: string
     content: string
     country: string
@@ -829,6 +856,7 @@ export interface Prisma__TestimonialClient<T, Null = never, ExtArgs extends runt
 export interface TestimonialFieldRefs {
   readonly id: Prisma.FieldRef<"Testimonial", 'String'>
   readonly testimonialImage: Prisma.FieldRef<"Testimonial", 'String'>
+  readonly imageKey: Prisma.FieldRef<"Testimonial", 'String'>
   readonly name: Prisma.FieldRef<"Testimonial", 'String'>
   readonly content: Prisma.FieldRef<"Testimonial", 'String'>
   readonly country: Prisma.FieldRef<"Testimonial", 'String'>
