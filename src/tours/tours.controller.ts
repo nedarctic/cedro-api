@@ -1,22 +1,22 @@
-import { 
-    Controller, 
-    UseGuards, 
-    Post, 
-    Get, 
-    Patch, 
-    Delete, 
-    Body, 
-    Param, 
-    UploadedFile, 
-    UseInterceptors 
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Patch,
+    Post,
+    UploadedFile,
+    UseGuards,
+    UseInterceptors
 } from '@nestjs/common';
-import { ToursService } from './tours.service';
-import { CreateTourDto } from './dto/create-tour.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Roles } from '../auth/decorators/roles.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
-import { Roles } from '../auth/decorators/roles.decorator';
 import { UserRole } from '../generated/prisma/enums';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { CreateTourDto } from './dto/create-tour.dto';
+import { ToursService } from './tours.service';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)

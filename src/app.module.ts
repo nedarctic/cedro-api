@@ -17,6 +17,7 @@ import { FaqsModule } from './faqs/faqs.module';
 import { ItinerariesModule } from './itineraries/itineraries.module';
 import { TeamModule } from './team/team.module';
 import { BookingsModule } from './bookings/bookings.module';
+import { DestinationsModule } from './destinations/destinations.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { BookingsModule } from './bookings/bookings.module';
     ItinerariesModule,
     TeamModule,
     BookingsModule,
+    DestinationsModule,
   ],
   controllers: [AppController, UsersController],
   providers: [AppService, UsersService],

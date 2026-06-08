@@ -1,15 +1,15 @@
-import { Controller, UseGuards, Get, Post, Param, Body, Delete, Patch } from '@nestjs/common';
-import { BookingsService } from './bookings.service';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Roles } from '../auth/decorators/roles.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
-import { Roles } from '../auth/decorators/roles.decorator';
 import { UserRole } from '../generated/prisma/enums';
+import { BookingsService } from './bookings.service';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
 @Controller('bookings')
 export class BookingsController {
-    constructor(private bookingsService: BookingsService) {}
+    constructor(private bookingsService: BookingsService) { }
 
     @Post()
     async createBooking(@Body() body: { tourId: string; email: string; name: string }) {

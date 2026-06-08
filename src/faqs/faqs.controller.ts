@@ -1,9 +1,9 @@
-import { Controller, Post, Get, Patch, Body, Delete, UseGuards } from '@nestjs/common';
-import { FaqsService } from './faqs.service';
+import { Body, Controller, Delete, Get, Patch, Post, UseGuards } from '@nestjs/common';
+import { Roles } from '../auth/decorators/roles.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
-import { Roles } from '../auth/decorators/roles.decorator';
 import { UserRole } from '../generated/prisma/enums';
+import { FaqsService } from './faqs.service';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)

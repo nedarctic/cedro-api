@@ -3,6 +3,7 @@ import { TourNotFoundException } from './exceptions/tour-not-found.exception';
 import { PrismaService } from '../prisma/prisma.service';
 import { R2Service } from '../r2/r2.service';
 import { CreateTourDto } from './dto/create-tour.dto';
+import { DestinationNotFoundException } from './exceptions/destination-not-found.exception';
 
 @Injectable()
 export class ToursService { 
@@ -22,16 +23,27 @@ export class ToursService {
         return tour;
     }
 
-    async createTourDestination(tourId: string, name: string, destinationImage: Express.Multer.File){
+    async createTourDestination(name: string, destinationImage: Express.Multer.File){
         const imageUrl = await this.r2Service.uploadFile(destinationImage, 'destinations');
         
         return this.prisma.destination.create({
             data: {
                 name,
-                tourId,
                 destinationImage: imageUrl.publicUrl,
             },
         });
+    }
+
+    async updateTourDestination(destinationId: string){}
+
+    async deleteTourDestination(destinationId: string){
+        const destination = await this.prisma.destination.findUnique({where: {id: destinationId}});
+
+        if(!destination){
+            throw new DestinationNotFoundException(destinationId);
+        }
+
+        return await this.prisma.destination.delete({where: {id: destinationId}});
     }
 
     async createDestinationGuide(destinationId: string, subtitle: string, content: string){
@@ -73,6 +85,8 @@ export class ToursService {
         if (!tour) {
             throw new TourNotFoundException();
         }
+
+        await this.r2Service.deleteFile(tour.imageKey!);
         return this.prisma.tour.delete({
             where: { id },
         });
