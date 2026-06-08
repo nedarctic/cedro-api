@@ -62,6 +62,7 @@ export class ToursService {
     }
 
     async getTourById(id: string) {
+
         const tour = await this.prisma.tour.findUnique({
             where: { id },
             include: {
@@ -72,6 +73,7 @@ export class ToursService {
                 },
             },
         });
+
         if (!tour) {
             throw new TourNotFoundException();
         }
