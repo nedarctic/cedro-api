@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UploadedFile, UseGuards, UseInterceptors, Logger } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -10,6 +10,8 @@ import { ItinerariesService } from './itineraries.service';
 @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
 @Controller('itineraries')
 export class ItinerariesController {
+
+    private readonly logger = new Logger(ItinerariesController.name);
     constructor(private readonly itinerariesService: ItinerariesService) {}
 
     @Post(':tourId')
@@ -20,6 +22,9 @@ export class ItinerariesController {
         @UploadedFile() dayImage: Express.Multer.File
     ) {
         const { day, title, activities } = createItineraryDto;
+
+        this.logger.log('CREATING ITINERARY...')
+        this.logger.log(`Received data at the server: Day: ${day}, Title: ${title}, Activities: ${activities}`)
         return this.itinerariesService.createItinerary(tourId, day, title, activities, dayImage);
     }
 
