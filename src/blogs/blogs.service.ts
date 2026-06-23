@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { R2Service } from '../r2/r2.service';
 import { BlogNotFoundException } from './exceptions/blog-not-found.exception';
@@ -6,6 +6,8 @@ import { StoryNotFoundException } from './exceptions/story-not-found.exception';
 
 @Injectable()
 export class BlogsService {
+
+    private readonly logger = new Logger(BlogsService.name)
     constructor(
         private prismaService: PrismaService,
         private r2Service: R2Service
@@ -33,6 +35,11 @@ export class BlogsService {
     }
 
     async getBlogById(id: string) {
+
+        console.log("BLOG ID:", id);
+
+        this.logger.log(`Getting blog ${id}`)
+        this.logger.log(`Blog ID received: ${id}`)
         const blog = await this.prismaService.blog.findUnique({
             where: { id },
             include: {
