@@ -1,9 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { UserRole } from '../generated/prisma/enums';
 import { BookingsService } from './bookings.service';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
@@ -18,8 +19,8 @@ export class BookingsController {
     }
 
     @Get()
-    async getBookings() {
-        return this.bookingsService.getBookings();
+    async getBookings(@Query() dto: PaginationDto) {
+        return this.bookingsService.getBookings(dto);
     }
 
     @Get(':id')
