@@ -43,7 +43,6 @@ model Tour {
 model Destination {
   id               String   @id @default(uuid()) @db.Uuid
   name             String   @unique
-  tourId           String?  @unique @db.Uuid
   destinationImage String
   imageKey         String?
   tour             Tour[]

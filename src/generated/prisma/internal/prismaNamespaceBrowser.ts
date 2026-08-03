@@ -119,7 +119,6 @@ export type TourScalarFieldEnum = (typeof TourScalarFieldEnum)[keyof typeof Tour
 export const DestinationScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  tourId: 'tourId',
   destinationImage: 'destinationImage',
   imageKey: 'imageKey',
   createdAt: 'createdAt',
