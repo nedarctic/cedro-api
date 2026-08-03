@@ -131,6 +131,7 @@ export type DestinationScalarFieldEnum = (typeof DestinationScalarFieldEnum)[key
 
 export const GuideScalarFieldEnum = {
   id: 'id',
+  position: 'position',
   subtitle: 'subtitle',
   content: 'content',
   destinationId: 'destinationId',

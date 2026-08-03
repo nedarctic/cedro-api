@@ -6,8 +6,7 @@ import { UserRole } from '../generated/prisma/enums';
 import { BookingsService } from './bookings.service';
 import { PaginationDto } from '../common/dto/pagination.dto';
 
-@UseGuards(JwtAuthGuard, RolesGuard)
-@Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
+
 @Controller('bookings')
 export class BookingsController {
     constructor(private bookingsService: BookingsService) { }
@@ -18,21 +17,29 @@ export class BookingsController {
         return this.bookingsService.createBooking(tourId, email, name);
     }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
     @Get()
     async getBookings(@Query() dto: PaginationDto) {
         return this.bookingsService.getBookings(dto);
     }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
     @Get(':id')
     async getBookingById(@Param('id') id: string) {
         return this.bookingsService.getBookingById(id);
     }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
     @Delete(':id')
     async deleteBooking(@Param('id') id: string) {
         return this.bookingsService.deleteBooking(id);
     }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
     @Patch(':id')
     async updateBooking(@Param('id') id: string, @Body() body: { tourId?: string; email?: string; name?: string }) {
         return this.bookingsService.updateBooking(id, body);

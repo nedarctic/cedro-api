@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { DestinationNotFound } from './exceptions/destination-not-found.exception';
 import { R2Service } from '../r2/r2.service';
+import { PaginationDto } from '../common/dto/pagination.dto';
+import { DestinationWhereInput } from '../generated/prisma/models';
 
 @Injectable()
 export class DestinationsService {
@@ -10,10 +12,40 @@ export class DestinationsService {
         private readonly r2Service: R2Service,
     ) { }
 
-    async getDestinations() {
+    async getDestinations(pagination: PaginationDto) {
 
         try {
-            return this.prismaService.destination.findMany();
+            const { limit = 10, page = 1, search } = pagination;
+            const skip = (page - 1) * limit;
+            const searchTerm = search ? search.trim() : undefined;
+            const where: DestinationWhereInput = searchTerm ? { name: { contains: searchTerm, mode: 'insensitive' } } : {};
+
+            const [destinations, total] = await Promise.all([
+                this.prismaService.destination.findMany({
+                    where,
+                    skip,
+                    take: limit,
+                    include: {
+                        tour: true
+                    }
+                }).then(destinations => destinations.map(({ tour, ...destination }) => ({
+                    ...destination,
+                    totalTours: tour.length,
+                    createdAt: destination.createdAt.toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" }),
+                    updatedAt: destination.updatedAt.toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" })
+                }))),
+                await this.prismaService.destination.count({ where })
+            ])
+
+            return {
+                destinations,
+                meta: {
+                    page,
+                    limit,
+                    total,
+                    totalPages: Math.ceil(total / limit)
+                }
+            }
         } catch (error) {
             throw new Error(String(error));
         }
@@ -34,20 +66,126 @@ export class DestinationsService {
         }
     }
 
-    async createDestination(name: string, image: Express.Multer.File) {
+    async createDestination(
+        dto: {
+            name: string,
+            guides: {
+                id: string,
+                position: number,
+                subtitle: string,
+                content: string,
+            }[]
+        },
+        image: Express.Multer.File
+    ) {
 
         const { key, publicUrl } = await this.r2Service.uploadFile(image, "destinations");
 
         try {
             return await this.prismaService.destination.create({
                 data: {
-                    name,
+                    name: dto.name,
                     imageKey: key,
                     destinationImage: publicUrl,
+                    guide: {
+                        createMany: {
+                            data: dto.guides
+                        }
+                    }
                 }
             });
         } catch (error) {
             throw new Error(String(error));
+        }
+    }
+
+    async updateDestination(
+        destinationId: string,
+        dto: {
+            name: string,
+            guides: {
+                id: string,
+                position: number,
+                subtitle: string,
+                content: string,
+            }[]
+        },
+        image: Express.Multer.File
+    ) {
+        const destination = await this.prismaService.destination.findUnique({
+            where: { id: destinationId }
+        })
+
+        if (!destination) {
+            throw new DestinationNotFound(destinationId);
+        }
+
+        let imageKey, imagePublicUrl;
+
+        if (image && image.size > 0) {
+            const { key, publicUrl } = await this.r2Service.uploadFile(image, "destinations");
+            imageKey = key;
+            imagePublicUrl = publicUrl;
+        }
+
+        try {
+
+            const existingGuides = await this.prismaService.guide.findMany({
+                where: { destinationId }
+            });
+            const existingGuideIds = existingGuides.map(guide => guide.id);
+
+            const updatedGuides = dto.guides.filter(guide => existingGuideIds.includes(guide.id)).map(guide => ({ ...guide, destinationId }));
+            const newGuides = dto.guides.filter(guide => !existingGuideIds.includes(guide.id)).map(guide => ({ ...guide, destinationId }));
+            const deletedGuideIds = existingGuideIds.filter(id => !dto.guides.some(guide => guide.id === id));
+
+            const [
+                deletedDestinationGuides,
+                createdDestinationGuides,
+                updatedDestinationGuides,
+                updatedDestination
+            ] = await Promise.all([
+                await this.prismaService.guide.deleteMany({
+                    where: { id: { in: deletedGuideIds } }
+                }),
+
+                await this.prismaService.guide.createMany({
+                    data: newGuides
+                }),
+
+                await Promise.all(updatedGuides.map(guide =>
+                    this.prismaService.guide.update({
+                        where: { id: guide.id },
+                        data: {
+                            subtitle: guide.subtitle,
+                            content: guide.content,
+                            position: guide.position,
+                            destinationId: guide.destinationId
+                        }
+                    })
+                )),
+
+                await this.prismaService.destination.update({
+                    where: {
+                        id: destinationId
+                    },
+                    data: {
+                        name: dto.name,
+                        imageKey,
+                        destinationImage: imagePublicUrl,
+                    }
+                }),
+            ]);
+
+            return {
+                updatedDestination,
+                updatedDestinationGuides,
+                createdDestinationGuides,
+                deletedDestinationGuides
+            }
+
+        } catch (error) {
+            throw new Error(String(error))
         }
     }
 
@@ -68,39 +206,6 @@ export class DestinationsService {
             return await this.prismaService.destination.delete({ where: { id: destinationId } })
         } catch (error) {
             throw new Error(String(error));
-        }
-    }
-
-    async updateDestination(destinationId: string, name: string, image: Express.Multer.File) {
-        const destination = await this.prismaService.destination.findUnique({
-            where: { id: destinationId }
-        })
-
-        if (!destination) {
-            throw new DestinationNotFound(destinationId);
-        }
-
-        let imageKey, imagePublicUrl;
-
-        if (image && image.size > 0) {
-            const { key, publicUrl } = await this.r2Service.uploadFile(image, "destinations");
-            imageKey = key;
-            imagePublicUrl = publicUrl;
-        }
-
-        try {
-            return await this.prismaService.destination.update({
-                where: {
-                    id: destinationId
-                },
-                data: {
-                    name,
-                    imageKey: imageKey ?? destination.imageKey,
-                    destinationImage: imagePublicUrl ?? destination.destinationImage
-                }
-            })
-        } catch (error) {
-            throw new Error(String(error))
         }
     }
 }

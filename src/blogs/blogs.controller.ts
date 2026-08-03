@@ -6,12 +6,13 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { UserRole } from '../generated/prisma/enums';
 import { BlogsService } from './blogs.service';
 
-@UseGuards(JwtAuthGuard, RolesGuard)
-@Roles(UserRole.SUPER_ADMIN)
+
 @Controller('blogs')
 export class BlogsController {
-    constructor(private blogsService: BlogsService) {}
+    constructor(private blogsService: BlogsService) { }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.SUPER_ADMIN)
     @Post()
     @UseInterceptors(FileInterceptor('image'))
     async createBlog(
@@ -32,11 +33,15 @@ export class BlogsController {
         return this.blogsService.getBlogById(id);
     }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.SUPER_ADMIN)
     @Delete(':id')
     async deleteBlog(@Param('id') id: string) {
         return this.blogsService.deleteBlog(id);
     }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.SUPER_ADMIN)
     @Patch(':id')
     @UseInterceptors(FileInterceptor('image'))
     async updateBlog(
@@ -48,6 +53,8 @@ export class BlogsController {
         return this.blogsService.updateBlog(id, { title, date, excerpt, image });
     }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.SUPER_ADMIN)
     @Post(':id/story')
     async createStoryForBlog(@Param('id') id: string, @Body() body: { intro: string; conclusion: string }) {
         const { intro, conclusion } = body;
@@ -59,29 +66,39 @@ export class BlogsController {
         return this.blogsService.getStoryByBlogId(id);
     }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.SUPER_ADMIN)
     @Patch('story/:id')
     async updateBlogStory(@Param('id') id: string, @Body() body: { intro?: string; conclusion?: string }) {
         const { intro, conclusion } = body;
         return this.blogsService.updateBlogStory(id, { intro, conclusion });
     }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.SUPER_ADMIN)
     @Delete('story/:id')
     async deleteBlogStory(@Param('id') id: string) {
         return this.blogsService.deleteBlogStory(id);
     }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.SUPER_ADMIN)
     @Post('story/:id/section')
     async addSectionToStory(@Param('id') id: string, @Body() body: { subtitle: string; content: string }) {
         const { subtitle, content } = body;
         return this.blogsService.addSectionToStory(id, subtitle, content);
     }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.SUPER_ADMIN)
     @Patch('story/:storyId/section/:sectionId')
     async updateStorySection(@Param('storyId') storyId: string, @Param('sectionId') sectionId: string, @Body() body: { subtitle?: string; content?: string }) {
         const { subtitle, content } = body;
         return this.blogsService.updateStorySection(storyId, sectionId, { subtitle, content });
     }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.SUPER_ADMIN)
     @Delete('story/:storyId/section/:sectionId')
     async deleteStorySection(@Param('storyId') storyId: string, @Param('sectionId') sectionId: string) {
         return this.blogsService.deleteStorySection(storyId, sectionId);

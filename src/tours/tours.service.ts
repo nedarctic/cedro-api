@@ -46,17 +46,6 @@ export class ToursService {
         return await this.prisma.destination.delete({where: {id: destinationId}});
     }
 
-    async createDestinationGuide(destinationId: string, subtitle: string, content: string){
-                
-        return this.prisma.guide.create({
-            data: {
-                subtitle,
-                destinationId,
-                content,
-            },
-        });
-    }
-
     async getAllTours() {
         return this.prisma.tour.findMany();
     }

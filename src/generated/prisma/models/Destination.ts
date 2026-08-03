@@ -216,18 +216,18 @@ export type DestinationOrderByWithRelationInput = {
 
 export type DestinationWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  name?: string
   tourId?: string
   AND?: Prisma.DestinationWhereInput | Prisma.DestinationWhereInput[]
   OR?: Prisma.DestinationWhereInput[]
   NOT?: Prisma.DestinationWhereInput | Prisma.DestinationWhereInput[]
-  name?: Prisma.StringFilter<"Destination"> | string
   destinationImage?: Prisma.StringFilter<"Destination"> | string
   imageKey?: Prisma.StringNullableFilter<"Destination"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Destination"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Destination"> | Date | string
   tour?: Prisma.TourListRelationFilter
   guide?: Prisma.GuideListRelationFilter
-}, "id" | "tourId">
+}, "id" | "name" | "tourId">
 
 export type DestinationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

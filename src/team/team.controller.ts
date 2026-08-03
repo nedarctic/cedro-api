@@ -6,12 +6,13 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { UserRole } from '../generated/prisma/enums';
 import { TeamService } from './team.service';
 
-@UseGuards(JwtAuthGuard, RolesGuard)
-@Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
+
 @Controller('team')
 export class TeamController {
-    constructor(private teamService: TeamService) {}
+    constructor(private teamService: TeamService) { }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
     @Post()
     @UseInterceptors(FileInterceptor('image'))
     async createTeam(
@@ -32,11 +33,15 @@ export class TeamController {
         return this.teamService.getTeamById(id);
     }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
     @Delete(':id')
     async deleteTeam(@Param('id') id: string) {
         return this.teamService.deleteTeam(id);
     }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
     @Patch(':id')
     @UseInterceptors(FileInterceptor('image'))
     async updateTeam(

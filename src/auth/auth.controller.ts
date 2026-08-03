@@ -17,7 +17,6 @@ export class AuthController {
     async login(@Request() req: ExpressRequest, @Response({ passthrough: true }) res: ExpressResponse) {
         const user = req.user;
         const { access_token, refresh_token } = await this.authService.login(req.user);
-
         return { user, access_token, refresh_token };
     }
 

@@ -18,12 +18,13 @@ import { UserRole } from '../generated/prisma/enums';
 import { CreateTourDto } from './dto/create-tour.dto';
 import { ToursService } from './tours.service';
 
-@UseGuards(JwtAuthGuard, RolesGuard)
-@Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
+
 @Controller('tours')
 export class ToursController {
-    constructor(private readonly toursService: ToursService) {}
+    constructor(private readonly toursService: ToursService) { }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
     @Post()
     @UseInterceptors(FileInterceptor('image'))
     async createTour(@Body() createTourDto: CreateTourDto, @UploadedFile() file: Express.Multer.File) {
@@ -40,12 +41,16 @@ export class ToursController {
         return this.toursService.getTourById(id);
     }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
     @UseInterceptors(FileInterceptor('image'))
     @Patch(':id')
     async updateTour(@Param('id') id: string, @Body() updateTourDto: CreateTourDto, @UploadedFile() image: Express.Multer.File) {
         return this.toursService.updateTour(id, updateTourDto, image);
     }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
     @Delete(':id')
     async deleteTour(@Param('id') id: string) {
         return this.toursService.deleteTour(id);
