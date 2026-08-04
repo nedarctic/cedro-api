@@ -1,3 +1,4 @@
+import { Type } from "class-transformer";
 import { IsArray, IsString } from "class-validator";
 
 export class CreateTourDto {
@@ -7,11 +8,11 @@ export class CreateTourDto {
     @IsString()
     duration!: string;
     
-    @IsString()
-    groupSize!: string;
+    @Type(() => Number)
+    groupSize!: number;
     
-    @IsString()
-    price!: string;
+    @Type(() => Number)
+    price!: number;
     
     @IsString()
     title!: string;
@@ -30,4 +31,11 @@ export class CreateTourDto {
 
     @IsString()
     destinationId!: string;
+
+    @IsArray()
+    itineraries!: {
+        day: string;
+        subtitle: string;
+        activities: string[];
+    }[];
 }

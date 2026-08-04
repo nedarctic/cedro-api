@@ -24,8 +24,8 @@ model Tour {
   destination   Destination? @relation(fields: [destinationId], references: [id])
   dates         String
   duration      String
-  groupSize     String
-  price         String
+  groupSize     Int
+  price         Int
   title         String
   intro         String
   tourImage     String
