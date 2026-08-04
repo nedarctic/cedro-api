@@ -20,16 +20,28 @@ export type TourModel = runtime.Types.Result.DefaultSelection<Prisma.$TourPayloa
 
 export type AggregateTour = {
   _count: TourCountAggregateOutputType | null
+  _avg: TourAvgAggregateOutputType | null
+  _sum: TourSumAggregateOutputType | null
   _min: TourMinAggregateOutputType | null
   _max: TourMaxAggregateOutputType | null
+}
+
+export type TourAvgAggregateOutputType = {
+  groupSize: number | null
+  price: number | null
+}
+
+export type TourSumAggregateOutputType = {
+  groupSize: number | null
+  price: number | null
 }
 
 export type TourMinAggregateOutputType = {
   id: string | null
   dates: string | null
   duration: string | null
-  groupSize: string | null
-  price: string | null
+  groupSize: number | null
+  price: number | null
   title: string | null
   intro: string | null
   tourImage: string | null
@@ -43,8 +55,8 @@ export type TourMaxAggregateOutputType = {
   id: string | null
   dates: string | null
   duration: string | null
-  groupSize: string | null
-  price: string | null
+  groupSize: number | null
+  price: number | null
   title: string | null
   intro: string | null
   tourImage: string | null
@@ -73,6 +85,16 @@ export type TourCountAggregateOutputType = {
   _all: number
 }
 
+
+export type TourAvgAggregateInputType = {
+  groupSize?: true
+  price?: true
+}
+
+export type TourSumAggregateInputType = {
+  groupSize?: true
+  price?: true
+}
 
 export type TourMinAggregateInputType = {
   id?: true
@@ -161,6 +183,18 @@ export type TourAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: TourAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: TourSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: TourMinAggregateInputType
@@ -191,6 +225,8 @@ export type TourGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: TourCountAggregateInputType | true
+  _avg?: TourAvgAggregateInputType
+  _sum?: TourSumAggregateInputType
   _min?: TourMinAggregateInputType
   _max?: TourMaxAggregateInputType
 }
@@ -199,8 +235,8 @@ export type TourGroupByOutputType = {
   id: string
   dates: string
   duration: string
-  groupSize: string
-  price: string
+  groupSize: number
+  price: number
   title: string
   intro: string
   tourImage: string
@@ -212,6 +248,8 @@ export type TourGroupByOutputType = {
   updatedAt: Date
   destinationId: string | null
   _count: TourCountAggregateOutputType | null
+  _avg: TourAvgAggregateOutputType | null
+  _sum: TourSumAggregateOutputType | null
   _min: TourMinAggregateOutputType | null
   _max: TourMaxAggregateOutputType | null
 }
@@ -238,8 +276,8 @@ export type TourWhereInput = {
   id?: Prisma.UuidFilter<"Tour"> | string
   dates?: Prisma.StringFilter<"Tour"> | string
   duration?: Prisma.StringFilter<"Tour"> | string
-  groupSize?: Prisma.StringFilter<"Tour"> | string
-  price?: Prisma.StringFilter<"Tour"> | string
+  groupSize?: Prisma.IntFilter<"Tour"> | number
+  price?: Prisma.IntFilter<"Tour"> | number
   title?: Prisma.StringFilter<"Tour"> | string
   intro?: Prisma.StringFilter<"Tour"> | string
   tourImage?: Prisma.StringFilter<"Tour"> | string
@@ -283,8 +321,8 @@ export type TourWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.TourWhereInput | Prisma.TourWhereInput[]
   dates?: Prisma.StringFilter<"Tour"> | string
   duration?: Prisma.StringFilter<"Tour"> | string
-  groupSize?: Prisma.StringFilter<"Tour"> | string
-  price?: Prisma.StringFilter<"Tour"> | string
+  groupSize?: Prisma.IntFilter<"Tour"> | number
+  price?: Prisma.IntFilter<"Tour"> | number
   title?: Prisma.StringFilter<"Tour"> | string
   intro?: Prisma.StringFilter<"Tour"> | string
   tourImage?: Prisma.StringFilter<"Tour"> | string
@@ -317,8 +355,10 @@ export type TourOrderByWithAggregationInput = {
   updatedAt?: Prisma.SortOrder
   destinationId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.TourCountOrderByAggregateInput
+  _avg?: Prisma.TourAvgOrderByAggregateInput
   _max?: Prisma.TourMaxOrderByAggregateInput
   _min?: Prisma.TourMinOrderByAggregateInput
+  _sum?: Prisma.TourSumOrderByAggregateInput
 }
 
 export type TourScalarWhereWithAggregatesInput = {
@@ -328,8 +368,8 @@ export type TourScalarWhereWithAggregatesInput = {
   id?: Prisma.UuidWithAggregatesFilter<"Tour"> | string
   dates?: Prisma.StringWithAggregatesFilter<"Tour"> | string
   duration?: Prisma.StringWithAggregatesFilter<"Tour"> | string
-  groupSize?: Prisma.StringWithAggregatesFilter<"Tour"> | string
-  price?: Prisma.StringWithAggregatesFilter<"Tour"> | string
+  groupSize?: Prisma.IntWithAggregatesFilter<"Tour"> | number
+  price?: Prisma.IntWithAggregatesFilter<"Tour"> | number
   title?: Prisma.StringWithAggregatesFilter<"Tour"> | string
   intro?: Prisma.StringWithAggregatesFilter<"Tour"> | string
   tourImage?: Prisma.StringWithAggregatesFilter<"Tour"> | string
@@ -346,8 +386,8 @@ export type TourCreateInput = {
   id?: string
   dates: string
   duration: string
-  groupSize: string
-  price: string
+  groupSize: number
+  price: number
   title: string
   intro: string
   tourImage: string
@@ -366,8 +406,8 @@ export type TourUncheckedCreateInput = {
   id?: string
   dates: string
   duration: string
-  groupSize: string
-  price: string
+  groupSize: number
+  price: number
   title: string
   intro: string
   tourImage: string
@@ -386,8 +426,8 @@ export type TourUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   dates?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  groupSize?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.StringFieldUpdateOperationsInput | string
+  groupSize?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   intro?: Prisma.StringFieldUpdateOperationsInput | string
   tourImage?: Prisma.StringFieldUpdateOperationsInput | string
@@ -406,8 +446,8 @@ export type TourUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   dates?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  groupSize?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.StringFieldUpdateOperationsInput | string
+  groupSize?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   intro?: Prisma.StringFieldUpdateOperationsInput | string
   tourImage?: Prisma.StringFieldUpdateOperationsInput | string
@@ -426,8 +466,8 @@ export type TourCreateManyInput = {
   id?: string
   dates: string
   duration: string
-  groupSize: string
-  price: string
+  groupSize: number
+  price: number
   title: string
   intro: string
   tourImage: string
@@ -444,8 +484,8 @@ export type TourUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   dates?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  groupSize?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.StringFieldUpdateOperationsInput | string
+  groupSize?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   intro?: Prisma.StringFieldUpdateOperationsInput | string
   tourImage?: Prisma.StringFieldUpdateOperationsInput | string
@@ -461,8 +501,8 @@ export type TourUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   dates?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  groupSize?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.StringFieldUpdateOperationsInput | string
+  groupSize?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   intro?: Prisma.StringFieldUpdateOperationsInput | string
   tourImage?: Prisma.StringFieldUpdateOperationsInput | string
@@ -501,6 +541,11 @@ export type TourCountOrderByAggregateInput = {
   destinationId?: Prisma.SortOrder
 }
 
+export type TourAvgOrderByAggregateInput = {
+  groupSize?: Prisma.SortOrder
+  price?: Prisma.SortOrder
+}
+
 export type TourMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   dates?: Prisma.SortOrder
@@ -531,6 +576,11 @@ export type TourMinOrderByAggregateInput = {
   destinationId?: Prisma.SortOrder
 }
 
+export type TourSumOrderByAggregateInput = {
+  groupSize?: Prisma.SortOrder
+  price?: Prisma.SortOrder
+}
+
 export type TourListRelationFilter = {
   every?: Prisma.TourWhereInput
   some?: Prisma.TourWhereInput
@@ -556,6 +606,14 @@ export type TourCreateexcludedInput = {
 
 export type TourCreateactivitiesInput = {
   set: string[]
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type TourUpdateincludedInput = {
@@ -647,8 +705,8 @@ export type TourCreateWithoutDestinationInput = {
   id?: string
   dates: string
   duration: string
-  groupSize: string
-  price: string
+  groupSize: number
+  price: number
   title: string
   intro: string
   tourImage: string
@@ -666,8 +724,8 @@ export type TourUncheckedCreateWithoutDestinationInput = {
   id?: string
   dates: string
   duration: string
-  groupSize: string
-  price: string
+  groupSize: number
+  price: number
   title: string
   intro: string
   tourImage: string
@@ -714,8 +772,8 @@ export type TourScalarWhereInput = {
   id?: Prisma.UuidFilter<"Tour"> | string
   dates?: Prisma.StringFilter<"Tour"> | string
   duration?: Prisma.StringFilter<"Tour"> | string
-  groupSize?: Prisma.StringFilter<"Tour"> | string
-  price?: Prisma.StringFilter<"Tour"> | string
+  groupSize?: Prisma.IntFilter<"Tour"> | number
+  price?: Prisma.IntFilter<"Tour"> | number
   title?: Prisma.StringFilter<"Tour"> | string
   intro?: Prisma.StringFilter<"Tour"> | string
   tourImage?: Prisma.StringFilter<"Tour"> | string
@@ -732,8 +790,8 @@ export type TourCreateWithoutItineraryInput = {
   id?: string
   dates: string
   duration: string
-  groupSize: string
-  price: string
+  groupSize: number
+  price: number
   title: string
   intro: string
   tourImage: string
@@ -751,8 +809,8 @@ export type TourUncheckedCreateWithoutItineraryInput = {
   id?: string
   dates: string
   duration: string
-  groupSize: string
-  price: string
+  groupSize: number
+  price: number
   title: string
   intro: string
   tourImage: string
@@ -786,8 +844,8 @@ export type TourUpdateWithoutItineraryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   dates?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  groupSize?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.StringFieldUpdateOperationsInput | string
+  groupSize?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   intro?: Prisma.StringFieldUpdateOperationsInput | string
   tourImage?: Prisma.StringFieldUpdateOperationsInput | string
@@ -805,8 +863,8 @@ export type TourUncheckedUpdateWithoutItineraryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   dates?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  groupSize?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.StringFieldUpdateOperationsInput | string
+  groupSize?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   intro?: Prisma.StringFieldUpdateOperationsInput | string
   tourImage?: Prisma.StringFieldUpdateOperationsInput | string
@@ -824,8 +882,8 @@ export type TourCreateWithoutBookingsInput = {
   id?: string
   dates: string
   duration: string
-  groupSize: string
-  price: string
+  groupSize: number
+  price: number
   title: string
   intro: string
   tourImage: string
@@ -843,8 +901,8 @@ export type TourUncheckedCreateWithoutBookingsInput = {
   id?: string
   dates: string
   duration: string
-  groupSize: string
-  price: string
+  groupSize: number
+  price: number
   title: string
   intro: string
   tourImage: string
@@ -878,8 +936,8 @@ export type TourUpdateWithoutBookingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   dates?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  groupSize?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.StringFieldUpdateOperationsInput | string
+  groupSize?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   intro?: Prisma.StringFieldUpdateOperationsInput | string
   tourImage?: Prisma.StringFieldUpdateOperationsInput | string
@@ -897,8 +955,8 @@ export type TourUncheckedUpdateWithoutBookingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   dates?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  groupSize?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.StringFieldUpdateOperationsInput | string
+  groupSize?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   intro?: Prisma.StringFieldUpdateOperationsInput | string
   tourImage?: Prisma.StringFieldUpdateOperationsInput | string
@@ -916,8 +974,8 @@ export type TourCreateManyDestinationInput = {
   id?: string
   dates: string
   duration: string
-  groupSize: string
-  price: string
+  groupSize: number
+  price: number
   title: string
   intro: string
   tourImage: string
@@ -933,8 +991,8 @@ export type TourUpdateWithoutDestinationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   dates?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  groupSize?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.StringFieldUpdateOperationsInput | string
+  groupSize?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   intro?: Prisma.StringFieldUpdateOperationsInput | string
   tourImage?: Prisma.StringFieldUpdateOperationsInput | string
@@ -952,8 +1010,8 @@ export type TourUncheckedUpdateWithoutDestinationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   dates?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  groupSize?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.StringFieldUpdateOperationsInput | string
+  groupSize?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   intro?: Prisma.StringFieldUpdateOperationsInput | string
   tourImage?: Prisma.StringFieldUpdateOperationsInput | string
@@ -971,8 +1029,8 @@ export type TourUncheckedUpdateManyWithoutDestinationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   dates?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.StringFieldUpdateOperationsInput | string
-  groupSize?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.StringFieldUpdateOperationsInput | string
+  groupSize?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   intro?: Prisma.StringFieldUpdateOperationsInput | string
   tourImage?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1127,8 +1185,8 @@ export type $TourPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     id: string
     dates: string
     duration: string
-    groupSize: string
-    price: string
+    groupSize: number
+    price: number
     title: string
     intro: string
     tourImage: string
@@ -1568,8 +1626,8 @@ export interface TourFieldRefs {
   readonly id: Prisma.FieldRef<"Tour", 'String'>
   readonly dates: Prisma.FieldRef<"Tour", 'String'>
   readonly duration: Prisma.FieldRef<"Tour", 'String'>
-  readonly groupSize: Prisma.FieldRef<"Tour", 'String'>
-  readonly price: Prisma.FieldRef<"Tour", 'String'>
+  readonly groupSize: Prisma.FieldRef<"Tour", 'Int'>
+  readonly price: Prisma.FieldRef<"Tour", 'Int'>
   readonly title: Prisma.FieldRef<"Tour", 'String'>
   readonly intro: Prisma.FieldRef<"Tour", 'String'>
   readonly tourImage: Prisma.FieldRef<"Tour", 'String'>
