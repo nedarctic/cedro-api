@@ -27,7 +27,11 @@ export class ToursController {
     @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
     @Post()
     @UseInterceptors(FileInterceptor('image'))
-    async createTour(@Body() createTourDto: CreateTourDto, @UploadedFile() file: Express.Multer.File) {
+    async createTour(
+        @Body() dto: { tour: string },
+        @UploadedFile() file: Express.Multer.File
+    ) {
+        const {createTourDto}: { createTourDto: CreateTourDto } = JSON.parse(dto.tour);
         return this.toursService.createTour(createTourDto, file);
     }
 
