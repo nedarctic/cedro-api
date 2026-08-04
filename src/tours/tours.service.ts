@@ -139,9 +139,10 @@ export class ToursService {
                 take: limit,
                 include: {
                     destination: true,
-                    itinerary: true
+                    itinerary: true,
+                    bookings: true,
                 },
-            }),
+            }).then(tours => tours.map(({bookings, ...tour}) => ({...tour, totalBookings: bookings.length}))),
             this.prisma.tour.count({ where: whereClause }),
         ]);
 

@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { R2Service } from '../r2/r2.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { MemberNotFoundException } from './exceptions/member-not-found.exception';
+import { PaginationDto } from '../common/dto/pagination.dto';
+import { TeamMemberWhereInput } from '../generated/prisma/models';
 
 @Injectable()
 export class TeamService {
@@ -20,8 +22,45 @@ export class TeamService {
         });
     }
 
-    async getTeams() {
-        return this.prisma.teamMember.findMany();
+    async getTeams(pagination: PaginationDto) {
+
+        const {
+            limit = 10,
+            page = 1,
+            search,
+        } = pagination;
+
+        const skip = (page - 1) * limit;
+        const searchTerm = search ? search.trim() : '';
+
+        const whereClause: TeamMemberWhereInput = searchTerm
+            ? {
+                OR: [
+                    { name: { contains: searchTerm, mode: 'insensitive' } },
+                    { description: { contains: searchTerm, mode: 'insensitive' } },
+                    { designation: { contains: searchTerm, mode: 'insensitive' } },
+                ],
+            }
+            : {};
+
+        const [members, total] = await Promise.all([
+            this.prisma.teamMember.findMany({
+                where: whereClause,
+                skip,
+                take: limit,
+            }),
+            this.prisma.teamMember.count({ where: whereClause }),
+        ]);
+
+        return {
+            members,
+            meta: {
+                total,
+                page,
+                limit,
+                totalPages: Math.ceil(total / limit),
+            },
+        };
     }
 
     async getTeamById(id: string) {
