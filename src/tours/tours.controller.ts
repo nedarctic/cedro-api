@@ -7,10 +7,12 @@ import {
     Patch,
     Post,
     UploadedFile,
+    UploadedFiles,
     UseGuards,
     UseInterceptors
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -26,13 +28,16 @@ export class ToursController {
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
     @Post()
-    @UseInterceptors(FileInterceptor('image'))
+    @UseInterceptors(FileFieldsInterceptor([
+        { name: 'tourImage', maxCount: 1 },
+        { name: 'itineraryImage', maxCount: 50 }
+    ]))
     async createTour(
         @Body() dto: { tour: string },
-        @UploadedFile() file: Express.Multer.File
+        @UploadedFiles() files: { tourImage?: Express.Multer.File[], itineraryImage?: Express.Multer.File[] }
     ) {
-        const {createTourDto}: { createTourDto: CreateTourDto } = JSON.parse(dto.tour);
-        return this.toursService.createTour(createTourDto, file);
+        const tour: CreateTourDto = JSON.parse(dto.tour);
+        return this.toursService.createTour(tour, files.tourImage![0], files.itineraryImage!);
     }
 
     @Get()
