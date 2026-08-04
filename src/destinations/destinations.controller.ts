@@ -1,13 +1,13 @@
-import { 
-    Controller, 
-    Post, 
-    Get, 
-    Patch, 
-    UseGuards, 
-    UseInterceptors, 
-    UploadedFile, 
-    Param, 
-    Body, 
+import {
+    Controller,
+    Post,
+    Get,
+    Patch,
+    UseGuards,
+    UseInterceptors,
+    UploadedFile,
+    Param,
+    Body,
     Delete,
     Query
 } from '@nestjs/common';
@@ -27,10 +27,16 @@ export class DestinationsController {
         private readonly destinationsService: DestinationsService
     ) { }
 
-    // get destinations
+    // get destinations: paginated
     @Get()
     async getDestinations(@Query() pagination: PaginationDto) {
         return this.destinationsService.getDestinations(pagination);
+    }
+
+    // get destinations: non-paginated
+    @Get('all')
+    async getDestinationsNonPaginated() {
+        return this.destinationsService.getDestinationsNonPaginated();
     }
 
     // get destination by id    
@@ -51,8 +57,8 @@ export class DestinationsController {
         },
         @UploadedFile() image: Express.Multer.File
     ) {
-        const {guides}: { guides: { id: string, position: number, subtitle: string, content: string }[] } = JSON.parse(dto.guides);
-        return this.destinationsService.createDestination({name: dto.name, guides}, image);
+        const { guides }: { guides: { id: string, position: number, subtitle: string, content: string }[] } = JSON.parse(dto.guides);
+        return this.destinationsService.createDestination({ name: dto.name, guides }, image);
     }
 
     // update destination
@@ -60,14 +66,15 @@ export class DestinationsController {
     @UseInterceptors(FileInterceptor('image'))
     @Patch(':destinationId')
     async updateDestination(
-        @Param('destinationId') destinationId: string, 
+        @Param('destinationId') destinationId: string,
         @Body() dto: {
             name: string,
             guides: string
-        }, 
+        },
         @UploadedFile() image: Express.Multer.File) {
-            const {guides}: {guides: {id: string; position: number; subtitle: string; content: string}[]} = JSON.parse(dto.guides);
-        return this.destinationsService.updateDestination(destinationId, {name: dto.name, guides}, image)
+        const { guides }: { guides: { id: string; position: number; subtitle: string; content: string }[] } = JSON.parse(dto.guides);
+        
+        return await this.destinationsService.updateDestination(destinationId, { name: dto.name, guides }, image)
     }
 
     // delete destination

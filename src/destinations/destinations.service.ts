@@ -51,10 +51,25 @@ export class DestinationsService {
         }
     }
 
+    async getDestinationsNonPaginated() {
+        const destinations = await this.prismaService.destination.findMany({
+            include: {
+                tour: true
+            }
+        }).then(destinations => destinations.map(({ tour, ...destination }) => ({
+            ...destination,
+            totalTours: tour.length,
+            createdAt: destination.createdAt.toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" }),
+            updatedAt: destination.updatedAt.toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" })
+        })));
+
+        return destinations;
+    }
+
     async getDestination(destinationId: string) {
 
         try {
-            const destination = await this.prismaService.destination.findUnique({ where: { id: destinationId } });
+            const destination = await this.prismaService.destination.findUnique({ where: { id: destinationId }, include: { guide: { orderBy: { position: 'asc' } } } });
 
             if (!destination) {
                 throw new DestinationNotFound(destinationId);
@@ -178,10 +193,10 @@ export class DestinationsService {
             ]);
 
             return {
-                updatedDestination,
-                updatedDestinationGuides,
+                deletedDestinationGuides,
                 createdDestinationGuides,
-                deletedDestinationGuides
+                updatedDestinationGuides,
+                updatedDestination
             }
 
         } catch (error) {
