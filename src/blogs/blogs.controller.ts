@@ -1,10 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { UserRole } from '../generated/prisma/enums';
 import { BlogsService } from './blogs.service';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 
 @Controller('blogs')
@@ -24,8 +25,8 @@ export class BlogsController {
     }
 
     @Get()
-    async getBlogs() {
-        return this.blogsService.getBlogs();
+    async getBlogs(@Query() pagination: PaginationDto) {
+        return this.blogsService.getBlogs(pagination);
     }
 
     @Get(':id')

@@ -3,6 +3,8 @@ import { PrismaService } from '../prisma/prisma.service';
 import { R2Service } from '../r2/r2.service';
 import { BlogNotFoundException } from './exceptions/blog-not-found.exception';
 import { StoryNotFoundException } from './exceptions/story-not-found.exception';
+import { PaginationDto } from '../common/dto/pagination.dto';
+import { BlogWhereInput } from '../generated/prisma/models';
 
 @Injectable()
 export class BlogsService {
@@ -26,12 +28,45 @@ export class BlogsService {
         });
     }
 
-    async getBlogs() {
-        return this.prismaService.blog.findMany({
-            include: {
-                story: true
+    async getBlogs(pagination: PaginationDto) {
+
+        const {
+            limit = 10,
+            page = 1,
+            search,
+        } = pagination;
+
+        const skip = (page - 1) * limit;
+        const searchTerm = search ? search.trim() : '';
+        
+        const whereClause: BlogWhereInput = searchTerm
+            ? {
+                OR: [
+                    { title: { contains: searchTerm, mode: 'insensitive' } },
+                    { excerpt: { contains: searchTerm, mode: 'insensitive' } },
+                ],
             }
-        });
+            : {};
+
+        const [blogs, total] = await Promise.all([
+            this.prismaService.blog.findMany({
+                where: whereClause,
+                skip,
+                take: limit,
+            }),
+            this.prismaService.blog.count({ where: whereClause }),
+        ]);
+
+        return {
+            blogs,
+            meta: {
+                total,
+                page,
+                limit,
+                totalPages: Math.ceil(total / limit),
+            }
+        };
+        
     }
 
     async getBlogById(id: string) {
