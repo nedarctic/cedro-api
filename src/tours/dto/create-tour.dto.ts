@@ -27,4 +27,7 @@ export class CreateTourDto {
     
     @IsArray()
     activities!: string[];
+
+    @IsString()
+    destinationId!: string;
 }
