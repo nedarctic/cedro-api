@@ -18,6 +18,7 @@ import { ItinerariesModule } from './itineraries/itineraries.module';
 import { TeamModule } from './team/team.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { DestinationsModule } from './destinations/destinations.module';
+import { DashModule } from './dash/dash.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { DestinationsModule } from './destinations/destinations.module';
     TeamModule,
     BookingsModule,
     DestinationsModule,
+    DashModule,
   ],
   controllers: [AppController, UsersController],
   providers: [AppService, UsersService],
