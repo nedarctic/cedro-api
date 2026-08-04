@@ -6,6 +6,7 @@ import {
     Param,
     Patch,
     Post,
+    Query,
     UploadedFile,
     UploadedFiles,
     UseGuards,
@@ -19,6 +20,7 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { UserRole } from '../generated/prisma/enums';
 import { CreateTourDto } from './dto/create-tour.dto';
 import { ToursService } from './tours.service';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 
 @Controller('tours')
@@ -43,6 +45,11 @@ export class ToursController {
     @Get()
     async getAllTours() {
         return this.toursService.getAllTours();
+    }
+
+    @Get("paginated-tours")
+    async getPaginatedTours (@Query() pagination: PaginationDto) {
+        return this.toursService.getPaginatedTours(pagination);
     }
 
     @Get(':id')

@@ -4,6 +4,8 @@ import { PrismaService } from '../prisma/prisma.service';
 import { R2Service } from '../r2/r2.service';
 import { CreateTourDto } from './dto/create-tour.dto';
 import { DestinationNotFoundException } from './exceptions/destination-not-found.exception';
+import { PaginationDto } from '../common/dto/pagination.dto';
+import { TourWhereInput } from '../generated/prisma/models';
 
 @Injectable()
 export class ToursService {
@@ -17,7 +19,7 @@ export class ToursService {
         tourImage: Express.Multer.File,
         itinieraryImages: Express.Multer.File[]
     ) {
-        
+
         const {
             activities,
             dates,
@@ -103,6 +105,57 @@ export class ToursService {
         return this.prisma.tour.findMany();
     }
 
+    // paginated tours
+    async getPaginatedTours(pagination: PaginationDto) {
+        const {
+            limit = 10,
+            page = 1,
+            search
+        } = pagination;
+
+        const skip = (page - 1) * limit;
+        const searchTerm = search ? search.trim() : '';
+
+        const whereClause: TourWhereInput = searchTerm
+            ? {
+                OR: [
+                    { title: { contains: searchTerm, mode: 'insensitive' } },
+                    { intro: { contains: searchTerm, mode: 'insensitive' } },
+                    { destination: { name: { contains: searchTerm, mode: 'insensitive' } } },
+                    { activities: { hasSome: [searchTerm] } },
+                    { included: { hasSome: [searchTerm] } },
+                    { excluded: { hasSome: [searchTerm] } },
+                    { itinerary: { some: { activities: { hasSome: [searchTerm] } } } },
+                    { groupSize: { equals: parseInt(searchTerm) || undefined } },
+                    { price: { equals: parseInt(searchTerm) || undefined } },
+                ],
+            }
+            : {};
+
+        const [tours, total] = await Promise.all([
+            this.prisma.tour.findMany({
+                where: whereClause,
+                skip,
+                take: limit,
+                include: {
+                    destination: true,
+                    itinerary: true
+                },
+            }),
+            this.prisma.tour.count({ where: whereClause }),
+        ]);
+
+        return {
+            tours,
+            meta: {
+                total,
+                page,
+                limit,
+                totalPages: Math.ceil(total / limit),
+            }
+        };
+    }
+
     async getTourById(id: string) {
 
         const tour = await this.prisma.tour.findUnique({
@@ -155,7 +208,7 @@ export class ToursService {
             ...updateData,
             tourImage: imageUrl ? imageUrl.publicUrl : tour.tourImage,
         };
-        
+
         if (!updateData.destinationId) {
             delete updatePayload.destinationId;
         }
