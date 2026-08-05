@@ -75,9 +75,6 @@ export class ToursController {
         await validateOrReject(tourData);
         
         const itinerariesImagesRels: string[] = JSON.parse(dto.imageRels);
-
-        console.log(tourData.itineraries?.[0].day);
-        console.log(typeof tourData.itineraries?.[0].day);
         return this.toursService.updateTour(id, tourData, itinerariesImagesRels, files.tourImage?.[0], files.itineraryImage);
     }
 
