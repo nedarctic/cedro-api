@@ -21,6 +21,9 @@ import { UserRole } from '../generated/prisma/enums';
 import { CreateTourDto } from './dto/create-tour.dto';
 import { ToursService } from './tours.service';
 import { PaginationDto } from '../common/dto/pagination.dto';
+import { plainToInstance } from 'class-transformer';
+import { UpdateTourDto } from './dto/update-tour.dto';
+import { validateOrReject } from 'class-validator';
 
 
 @Controller('tours')
@@ -48,7 +51,7 @@ export class ToursController {
     }
 
     @Get("paginated-tours")
-    async getPaginatedTours (@Query() pagination: PaginationDto) {
+    async getPaginatedTours(@Query() pagination: PaginationDto) {
         return this.toursService.getPaginatedTours(pagination);
     }
 
@@ -59,10 +62,23 @@ export class ToursController {
 
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
-    @UseInterceptors(FileInterceptor('image'))
+    @UseInterceptors(FileFieldsInterceptor([
+        { name: 'tourImage', maxCount: 1 },
+        { name: 'itineraryImage', maxCount: 50 }]))
     @Patch(':id')
-    async updateTour(@Param('id') id: string, @Body() updateTourDto: CreateTourDto, @UploadedFile() image: Express.Multer.File) {
-        return this.toursService.updateTour(id, updateTourDto, image);
+    async updateTour(
+        @Param('id') id: string,
+        @Body() dto: { tour: string, imageRels: string },
+        @UploadedFiles() files: { tourImage?: Express.Multer.File[], itineraryImage?: Express.Multer.File[] }
+    ) {
+        const tourData = plainToInstance(UpdateTourDto, JSON.parse(dto.tour));
+        await validateOrReject(tourData);
+        
+        const itinerariesImagesRels: string[] = JSON.parse(dto.imageRels);
+
+        console.log(tourData.itineraries?.[0].day);
+        console.log(typeof tourData.itineraries?.[0].day);
+        return this.toursService.updateTour(id, tourData, itinerariesImagesRels, files.tourImage?.[0], files.itineraryImage);
     }
 
     @UseGuards(JwtAuthGuard, RolesGuard)
