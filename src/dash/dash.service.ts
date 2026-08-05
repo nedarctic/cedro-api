@@ -38,7 +38,10 @@ export class DashService {
             orderBy: {
                 createdAt: 'desc'
             },
-            take: 5
+            take: 5,
+            include: {
+                tour: true
+            }
         });
     }
 
