@@ -93,7 +93,14 @@ export class BookingsService {
         }
 
         return this.prisma.booking.findUnique({
-            where: { id }
+            where: { id },
+            include: {
+                tour: {
+                    include: {
+                        destination: true
+                    }
+                }
+            }
         });
     }
 

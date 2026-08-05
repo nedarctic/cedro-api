@@ -9,13 +9,14 @@ import { TeamMemberWhereInput } from '../generated/prisma/models';
 export class TeamService {
     constructor(private prisma: PrismaService, private r2: R2Service) { }
 
-    async createTeam(name: string, description: string, designation: string, image: Express.Multer.File) {
+    async createTeam(name: string, description: string, designation: string, level: number, image: Express.Multer.File) {
         const imageUrl = await this.r2.uploadFile(image, 'members');
         return this.prisma.teamMember.create({
             data: {
                 name,
                 description,
                 designation,
+                level,
                 memberImage: imageUrl.publicUrl,
                 imageKey: imageUrl.key,
             }

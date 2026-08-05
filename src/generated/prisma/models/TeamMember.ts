@@ -20,8 +20,18 @@ export type TeamMemberModel = runtime.Types.Result.DefaultSelection<Prisma.$Team
 
 export type AggregateTeamMember = {
   _count: TeamMemberCountAggregateOutputType | null
+  _avg: TeamMemberAvgAggregateOutputType | null
+  _sum: TeamMemberSumAggregateOutputType | null
   _min: TeamMemberMinAggregateOutputType | null
   _max: TeamMemberMaxAggregateOutputType | null
+}
+
+export type TeamMemberAvgAggregateOutputType = {
+  level: number | null
+}
+
+export type TeamMemberSumAggregateOutputType = {
+  level: number | null
 }
 
 export type TeamMemberMinAggregateOutputType = {
@@ -31,6 +41,7 @@ export type TeamMemberMinAggregateOutputType = {
   imageKey: string | null
   designation: string | null
   description: string | null
+  level: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -42,6 +53,7 @@ export type TeamMemberMaxAggregateOutputType = {
   imageKey: string | null
   designation: string | null
   description: string | null
+  level: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -53,11 +65,20 @@ export type TeamMemberCountAggregateOutputType = {
   imageKey: number
   designation: number
   description: number
+  level: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
+
+export type TeamMemberAvgAggregateInputType = {
+  level?: true
+}
+
+export type TeamMemberSumAggregateInputType = {
+  level?: true
+}
 
 export type TeamMemberMinAggregateInputType = {
   id?: true
@@ -66,6 +87,7 @@ export type TeamMemberMinAggregateInputType = {
   imageKey?: true
   designation?: true
   description?: true
+  level?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -77,6 +99,7 @@ export type TeamMemberMaxAggregateInputType = {
   imageKey?: true
   designation?: true
   description?: true
+  level?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -88,6 +111,7 @@ export type TeamMemberCountAggregateInputType = {
   imageKey?: true
   designation?: true
   description?: true
+  level?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -131,6 +155,18 @@ export type TeamMemberAggregateArgs<ExtArgs extends runtime.Types.Extensions.Int
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: TeamMemberAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: TeamMemberSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: TeamMemberMinAggregateInputType
@@ -161,6 +197,8 @@ export type TeamMemberGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   _count?: TeamMemberCountAggregateInputType | true
+  _avg?: TeamMemberAvgAggregateInputType
+  _sum?: TeamMemberSumAggregateInputType
   _min?: TeamMemberMinAggregateInputType
   _max?: TeamMemberMaxAggregateInputType
 }
@@ -172,9 +210,12 @@ export type TeamMemberGroupByOutputType = {
   imageKey: string | null
   designation: string
   description: string
+  level: number
   createdAt: Date
   updatedAt: Date
   _count: TeamMemberCountAggregateOutputType | null
+  _avg: TeamMemberAvgAggregateOutputType | null
+  _sum: TeamMemberSumAggregateOutputType | null
   _min: TeamMemberMinAggregateOutputType | null
   _max: TeamMemberMaxAggregateOutputType | null
 }
@@ -204,6 +245,7 @@ export type TeamMemberWhereInput = {
   imageKey?: Prisma.StringNullableFilter<"TeamMember"> | string | null
   designation?: Prisma.StringFilter<"TeamMember"> | string
   description?: Prisma.StringFilter<"TeamMember"> | string
+  level?: Prisma.IntFilter<"TeamMember"> | number
   createdAt?: Prisma.DateTimeFilter<"TeamMember"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TeamMember"> | Date | string
 }
@@ -215,6 +257,7 @@ export type TeamMemberOrderByWithRelationInput = {
   imageKey?: Prisma.SortOrderInput | Prisma.SortOrder
   designation?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  level?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -229,6 +272,7 @@ export type TeamMemberWhereUniqueInput = Prisma.AtLeast<{
   imageKey?: Prisma.StringNullableFilter<"TeamMember"> | string | null
   designation?: Prisma.StringFilter<"TeamMember"> | string
   description?: Prisma.StringFilter<"TeamMember"> | string
+  level?: Prisma.IntFilter<"TeamMember"> | number
   createdAt?: Prisma.DateTimeFilter<"TeamMember"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TeamMember"> | Date | string
 }, "id">
@@ -240,11 +284,14 @@ export type TeamMemberOrderByWithAggregationInput = {
   imageKey?: Prisma.SortOrderInput | Prisma.SortOrder
   designation?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  level?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.TeamMemberCountOrderByAggregateInput
+  _avg?: Prisma.TeamMemberAvgOrderByAggregateInput
   _max?: Prisma.TeamMemberMaxOrderByAggregateInput
   _min?: Prisma.TeamMemberMinOrderByAggregateInput
+  _sum?: Prisma.TeamMemberSumOrderByAggregateInput
 }
 
 export type TeamMemberScalarWhereWithAggregatesInput = {
@@ -257,6 +304,7 @@ export type TeamMemberScalarWhereWithAggregatesInput = {
   imageKey?: Prisma.StringNullableWithAggregatesFilter<"TeamMember"> | string | null
   designation?: Prisma.StringWithAggregatesFilter<"TeamMember"> | string
   description?: Prisma.StringWithAggregatesFilter<"TeamMember"> | string
+  level?: Prisma.IntWithAggregatesFilter<"TeamMember"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TeamMember"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"TeamMember"> | Date | string
 }
@@ -268,6 +316,7 @@ export type TeamMemberCreateInput = {
   imageKey?: string | null
   designation: string
   description: string
+  level: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -279,6 +328,7 @@ export type TeamMemberUncheckedCreateInput = {
   imageKey?: string | null
   designation: string
   description: string
+  level: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -290,6 +340,7 @@ export type TeamMemberUpdateInput = {
   imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   designation?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -301,6 +352,7 @@ export type TeamMemberUncheckedUpdateInput = {
   imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   designation?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -312,6 +364,7 @@ export type TeamMemberCreateManyInput = {
   imageKey?: string | null
   designation: string
   description: string
+  level: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -323,6 +376,7 @@ export type TeamMemberUpdateManyMutationInput = {
   imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   designation?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -334,6 +388,7 @@ export type TeamMemberUncheckedUpdateManyInput = {
   imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   designation?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -345,8 +400,13 @@ export type TeamMemberCountOrderByAggregateInput = {
   imageKey?: Prisma.SortOrder
   designation?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  level?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type TeamMemberAvgOrderByAggregateInput = {
+  level?: Prisma.SortOrder
 }
 
 export type TeamMemberMaxOrderByAggregateInput = {
@@ -356,6 +416,7 @@ export type TeamMemberMaxOrderByAggregateInput = {
   imageKey?: Prisma.SortOrder
   designation?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  level?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -367,8 +428,13 @@ export type TeamMemberMinOrderByAggregateInput = {
   imageKey?: Prisma.SortOrder
   designation?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  level?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type TeamMemberSumOrderByAggregateInput = {
+  level?: Prisma.SortOrder
 }
 
 
@@ -380,6 +446,7 @@ export type TeamMemberSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   imageKey?: boolean
   designation?: boolean
   description?: boolean
+  level?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["teamMember"]>
@@ -391,6 +458,7 @@ export type TeamMemberSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   imageKey?: boolean
   designation?: boolean
   description?: boolean
+  level?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["teamMember"]>
@@ -402,6 +470,7 @@ export type TeamMemberSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   imageKey?: boolean
   designation?: boolean
   description?: boolean
+  level?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["teamMember"]>
@@ -413,11 +482,12 @@ export type TeamMemberSelectScalar = {
   imageKey?: boolean
   designation?: boolean
   description?: boolean
+  level?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TeamMemberOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "memberImage" | "imageKey" | "designation" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["teamMember"]>
+export type TeamMemberOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "memberImage" | "imageKey" | "designation" | "description" | "level" | "createdAt" | "updatedAt", ExtArgs["result"]["teamMember"]>
 
 export type $TeamMemberPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "TeamMember"
@@ -429,6 +499,7 @@ export type $TeamMemberPayload<ExtArgs extends runtime.Types.Extensions.Internal
     imageKey: string | null
     designation: string
     description: string
+    level: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["teamMember"]>
@@ -860,6 +931,7 @@ export interface TeamMemberFieldRefs {
   readonly imageKey: Prisma.FieldRef<"TeamMember", 'String'>
   readonly designation: Prisma.FieldRef<"TeamMember", 'String'>
   readonly description: Prisma.FieldRef<"TeamMember", 'String'>
+  readonly level: Prisma.FieldRef<"TeamMember", 'Int'>
   readonly createdAt: Prisma.FieldRef<"TeamMember", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"TeamMember", 'DateTime'>
 }

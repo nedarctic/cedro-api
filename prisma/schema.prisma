@@ -125,6 +125,7 @@ model TeamMember {
   imageKey    String?
   designation String
   description String
+  level       Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt()
 }

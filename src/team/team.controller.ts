@@ -6,6 +6,7 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { UserRole } from '../generated/prisma/enums';
 import { TeamService } from './team.service';
 import { PaginationDto } from '../common/dto/pagination.dto';
+import { CreateMemberDto } from './dto/create-member.dto';
 
 
 @Controller('team')
@@ -18,10 +19,11 @@ export class TeamController {
     @UseInterceptors(FileInterceptor('image'))
     async createTeam(
         @UploadedFile() image: Express.Multer.File,
-        @Body() body: { name: string; description: string; designation: string }
+        @Body() body: CreateMemberDto
     ) {
-        const { name, description, designation } = body;
-        return this.teamService.createTeam(name, description, designation, image);
+        const { name, description, designation, level } = body;
+        console.log("received data", body);
+        return this.teamService.createTeam(name, description, designation, level, image);
     }
 
     @Get()
