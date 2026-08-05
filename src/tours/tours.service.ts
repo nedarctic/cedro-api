@@ -6,6 +6,7 @@ import { CreateTourDto } from './dto/create-tour.dto';
 import { DestinationNotFoundException } from './exceptions/destination-not-found.exception';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { TourWhereInput } from '../generated/prisma/models';
+import { UpdateTourDto } from './dto/update-tour.dto';
 
 @Injectable()
 export class ToursService {
@@ -53,13 +54,13 @@ export class ToursService {
         });
 
         for (let i = 0; i < itineraries.length; i++) {
-            const { subtitle, activities, day } = itineraries[i];
+            const { title, activities, day } = itineraries[i];
             const itineraryImage = itinieraryImages[i];
             const { key: itineraryImageKey, publicUrl: itineraryImagePublicUrl } = await this.r2Service.uploadFile(itineraryImage, 'itineraries');
 
             await this.prisma.itinerary.create({
                 data: {
-                    title: subtitle,
+                    title,
                     activities,
                     day,
                     tourId: tour.id,
@@ -142,7 +143,7 @@ export class ToursService {
                     itinerary: true,
                     bookings: true,
                 },
-            }).then(tours => tours.map(({bookings, ...tour}) => ({...tour, totalBookings: bookings.length}))),
+            }).then(tours => tours.map(({ bookings, ...tour }) => ({ ...tour, totalBookings: bookings.length }))),
             this.prisma.tour.count({ where: whereClause }),
         ]);
 
@@ -191,32 +192,117 @@ export class ToursService {
         });
     }
 
-    async updateTour(id: string, updateData: Partial<CreateTourDto>, imageFile?: Express.Multer.File) {
+    async updateTour(
+        tourId: string,
+        updateData: UpdateTourDto,
+        imageRels: string[],
+        tourImageFile?: Express.Multer.File,
+        itineraryImages?: Express.Multer.File[],
+        
+    ) {
+
         const tour = await this.prisma.tour.findUnique({
-            where: { id },
+            where: { id: tourId },
         });
+
         if (!tour) {
             throw new TourNotFoundException();
         }
 
-        let imageUrl;
+        const { itineraries, ...tourData } = updateData;
 
-        if (imageFile && imageFile.size > 0) {
-            imageUrl = await this.r2Service.uploadFile(imageFile, 'tours');
+        const existingItineraries = await this.prisma.itinerary.findMany({ where: { tourId } });
+        const existingIds = new Set(existingItineraries.map(it => it.id))
+        const updatedItineraries = itineraries?.filter(itinerary => existingIds.has(itinerary.id!));
+        const updatedIds = new Set(updatedItineraries?.map(it => it.id));
+        const newItineraries = itineraries?.filter(itinerary => !existingIds.has(itinerary.id!));
+        const deletedItineraries = existingItineraries.filter(it => !updatedIds.has(it.id));
+
+        // delete remote itinerary images
+        await Promise.all(deletedItineraries?.map(async (it) => {
+            await this.r2Service.deleteFile(it.imageKey!);
+        }));
+
+        // update tour data
+        const { key, publicUrl } = tourImageFile && tourImageFile.size > 0 ?
+            await this.r2Service.uploadFile(tourImageFile, 'tours') :
+            { key: tour.imageKey, publicUrl: tour.tourImage };
+
+        // delete remote tour image
+        tourImageFile && tourImageFile.size > 0 && await this.r2Service.deleteFile(tour.imageKey!);
+
+        const [
+            tourUpdate,
+            itinerariesUpdate,
+            itinerariesCreate,
+            itinerariesDelete
+        ] = await Promise.all([
+
+            this.prisma.tour.update({
+                where: {
+                    id: tourId
+                },
+                data: {
+                    ...tourData,
+                    tourImage: publicUrl,
+                    imageKey: key
+                }
+            }),
+
+            Promise.all(updatedItineraries?.map(async (it, id) => {
+                const existingMap = new Map(existingItineraries.map(it => [it.id, it]))
+                const existing = existingMap.get(it.id!);
+
+
+                const itineraryImage = imageRels?.includes(it.id!) ? itineraryImages?.[imageRels.indexOf(it.id!)] : undefined;
+                itineraryImage && itineraryImage.size > 0 && await this.r2Service.deleteFile(existing?.imageKey!);
+                const { key, publicUrl } = itineraryImage && itineraryImage.size > 0
+                    ? await this.r2Service.uploadFile(itineraryImage, "itineraries")
+                    : {} as { key?: string; publicUrl?: string };
+
+                await this.prisma.itinerary.update({
+                    where: {
+                        id: it.id!
+                    },
+                    data: {
+                        ...it,
+                        dayImage: publicUrl,
+                        imageKey: key
+                    }
+                })
+            }) ?? []),
+
+            Promise.all(newItineraries?.map(async (it, id) => {
+                const itineraryImage = imageRels?.includes(it.id!) ? itineraryImages?.[imageRels.indexOf(it.id!)] : undefined;
+                const { key, publicUrl } = itineraryImage && itineraryImage.size > 0
+                    ? await this.r2Service.uploadFile(itineraryImage, "itineraries")
+                    : {} as { key?: string; publicUrl?: string };
+
+                await this.prisma.itinerary.create({
+                    data: {
+                        ...it,
+                        tourId,
+                        dayImage: publicUrl!,
+                        imageKey: key,
+                    }
+                })
+            }) ?? []),
+
+            this.prisma.itinerary.deleteMany({
+                where: {
+                    id: {
+                        in: deletedItineraries.map(it => it.id)
+                    }
+                }
+            })
+        ]);
+
+        return {
+            tourUpdate,
+            itinerariesUpdate,
+            itinerariesCreate,
+            itinerariesDelete
         }
 
-        const updatePayload: any = {
-            ...updateData,
-            tourImage: imageUrl ? imageUrl.publicUrl : tour.tourImage,
-        };
-
-        if (!updateData.destinationId) {
-            delete updatePayload.destinationId;
-        }
-
-        return this.prisma.tour.update({
-            where: { id },
-            data: updatePayload,
-        });
     }
 }
