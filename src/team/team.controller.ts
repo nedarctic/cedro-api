@@ -7,6 +7,7 @@ import { UserRole } from '../generated/prisma/enums';
 import { TeamService } from './team.service';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { CreateMemberDto } from './dto/create-member.dto';
+import { UpdateMemberDto } from './dto/update-member.dto';
 
 
 @Controller('team')
@@ -50,9 +51,10 @@ export class TeamController {
     async updateTeam(
         @Param('id') id: string,
         @UploadedFile() image: Express.Multer.File,
-        @Body() body: { name?: string; description?: string; designation?: string }
+        @Body() body: UpdateMemberDto
     ) {
-        const { name, description, designation } = body;
-        return this.teamService.updateTeam(id, { name, description, designation, image });
+        const { name, description, designation, level } = body;
+        console.log("body received", body);
+        return this.teamService.updateTeam(id, { name, description, designation, level, image });
     }
 }
