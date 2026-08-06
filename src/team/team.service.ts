@@ -99,6 +99,7 @@ export class TeamService {
             name?: string;
             description?: string;
             designation?: string;
+            level?: number;
             image?: Express.Multer.File;
         },
     ) {
@@ -113,7 +114,7 @@ export class TeamService {
         let imageUrl: string | undefined;
         let imageKey: string | undefined;
 
-        if (data.image) {
+        if (data.image && data.image.size > 0) {
             const uploaded = await this.r2.uploadFile(data.image, "members");
             imageUrl = uploaded.publicUrl;
             imageKey = uploaded.key;
@@ -130,6 +131,7 @@ export class TeamService {
                 name: data.name,
                 description: data.description,
                 designation: data.designation,
+                level: data.level,
                 ...(imageUrl && { memberImage: imageUrl }),
                 ...(imageKey && { imageKey }),
             },
