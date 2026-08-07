@@ -54,7 +54,6 @@ export class TeamController {
         @Body() body: UpdateMemberDto
     ) {
         const { name, description, designation, level } = body;
-        console.log("body received", body);
         return this.teamService.updateTeam(id, { name, description, designation, level, image });
     }
 }
