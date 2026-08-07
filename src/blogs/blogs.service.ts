@@ -75,7 +75,13 @@ export class BlogsService {
                 where: whereClause,
                 skip,
                 take: limit,
-            }),
+            }).then(blogs => blogs.map(({
+                createdAt,
+                ...blog }) => ({
+                    ...blog,
+                    createdAt: createdAt.toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" })
+                })
+            )),
             this.prismaService.blog.count({ where: whereClause }),
         ]);
 
@@ -93,10 +99,6 @@ export class BlogsService {
 
     async getBlogById(id: string) {
 
-        console.log("BLOG ID:", id);
-
-        this.logger.log(`Getting blog ${id}`)
-        this.logger.log(`Blog ID received: ${id}`)
         const blog = await this.prismaService.blog.findUnique({
             where: { id },
             include: {
