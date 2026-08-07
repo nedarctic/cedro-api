@@ -196,6 +196,7 @@ export type StoryScalarFieldEnum = (typeof StoryScalarFieldEnum)[keyof typeof St
 
 export const StorySectionScalarFieldEnum = {
   id: 'id',
+  sectionNumber: 'sectionNumber',
   subtitle: 'subtitle',
   content: 'content',
   storyId: 'storyId',

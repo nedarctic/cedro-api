@@ -27,15 +27,16 @@ export type AggregateStorySection = {
 }
 
 export type StorySectionAvgAggregateOutputType = {
-  id: number | null
+  sectionNumber: number | null
 }
 
 export type StorySectionSumAggregateOutputType = {
-  id: number | null
+  sectionNumber: number | null
 }
 
 export type StorySectionMinAggregateOutputType = {
-  id: number | null
+  id: string | null
+  sectionNumber: number | null
   subtitle: string | null
   content: string | null
   storyId: string | null
@@ -44,7 +45,8 @@ export type StorySectionMinAggregateOutputType = {
 }
 
 export type StorySectionMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
+  sectionNumber: number | null
   subtitle: string | null
   content: string | null
   storyId: string | null
@@ -54,6 +56,7 @@ export type StorySectionMaxAggregateOutputType = {
 
 export type StorySectionCountAggregateOutputType = {
   id: number
+  sectionNumber: number
   subtitle: number
   content: number
   storyId: number
@@ -64,15 +67,16 @@ export type StorySectionCountAggregateOutputType = {
 
 
 export type StorySectionAvgAggregateInputType = {
-  id?: true
+  sectionNumber?: true
 }
 
 export type StorySectionSumAggregateInputType = {
-  id?: true
+  sectionNumber?: true
 }
 
 export type StorySectionMinAggregateInputType = {
   id?: true
+  sectionNumber?: true
   subtitle?: true
   content?: true
   storyId?: true
@@ -82,6 +86,7 @@ export type StorySectionMinAggregateInputType = {
 
 export type StorySectionMaxAggregateInputType = {
   id?: true
+  sectionNumber?: true
   subtitle?: true
   content?: true
   storyId?: true
@@ -91,6 +96,7 @@ export type StorySectionMaxAggregateInputType = {
 
 export type StorySectionCountAggregateInputType = {
   id?: true
+  sectionNumber?: true
   subtitle?: true
   content?: true
   storyId?: true
@@ -186,7 +192,8 @@ export type StorySectionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 export type StorySectionGroupByOutputType = {
-  id: number
+  id: string
+  sectionNumber: number
   subtitle: string
   content: string
   storyId: string
@@ -218,7 +225,8 @@ export type StorySectionWhereInput = {
   AND?: Prisma.StorySectionWhereInput | Prisma.StorySectionWhereInput[]
   OR?: Prisma.StorySectionWhereInput[]
   NOT?: Prisma.StorySectionWhereInput | Prisma.StorySectionWhereInput[]
-  id?: Prisma.IntFilter<"StorySection"> | number
+  id?: Prisma.StringFilter<"StorySection"> | string
+  sectionNumber?: Prisma.IntFilter<"StorySection"> | number
   subtitle?: Prisma.StringFilter<"StorySection"> | string
   content?: Prisma.StringFilter<"StorySection"> | string
   storyId?: Prisma.UuidFilter<"StorySection"> | string
@@ -229,6 +237,7 @@ export type StorySectionWhereInput = {
 
 export type StorySectionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  sectionNumber?: Prisma.SortOrder
   subtitle?: Prisma.SortOrder
   content?: Prisma.SortOrder
   storyId?: Prisma.SortOrder
@@ -238,10 +247,11 @@ export type StorySectionOrderByWithRelationInput = {
 }
 
 export type StorySectionWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   AND?: Prisma.StorySectionWhereInput | Prisma.StorySectionWhereInput[]
   OR?: Prisma.StorySectionWhereInput[]
   NOT?: Prisma.StorySectionWhereInput | Prisma.StorySectionWhereInput[]
+  sectionNumber?: Prisma.IntFilter<"StorySection"> | number
   subtitle?: Prisma.StringFilter<"StorySection"> | string
   content?: Prisma.StringFilter<"StorySection"> | string
   storyId?: Prisma.UuidFilter<"StorySection"> | string
@@ -252,6 +262,7 @@ export type StorySectionWhereUniqueInput = Prisma.AtLeast<{
 
 export type StorySectionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  sectionNumber?: Prisma.SortOrder
   subtitle?: Prisma.SortOrder
   content?: Prisma.SortOrder
   storyId?: Prisma.SortOrder
@@ -268,7 +279,8 @@ export type StorySectionScalarWhereWithAggregatesInput = {
   AND?: Prisma.StorySectionScalarWhereWithAggregatesInput | Prisma.StorySectionScalarWhereWithAggregatesInput[]
   OR?: Prisma.StorySectionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.StorySectionScalarWhereWithAggregatesInput | Prisma.StorySectionScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"StorySection"> | number
+  id?: Prisma.StringWithAggregatesFilter<"StorySection"> | string
+  sectionNumber?: Prisma.IntWithAggregatesFilter<"StorySection"> | number
   subtitle?: Prisma.StringWithAggregatesFilter<"StorySection"> | string
   content?: Prisma.StringWithAggregatesFilter<"StorySection"> | string
   storyId?: Prisma.UuidWithAggregatesFilter<"StorySection"> | string
@@ -277,6 +289,8 @@ export type StorySectionScalarWhereWithAggregatesInput = {
 }
 
 export type StorySectionCreateInput = {
+  id?: string
+  sectionNumber: number
   subtitle: string
   content: string
   createdAt?: Date | string
@@ -285,7 +299,8 @@ export type StorySectionCreateInput = {
 }
 
 export type StorySectionUncheckedCreateInput = {
-  id?: number
+  id?: string
+  sectionNumber: number
   subtitle: string
   content: string
   storyId: string
@@ -294,6 +309,8 @@ export type StorySectionUncheckedCreateInput = {
 }
 
 export type StorySectionUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sectionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   subtitle?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -302,7 +319,8 @@ export type StorySectionUpdateInput = {
 }
 
 export type StorySectionUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sectionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   subtitle?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   storyId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -311,7 +329,8 @@ export type StorySectionUncheckedUpdateInput = {
 }
 
 export type StorySectionCreateManyInput = {
-  id?: number
+  id?: string
+  sectionNumber: number
   subtitle: string
   content: string
   storyId: string
@@ -320,6 +339,8 @@ export type StorySectionCreateManyInput = {
 }
 
 export type StorySectionUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sectionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   subtitle?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -327,7 +348,8 @@ export type StorySectionUpdateManyMutationInput = {
 }
 
 export type StorySectionUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sectionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   subtitle?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   storyId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -347,6 +369,7 @@ export type StorySectionOrderByRelationAggregateInput = {
 
 export type StorySectionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  sectionNumber?: Prisma.SortOrder
   subtitle?: Prisma.SortOrder
   content?: Prisma.SortOrder
   storyId?: Prisma.SortOrder
@@ -355,11 +378,12 @@ export type StorySectionCountOrderByAggregateInput = {
 }
 
 export type StorySectionAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
+  sectionNumber?: Prisma.SortOrder
 }
 
 export type StorySectionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  sectionNumber?: Prisma.SortOrder
   subtitle?: Prisma.SortOrder
   content?: Prisma.SortOrder
   storyId?: Prisma.SortOrder
@@ -369,6 +393,7 @@ export type StorySectionMaxOrderByAggregateInput = {
 
 export type StorySectionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  sectionNumber?: Prisma.SortOrder
   subtitle?: Prisma.SortOrder
   content?: Prisma.SortOrder
   storyId?: Prisma.SortOrder
@@ -377,7 +402,7 @@ export type StorySectionMinOrderByAggregateInput = {
 }
 
 export type StorySectionSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
+  sectionNumber?: Prisma.SortOrder
 }
 
 export type StorySectionCreateNestedManyWithoutStoryInput = {
@@ -423,6 +448,8 @@ export type StorySectionUncheckedUpdateManyWithoutStoryNestedInput = {
 }
 
 export type StorySectionCreateWithoutStoryInput = {
+  id?: string
+  sectionNumber: number
   subtitle: string
   content: string
   createdAt?: Date | string
@@ -430,7 +457,8 @@ export type StorySectionCreateWithoutStoryInput = {
 }
 
 export type StorySectionUncheckedCreateWithoutStoryInput = {
-  id?: number
+  id?: string
+  sectionNumber: number
   subtitle: string
   content: string
   createdAt?: Date | string
@@ -467,7 +495,8 @@ export type StorySectionScalarWhereInput = {
   AND?: Prisma.StorySectionScalarWhereInput | Prisma.StorySectionScalarWhereInput[]
   OR?: Prisma.StorySectionScalarWhereInput[]
   NOT?: Prisma.StorySectionScalarWhereInput | Prisma.StorySectionScalarWhereInput[]
-  id?: Prisma.IntFilter<"StorySection"> | number
+  id?: Prisma.StringFilter<"StorySection"> | string
+  sectionNumber?: Prisma.IntFilter<"StorySection"> | number
   subtitle?: Prisma.StringFilter<"StorySection"> | string
   content?: Prisma.StringFilter<"StorySection"> | string
   storyId?: Prisma.UuidFilter<"StorySection"> | string
@@ -476,7 +505,8 @@ export type StorySectionScalarWhereInput = {
 }
 
 export type StorySectionCreateManyStoryInput = {
-  id?: number
+  id?: string
+  sectionNumber: number
   subtitle: string
   content: string
   createdAt?: Date | string
@@ -484,6 +514,8 @@ export type StorySectionCreateManyStoryInput = {
 }
 
 export type StorySectionUpdateWithoutStoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sectionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   subtitle?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -491,7 +523,8 @@ export type StorySectionUpdateWithoutStoryInput = {
 }
 
 export type StorySectionUncheckedUpdateWithoutStoryInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sectionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   subtitle?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -499,7 +532,8 @@ export type StorySectionUncheckedUpdateWithoutStoryInput = {
 }
 
 export type StorySectionUncheckedUpdateManyWithoutStoryInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sectionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   subtitle?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -510,6 +544,7 @@ export type StorySectionUncheckedUpdateManyWithoutStoryInput = {
 
 export type StorySectionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  sectionNumber?: boolean
   subtitle?: boolean
   content?: boolean
   storyId?: boolean
@@ -520,6 +555,7 @@ export type StorySectionSelect<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type StorySectionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  sectionNumber?: boolean
   subtitle?: boolean
   content?: boolean
   storyId?: boolean
@@ -530,6 +566,7 @@ export type StorySectionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
 
 export type StorySectionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  sectionNumber?: boolean
   subtitle?: boolean
   content?: boolean
   storyId?: boolean
@@ -540,6 +577,7 @@ export type StorySectionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
 
 export type StorySectionSelectScalar = {
   id?: boolean
+  sectionNumber?: boolean
   subtitle?: boolean
   content?: boolean
   storyId?: boolean
@@ -547,7 +585,7 @@ export type StorySectionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type StorySectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "subtitle" | "content" | "storyId" | "createdAt" | "updatedAt", ExtArgs["result"]["storySection"]>
+export type StorySectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sectionNumber" | "subtitle" | "content" | "storyId" | "createdAt" | "updatedAt", ExtArgs["result"]["storySection"]>
 export type StorySectionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   story?: boolean | Prisma.StoryDefaultArgs<ExtArgs>
 }
@@ -564,7 +602,8 @@ export type $StorySectionPayload<ExtArgs extends runtime.Types.Extensions.Intern
     story: Prisma.$StoryPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
+    sectionNumber: number
     subtitle: string
     content: string
     storyId: string
@@ -994,7 +1033,8 @@ export interface Prisma__StorySectionClient<T, Null = never, ExtArgs extends run
  * Fields of the StorySection model
  */
 export interface StorySectionFieldRefs {
-  readonly id: Prisma.FieldRef<"StorySection", 'Int'>
+  readonly id: Prisma.FieldRef<"StorySection", 'String'>
+  readonly sectionNumber: Prisma.FieldRef<"StorySection", 'Int'>
   readonly subtitle: Prisma.FieldRef<"StorySection", 'String'>
   readonly content: Prisma.FieldRef<"StorySection", 'String'>
   readonly storyId: Prisma.FieldRef<"StorySection", 'String'>
