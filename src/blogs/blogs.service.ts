@@ -4,7 +4,9 @@ import { R2Service } from '../r2/r2.service';
 import { BlogNotFoundException } from './exceptions/blog-not-found.exception';
 import { StoryNotFoundException } from './exceptions/story-not-found.exception';
 import { PaginationDto } from '../common/dto/pagination.dto';
-import { BlogWhereInput } from '../generated/prisma/models';
+import { BlogUpdateInput, BlogWhereInput, StoryUpdateInput } from '../generated/prisma/models';
+import { CreateBlogDto } from './dto/create-blog.dto';
+import { UpdateBlogDto } from './dto/update-blog.dto';
 
 @Injectable()
 export class BlogsService {
@@ -13,19 +15,39 @@ export class BlogsService {
     constructor(
         private prismaService: PrismaService,
         private r2Service: R2Service
-    ) {}
+    ) { }
 
-    async createBlog(title: string, date: string, excerpt: string, image: Express.Multer.File) {
-        const imageUrl = await this.r2Service.uploadFile(image, 'blogs');
-        return this.prismaService.blog.create({
+    async createBlog(blog: CreateBlogDto, blogImage: Express.Multer.File) {
+        const {
+            title,
+            date,
+            excerpt,
+            intro,
+            sections,
+            conclusion
+        } = blog;
+
+        const { key, publicUrl } = await this.r2Service.uploadFile(blogImage, "blogs");
+        return await this.prismaService.blog.create({
             data: {
                 title,
                 date,
                 excerpt,
-                blogImage: imageUrl.publicUrl,
-                imageKey: imageUrl.key,
+                blogImage: publicUrl,
+                imageKey: key,
+                story: {
+                    create: {
+                        intro,
+                        conclusion,
+                        sections: {
+                            createMany: {
+                                data: sections
+                            }
+                        }
+                    }
+                }
             }
-        });
+        })
     }
 
     async getBlogs(pagination: PaginationDto) {
@@ -38,7 +60,7 @@ export class BlogsService {
 
         const skip = (page - 1) * limit;
         const searchTerm = search ? search.trim() : '';
-        
+
         const whereClause: BlogWhereInput = searchTerm
             ? {
                 OR: [
@@ -66,7 +88,7 @@ export class BlogsService {
                 totalPages: Math.ceil(total / limit),
             }
         };
-        
+
     }
 
     async getBlogById(id: string) {
@@ -85,7 +107,7 @@ export class BlogsService {
                 }
             }
         });
-        
+
         if (!blog) {
             throw new BlogNotFoundException(id);
         }
@@ -93,11 +115,129 @@ export class BlogsService {
         return blog;
     }
 
+    async updateBlog(blogId: string, blogData: UpdateBlogDto, blogImage?: Express.Multer.File) {
+        const blog = await this.prismaService.blog.findUnique({
+            where: {
+                id: blogId
+            }
+        });
+
+        if (!blog) {
+            throw new BlogNotFoundException(blogId);
+        }
+
+        const story = await this.prismaService.story.findUnique({
+            where: {
+                blogId
+            }
+        });
+
+        if (!story) {
+            throw new StoryNotFoundException()
+        }
+
+        let imageKey;
+        let imageUrl;
+
+        if (blogImage && blogImage.size > 0) {
+            await this.r2Service.deleteFile(blog.imageKey!);
+            const { key, publicUrl } = await this.r2Service.uploadFile(blogImage, "blogs");
+            imageKey = key;
+            imageUrl = publicUrl;
+        }
+
+        const { sections } = blogData;
+        const existingSections = await this.prismaService.storySection.findMany({
+            where: {
+                story: {
+                    blogId
+                }
+            }
+        });
+
+        const existingSectionsIdsSet = new Set(existingSections.map(section => section.id));
+        const incomingSectionsIdsSet = new Set(sections.map(section => section.id));
+
+        const updatedSections = sections.filter(section => existingSectionsIdsSet.has(section.id));
+        const newSections = sections.filter(section => !existingSectionsIdsSet.has(section.id));
+        const deletedSections = existingSections.filter(section => !incomingSectionsIdsSet.has(section.id));
+
+        const blogUpdatePayload: BlogUpdateInput = {
+            title: blogData.title,
+            date: blogData.date,
+            excerpt: blogData.excerpt,
+            blogImage: imageUrl,
+            imageKey,
+        };
+
+        const blogStoryUpdatePayload: StoryUpdateInput = {
+            intro: blogData.intro,
+            conclusion: blogData.conclusion,
+        };
+
+
+        const [
+            blogUpdate,
+            storyUpdate,
+            storySectionsCreate,
+            storySectionsUpdate,
+            storySectionsDelete
+        ] = await Promise.all([
+            this.prismaService.blog.update({
+                where: {
+                    id: blogId
+                },
+                data: blogUpdatePayload
+            }),
+            this.prismaService.story.update({
+                where: {
+                    blogId
+                },
+                data: blogStoryUpdatePayload
+            }),
+            this.prismaService.story.update({
+                where: {
+                    id: story.id
+                },
+                data: {
+                    sections: {
+                        createMany: {
+                            data: newSections
+                        }
+                    }
+                }
+            }),
+            Promise.all(updatedSections.map(async (section) => {
+                await this.prismaService.storySection.update({
+                    where: {
+                        id: section.id,
+                    },
+                    data: section
+                })
+            })),
+            this.prismaService.storySection.deleteMany({
+                where: {
+                    id: {
+                        in: deletedSections.map(section => section.id)
+                    }
+                }
+            })
+        ]);
+
+        return {
+            blogUpdate,
+            storyUpdate,
+            storySectionsCreate,
+            storySectionsUpdate,
+            storySectionsDelete
+        };
+    }
+
     async deleteBlog(id: string) {
         const blog = await this.prismaService.blog.findUnique({
             where: { id }
         });
-        
+
         if (!blog) {
             throw new BlogNotFoundException(id);
         }
@@ -109,139 +249,4 @@ export class BlogsService {
         });
     }
 
-    async updateBlog(id: string, data: { title?: string; date?: string; excerpt?: string; image?: Express.Multer.File }) {
-        const blog = await this.prismaService.blog.findUnique({
-            where: { id }
-        });
-        
-        if (!blog) {
-            throw new BlogNotFoundException(id);
-        }
-        
-        let imageUrl;
-        if (data.image) {
-            imageUrl = await this.r2Service.uploadFile(data.image, 'blogs');
-        }
-
-        return this.prismaService.blog.update({
-            where: { id },
-            data: {
-                title: data.title,
-                date: data.date,
-                excerpt: data.excerpt,
-                blogImage: imageUrl ? imageUrl.publicUrl : undefined,
-                imageKey: imageUrl ? imageUrl.key : undefined,
-            }
-        });
-    }
-
-    async addStoryToBlog(blogId: string, intro: string, conclusion: string) {
-        const blog = await this.prismaService.blog.findUnique({
-            where: { id: blogId }
-        });
-        
-        if (!blog) {
-            throw new BlogNotFoundException(blogId);
-        }
-
-        return this.prismaService.story.create({
-            data: {
-                intro,
-                conclusion,
-                blogId
-            }
-        });
-    }
-
-    async getStoryByBlogId(blogId: string) {
-        const blog = await this.prismaService.blog.findUnique({
-            where: { id: blogId },
-            include: {
-                story: true
-            }
-        });
-        
-        if (!blog) {
-            throw new BlogNotFoundException(blogId);
-        }
-
-        return blog.story;
-    }
-
-    async updateBlogStory(storyId: string, data: { intro?: string; conclusion?: string }) {
-        const story = await this.prismaService.story.findUnique({
-            where: { id: storyId }
-        });
-        
-        if (!story) {
-            throw new StoryNotFoundException(storyId);
-        }
-
-        return this.prismaService.story.update({
-            where: { id: storyId },
-            data
-        });
-    }
-
-    async deleteBlogStory(storyId: string) {
-        const story = await this.prismaService.story.findUnique({
-            where: { id: storyId }
-        });
-        
-        if (!story) {
-            throw new StoryNotFoundException(storyId);
-        }
-
-        return this.prismaService.story.delete({
-            where: { id: storyId }
-        });
-    }
-    
-    async addSectionToStory(storyId: string, subtitle: string, content: string) {
-        const story = await this.prismaService.story.findUnique({
-            where: { id: storyId }
-        });
-        
-        if (!story) {
-            throw new StoryNotFoundException(storyId);
-        }
-
-        return this.prismaService.storySection.create({
-            data: {
-                subtitle,
-                content,
-                storyId
-            }
-        });
-    }
-
-    async updateStorySection(storyId: string, sectionId: string, data: { subtitle?: string; content?: string }) {
-
-        const section = await this.prismaService.storySection.findUnique({
-            where: { id: parseInt(sectionId, 10), storyId }
-        });
-        
-        if (!section) {
-            throw new StoryNotFoundException(sectionId);
-        }
-
-        return this.prismaService.storySection.update({
-            where: { id: parseInt(sectionId, 10), storyId },
-            data
-        });
-    }
-
-    async deleteStorySection(storyId: string, sectionId: string) {
-        const section = await this.prismaService.storySection.findUnique({
-            where: { id: parseInt(sectionId, 10), storyId }
-        });
-        
-        if (!section) {
-            throw new StoryNotFoundException(sectionId);
-        }
-
-        return this.prismaService.storySection.delete({
-            where: { id: parseInt(sectionId, 10), storyId }
-        });
-    }
 }
