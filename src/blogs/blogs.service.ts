@@ -77,8 +77,10 @@ export class BlogsService {
                 take: limit,
             }).then(blogs => blogs.map(({
                 createdAt,
+                date,
                 ...blog }) => ({
                     ...blog,
+                    date: date.toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" }),
                     createdAt: createdAt.toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" })
                 })
             )),
@@ -129,6 +131,11 @@ export class BlogsService {
         }
 
         return blog;
+    }
+
+    async getOtherBlogs (blogId: string) {
+        return await this.prismaService.blog.findMany()
+        .then(blogs => blogs.filter(({id}) => id !== blogId));
     }
 
     async updateBlog(blogId: string, blogData: UpdateBlogDto, blogImage?: Express.Multer.File) {
