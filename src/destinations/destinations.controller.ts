@@ -39,6 +39,18 @@ export class DestinationsController {
         return this.destinationsService.getDestinationsNonPaginated();
     }
 
+    // get destination names
+    @Get("names")
+    async getDestinationNames () {
+        return await this.destinationsService.getDestinationNames();
+    }
+
+    // names and ids
+    @Get("names-and-ids")
+    async getDestinationNamesAndIds () {
+        return await this.destinationsService.getDestinationNamesAndIds();
+    }
+
     // get destination by id    
     @Get(':destinationId')
     async getDestination(@Param('destinationId') destinationId: string) {
