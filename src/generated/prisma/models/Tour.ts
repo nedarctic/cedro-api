@@ -397,7 +397,7 @@ export type TourCreateInput = {
   activities?: Prisma.TourCreateactivitiesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
-  destination?: Prisma.DestinationCreateNestedOneWithoutTourInput
+  destination?: Prisma.DestinationCreateNestedOneWithoutToursInput
   itinerary?: Prisma.ItineraryCreateNestedManyWithoutTourInput
   bookings?: Prisma.BookingCreateNestedManyWithoutTourInput
 }
@@ -437,7 +437,7 @@ export type TourUpdateInput = {
   activities?: Prisma.TourUpdateactivitiesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  destination?: Prisma.DestinationUpdateOneWithoutTourNestedInput
+  destination?: Prisma.DestinationUpdateOneWithoutToursNestedInput
   itinerary?: Prisma.ItineraryUpdateManyWithoutTourNestedInput
   bookings?: Prisma.BookingUpdateManyWithoutTourNestedInput
 }
@@ -801,7 +801,7 @@ export type TourCreateWithoutItineraryInput = {
   activities?: Prisma.TourCreateactivitiesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
-  destination?: Prisma.DestinationCreateNestedOneWithoutTourInput
+  destination?: Prisma.DestinationCreateNestedOneWithoutToursInput
   bookings?: Prisma.BookingCreateNestedManyWithoutTourInput
 }
 
@@ -855,7 +855,7 @@ export type TourUpdateWithoutItineraryInput = {
   activities?: Prisma.TourUpdateactivitiesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  destination?: Prisma.DestinationUpdateOneWithoutTourNestedInput
+  destination?: Prisma.DestinationUpdateOneWithoutToursNestedInput
   bookings?: Prisma.BookingUpdateManyWithoutTourNestedInput
 }
 
@@ -893,7 +893,7 @@ export type TourCreateWithoutBookingsInput = {
   activities?: Prisma.TourCreateactivitiesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
-  destination?: Prisma.DestinationCreateNestedOneWithoutTourInput
+  destination?: Prisma.DestinationCreateNestedOneWithoutToursInput
   itinerary?: Prisma.ItineraryCreateNestedManyWithoutTourInput
 }
 
@@ -947,7 +947,7 @@ export type TourUpdateWithoutBookingsInput = {
   activities?: Prisma.TourUpdateactivitiesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  destination?: Prisma.DestinationUpdateOneWithoutTourNestedInput
+  destination?: Prisma.DestinationUpdateOneWithoutToursNestedInput
   itinerary?: Prisma.ItineraryUpdateManyWithoutTourNestedInput
 }
 

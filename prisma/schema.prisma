@@ -45,7 +45,7 @@ model Destination {
   name             String   @unique
   destinationImage String
   imageKey         String?
-  tour             Tour[]
+  tours            Tour[]
   guide            Guide[]
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt()
@@ -109,7 +109,7 @@ model Story {
 }
 
 model StorySection {
-  id            String      @id @default(uuid())
+  id            String   @id @default(uuid())
   sectionNumber Int
   subtitle      String
   content       String
