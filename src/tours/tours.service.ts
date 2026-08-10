@@ -118,6 +118,11 @@ export class ToursService {
         return popularTours;
     }
 
+    async getOtherTours (tourId: string) {
+        return await this.prisma.tour.findMany()
+        .then(tours => tours.filter(({id}) => id !== tourId));
+    }
+
     async createTour(
         tourData: CreateTourDto,
         tourImage: Express.Multer.File,
