@@ -55,10 +55,15 @@ export class ToursController {
         return this.toursService.getPaginatedTours(pagination);
     }
 
+    @Get("popular-tours")
+    async getPopularTours () {
+        return await this.toursService.getPopularTours();
+    }
+
     @Get(':id')
     async getTourById(@Param('id') id: string) {
         return this.toursService.getTourById(id);
-    }
+    }    
 
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
