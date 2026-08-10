@@ -34,6 +34,11 @@ export class BlogsController {
         return this.blogsService.getBlogs(pagination);
     }
 
+    @Get("three")
+    async getThreeLatestBlogs () {
+        return await this.blogsService.getThreeLatestBlogs();
+    }
+
     @Get(':id')
     async getBlogById(@Param('id') id: string) {
         return this.blogsService.getBlogById(id);

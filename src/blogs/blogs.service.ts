@@ -97,6 +97,20 @@ export class BlogsService {
 
     }
 
+    async getThreeLatestBlogs () {
+        const blogs = await this.prismaService.blog.findMany({
+            take: 3,
+            orderBy: {
+                createdAt: "desc"
+            }
+        }).then(blogs => blogs.map(({date, ...blog}) => ({
+            ...blog,
+            date: date.toLocaleDateString("en-KE", {day: "2-digit", month: "short", year: "numeric"})
+        })));
+
+        return blogs;
+    }
+
     async getBlogById(id: string) {
 
         const blog = await this.prismaService.blog.findUnique({
