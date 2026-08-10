@@ -23,7 +23,6 @@ export class TeamController {
         @Body() body: CreateMemberDto
     ) {
         const { name, description, designation, level } = body;
-        console.log("received data", body);
         return this.teamService.createTeam(name, description, designation, level, image);
     }
 
