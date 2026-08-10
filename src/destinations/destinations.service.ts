@@ -26,14 +26,16 @@ export class DestinationsService {
                     skip,
                     take: limit,
                     include: {
-                        tour: true
+                        tours: true
                     }
-                }).then(destinations => destinations.map(({ tour, ...destination }) => ({
-                    ...destination,
-                    totalTours: tour.length,
-                    createdAt: destination.createdAt.toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" }),
-                    updatedAt: destination.updatedAt.toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" })
-                }))),
+                })
+                    .then(destinations => destinations.filter((destination) => destination.tours.length))
+                    .then(destinations => destinations.map(({ tours, ...destination }) => ({
+                        ...destination,
+                        totalTours: tours.length,
+                        createdAt: destination.createdAt.toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" }),
+                        updatedAt: destination.updatedAt.toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" })
+                    }))),
                 await this.prismaService.destination.count({ where })
             ])
 
@@ -54,14 +56,16 @@ export class DestinationsService {
     async getDestinationsNonPaginated() {
         const destinations = await this.prismaService.destination.findMany({
             include: {
-                tour: true
+                tours: true
             }
-        }).then(destinations => destinations.map(({ tour, ...destination }) => ({
-            ...destination,
-            totalTours: tour.length,
-            createdAt: destination.createdAt.toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" }),
-            updatedAt: destination.updatedAt.toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" })
-        })));
+        })
+            .then(destinations => destinations.filter((destination) => destination.tours.length))
+            .then(destinations => destinations.map(({ tours, ...destination }) => ({
+                ...destination,
+                totalTours: tours.length,
+                createdAt: destination.createdAt.toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" }),
+                updatedAt: destination.updatedAt.toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" })
+            })));
 
         return destinations;
     }
@@ -69,7 +73,23 @@ export class DestinationsService {
     async getDestination(destinationId: string) {
 
         try {
-            const destination = await this.prismaService.destination.findUnique({ where: { id: destinationId }, include: { guide: { orderBy: { position: 'asc' } } } });
+            const destination = await this.prismaService.destination.findUnique({
+                where: {
+                    id: destinationId
+                },
+                include: {
+                    guide: {
+                        orderBy: {
+                            position: 'asc'
+                        }
+                    },
+                    tours: {
+                        include: {
+                            destination: true
+                        }
+                    }
+                }
+            });
 
             if (!destination) {
                 throw new DestinationNotFound(destinationId);
@@ -79,6 +99,32 @@ export class DestinationsService {
         } catch (error) {
             throw new Error(String(error))
         }
+    }
+
+    async getDestinationNames() {
+        return await this.prismaService.destination.findMany({
+            select: {
+                name: true,
+                tours: true
+            },
+        })
+            .then(destinations => destinations.filter(name => name.tours.length))
+            .then((destinations) => destinations.map(({ name }) => name[0].toUpperCase() + name.slice(1)))
+    }
+
+    async getDestinationNamesAndIds() {
+        return await this.prismaService.destination.findMany({
+            select: {
+                id: true,
+                name: true,
+                tours: true,
+            }
+        })
+            .then(destinations => destinations.filter(destination => destination.tours.length))
+            .then((destinations) => destinations.map(({ id, name }) => ({
+                id,
+                name: name[0].toUpperCase() + name.slice(1),
+            })))
     }
 
     async createDestination(
