@@ -35,20 +35,18 @@ export class BlogsController {
     }
 
     @Get("three")
-    async getThreeLatestBlogs () {
+    async getThreeLatestBlogs() {
         return await this.blogsService.getThreeLatestBlogs();
     }
 
     @Get(':id')
     async getBlogById(@Param('id') id: string) {
-        return this.blogsService.getBlogById(id);
+        return await this.blogsService.getBlogById(id);
     }
 
-    @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles(UserRole.SUPER_ADMIN)
-    @Delete(':id')
-    async deleteBlog(@Param('id') id: string) {
-        return this.blogsService.deleteBlog(id);
+    @Get(":blogId/other-blogs")
+    async getOtherBlogs(@Param("blogId") blogId: string) {
+        return await this.blogsService.getOtherBlogs(blogId);
     }
 
     @UseGuards(JwtAuthGuard, RolesGuard)
@@ -63,5 +61,12 @@ export class BlogsController {
         const blogData = plainToInstance(UpdateBlogDto, JSON.parse(body.blog));
         await validateOrReject(blogData);
         return this.blogsService.updateBlog(id, blogData, image);
-    }    
+    }
+
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.SUPER_ADMIN)
+    @Delete(':id')
+    async deleteBlog(@Param('id') id: string) {
+        return this.blogsService.deleteBlog(id);
+    }
 }
