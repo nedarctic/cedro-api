@@ -65,6 +65,11 @@ export class ToursController {
         return this.toursService.getTourById(id);
     }    
 
+    @Get(":tourId/other-tours")
+    async getOtherTours (@Param("tourId") tourId: string) {
+        return await this.toursService.getOtherTours(tourId);
+    }
+
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
     @UseInterceptors(FileFieldsInterceptor([
