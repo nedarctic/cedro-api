@@ -23,11 +23,22 @@ export class ToursService {
         const {
             limit = 10,
             page = 1,
-            search
+            search,
+            filter
         } = pagination;
 
         const skip = (page - 1) * limit;
         const searchTerm = search ? search.trim() : '';
+        
+        const filterTerm = filter ? filter.trim() : "";
+        const filterClause: TourWhereInput = filterTerm ? {
+            destination: {
+                name: {
+                    contains: filterTerm, 
+                    mode: "insensitive"
+                }
+            }
+        } : {};
 
         const whereClause: TourWhereInput = searchTerm
             ? {
@@ -47,7 +58,7 @@ export class ToursService {
 
         const [tours, total] = await Promise.all([
             this.prisma.tour.findMany({
-                where: whereClause,
+                where: whereClause && filterClause,
                 skip,
                 take: limit,
                 include: {
@@ -98,7 +109,10 @@ export class ToursService {
                     _count: 'desc'
                 }
             },
-            take: 3
+            take: 3,
+            include: {
+                destination: true
+            }
         });
 
         return popularTours;
