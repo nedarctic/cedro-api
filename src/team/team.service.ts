@@ -49,6 +49,9 @@ export class TeamService {
                 where: whereClause,
                 skip,
                 take: limit,
+                orderBy: {
+                    level: "asc"
+                }
             }),
             this.prisma.teamMember.count({ where: whereClause }),
         ]);
