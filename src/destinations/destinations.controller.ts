@@ -27,10 +27,17 @@ export class DestinationsController {
         private readonly destinationsService: DestinationsService
     ) { }
 
-    // get destinations: paginated
+    // get destinations: paginated for tour only destinations
     @Get()
     async getDestinations(@Query() pagination: PaginationDto) {
         return this.destinationsService.getDestinations(pagination);
+    }
+
+    @Get("super-admin")
+    async getDestinationsSuperAdmin(
+        @Query() pagination: PaginationDto
+    ){
+        return await this.destinationsService.getDestinationsSuperAdmin(pagination);
     }
 
     // get destinations: non-paginated

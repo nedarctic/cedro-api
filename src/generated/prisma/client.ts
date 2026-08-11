@@ -99,3 +99,13 @@ export type FAQ = Prisma.FAQModel
  * 
  */
 export type Testimonial = Prisma.TestimonialModel
+/**
+ * Model Subscription
+ * 
+ */
+export type Subscription = Prisma.SubscriptionModel
+/**
+ * Model Message
+ * 
+ */
+export type Message = Prisma.MessageModel

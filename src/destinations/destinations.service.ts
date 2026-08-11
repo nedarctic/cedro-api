@@ -53,6 +53,45 @@ export class DestinationsService {
         }
     }
 
+    async getDestinationsSuperAdmin(pagination: PaginationDto) {
+        try {
+            const { limit = 10, page = 1, search } = pagination;
+            const skip = (page - 1) * limit;
+            const searchTerm = search ? search.trim() : undefined;
+            const where: DestinationWhereInput = searchTerm ? { name: { contains: searchTerm, mode: 'insensitive' } } : {};
+
+            const [destinations, total] = await Promise.all([
+                this.prismaService.destination.findMany({
+                    where,
+                    skip,
+                    take: limit,
+                    include: {
+                        tours: true
+                    }
+                })
+                    .then(destinations => destinations.map(({ tours, ...destination }) => ({
+                        ...destination,
+                        totalTours: tours.length,
+                        createdAt: destination.createdAt.toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" }),
+                        updatedAt: destination.updatedAt.toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" })
+                    }))),
+                await this.prismaService.destination.count({ where })
+            ])
+
+            return {
+                destinations,
+                meta: {
+                    page,
+                    limit,
+                    total,
+                    totalPages: Math.ceil(total / limit)
+                }
+            }
+        } catch (error) {
+            throw new Error(String(error));
+        }
+    }
+
     async getDestinationsNonPaginated() {
         const destinations = await this.prismaService.destination.findMany({
             include: {

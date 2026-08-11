@@ -19,6 +19,8 @@ import { TeamModule } from './team/team.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { DestinationsModule } from './destinations/destinations.module';
 import { DashModule } from './dash/dash.module';
+import { SubscriptionsModule } from './subscriptions/subscriptions.module';
+import { MessagesModule } from './messages/messages.module';
 
 @Module({
   imports: [
@@ -45,6 +47,8 @@ import { DashModule } from './dash/dash.module';
     BookingsModule,
     DestinationsModule,
     DashModule,
+    SubscriptionsModule,
+    MessagesModule,
   ],
   controllers: [AppController, UsersController],
   providers: [AppService, UsersService],
