@@ -99,15 +99,15 @@ export class BlogsService {
 
     }
 
-    async getThreeLatestBlogs () {
+    async getThreeLatestBlogs() {
         const blogs = await this.prismaService.blog.findMany({
             take: 3,
             orderBy: {
                 createdAt: "desc"
             }
-        }).then(blogs => blogs.map(({date, ...blog}) => ({
+        }).then(blogs => blogs.map(({ date, ...blog }) => ({
             ...blog,
-            date: date.toLocaleDateString("en-KE", {day: "2-digit", month: "short", year: "numeric"})
+            date: date.toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" })
         })));
 
         return blogs;
@@ -130,12 +130,17 @@ export class BlogsService {
             throw new BlogNotFoundException(id);
         }
 
-        return blog;
+        const { date, ...rest } = blog;
+
+        return {
+            ...rest,
+            date: date.toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" })
+        };
     }
 
-    async getOtherBlogs (blogId: string) {
+    async getOtherBlogs(blogId: string) {
         return await this.prismaService.blog.findMany()
-        .then(blogs => blogs.filter(({id}) => id !== blogId));
+            .then(blogs => blogs.filter(({ id }) => id !== blogId));
     }
 
     async updateBlog(blogId: string, blogData: UpdateBlogDto, blogImage?: Express.Multer.File) {

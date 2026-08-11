@@ -12,9 +12,9 @@ export class BookingsController {
     constructor(private bookingsService: BookingsService) { }
 
     @Post()
-    async createBooking(@Body() body: { tourId: string; email: string; name: string }) {
+    async createBooking(@Body() body: { tourId?: string; email: string; name: string }) {
         const { tourId, email, name } = body;
-        return this.bookingsService.createBooking(tourId, email, name);
+        return this.bookingsService.createBooking(email, name, tourId);
     }
 
     @UseGuards(JwtAuthGuard, RolesGuard)

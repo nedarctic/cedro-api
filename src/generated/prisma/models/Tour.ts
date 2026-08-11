@@ -596,6 +596,11 @@ export type TourScalarRelationFilter = {
   isNot?: Prisma.TourWhereInput
 }
 
+export type TourNullableScalarRelationFilter = {
+  is?: Prisma.TourWhereInput | null
+  isNot?: Prisma.TourWhereInput | null
+}
+
 export type TourCreateincludedInput = {
   set: string[]
 }
@@ -693,10 +698,12 @@ export type TourCreateNestedOneWithoutBookingsInput = {
   connect?: Prisma.TourWhereUniqueInput
 }
 
-export type TourUpdateOneRequiredWithoutBookingsNestedInput = {
+export type TourUpdateOneWithoutBookingsNestedInput = {
   create?: Prisma.XOR<Prisma.TourCreateWithoutBookingsInput, Prisma.TourUncheckedCreateWithoutBookingsInput>
   connectOrCreate?: Prisma.TourCreateOrConnectWithoutBookingsInput
   upsert?: Prisma.TourUpsertWithoutBookingsInput
+  disconnect?: Prisma.TourWhereInput | boolean
+  delete?: Prisma.TourWhereInput | boolean
   connect?: Prisma.TourWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.TourUpdateToOneWithWhereWithoutBookingsInput, Prisma.TourUpdateWithoutBookingsInput>, Prisma.TourUncheckedUpdateWithoutBookingsInput>
 }

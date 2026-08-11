@@ -8,7 +8,7 @@ import { BookingNotFoundException } from './exceptions/booking-not-found.excepti
 export class BookingsService {
     constructor(private prisma: PrismaService) { }
 
-    async createBooking(tourId: string, email: string, name: string) {
+    async createBooking(email: string, name: string, tourId?: string) {
         try {
             return this.prisma.booking.create({
                 data: {
@@ -70,7 +70,7 @@ export class BookingsService {
         ])
 
         const bookings = data.map(({ tour, ...booking }) => {
-            return { ...booking, tourName: tour.title }
+            return { ...booking, tourName: tour?.title }
         })
 
         return {
