@@ -194,7 +194,7 @@ export class BookingsService {
         ])
 
         const bookings = data.map(({ tour, ...booking }) => {
-            return { ...booking, tourName: tour?.title }
+            return { ...booking, tourName: tour?.title || "Booking request" }
         })
 
         return {
