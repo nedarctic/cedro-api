@@ -109,6 +109,16 @@ export class DestinationsService {
         return destinations;
     }
 
+    async getAllDestinations() {
+        const destinations = await this.prismaService.destination.findMany()
+            .then(destinations => destinations.map(({ ...destination }) => ({
+                ...destination,
+                createdAt: destination.createdAt.toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" }),
+                updatedAt: destination.updatedAt.toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" })
+            })));
+        return destinations;
+    }
+
     async getDestination(destinationId: string) {
 
         try {

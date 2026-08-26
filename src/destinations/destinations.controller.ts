@@ -43,7 +43,7 @@ export class DestinationsController {
     // get destinations: non-paginated
     @Get('all')
     async getDestinationsNonPaginated() {
-        return this.destinationsService.getDestinationsNonPaginated();
+        return this.destinationsService.getAllDestinations();
     }
 
     // get destination names
