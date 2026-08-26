@@ -9,7 +9,7 @@ export default () => ({
     R2_S3_API: process.env.R2_S3_API!,
     NODE_ENV: process.env.NODE_ENV!,
     SMTP_HOST: process.env.SMTP_HOST!,
-    SMPT_PORT: process.env.SMPT_PORT!,
+    SMTP_PORT: process.env.SMTP_PORT!,
     SMTP_USER: process.env.SMTP_USER!,
     SMTP_PASS: process.env.SMTP_PASS!,
     BOOKINGS_EMAIL: process.env.BOOKINGS_EMAIL!,
