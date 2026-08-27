@@ -16,32 +16,35 @@ export class BookingsService {
     ) { }
 
     async createBooking(email: string, name: string, tourId?: string) {
-        const tour = await this.prisma.tour.findUnique({
-            where: {
-                id: tourId,
-            },
-            select: {
-                id: true,
-                title: true,
-            },
-        });
 
-        if (!tour) {
-            throw new TourNotFoundException();
-        }
+        let booking;
+        if (tourId) {
+            const tour = await this.prisma.tour.findUnique({
+                where: {
+                    id: tourId,
+                },
+                select: {
+                    id: true,
+                    title: true,
+                },
+            });
 
-        const booking = await this.prisma.booking.create({
-            data: {
-                tourId,
-                email,
-                name,
-            },
-        });
+            if (!tour) {
+                throw new TourNotFoundException();
+            }
 
-        await this.mail.sendMail({
-            toEmail: this.config.get("BOOKINGS_EMAIL")!,
-            subject: `New Booking Request — ${tour.title}`,
-            body: `
+            booking = await this.prisma.booking.create({
+                data: {
+                    tourId,
+                    email,
+                    name,
+                },
+            });
+
+            await this.mail.sendMail({
+                toEmail: this.config.get("BOOKINGS_EMAIL")!,
+                subject: `New Booking Request — ${tour.title}`,
+                body: `
                 <!DOCTYPE html>
                 <html lang="en">
                 <head>
@@ -141,7 +144,114 @@ export class BookingsService {
                 </body>
                 </html>
                 `,
-        });
+            });
+        } else {
+            booking = await this.prisma.booking.create({
+                data: {
+                    name,
+                    email
+                }
+            });
+
+            await this.mail.sendMail({
+                toEmail: this.config.get("BOOKINGS_EMAIL")!,
+                subject: "Booking Assistance Request",
+                body: `
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Booking Assistance Request</title>
+                </head>
+
+                <body style="margin:0; padding:0; background-color:#f5f5f5; font-family:Arial, Helvetica, sans-serif; color:#333333;">
+
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                        style="background-color:#f5f5f5; padding:30px 15px;">
+
+                        <tr>
+                            <td align="center">
+
+                                <table width="600" cellpadding="0" cellspacing="0" border="0"
+                                    style="max-width:600px; width:100%; background-color:#ffffff; border-radius:8px; overflow:hidden;">
+
+                                    <tr>
+                                        <td style="background-color:#1f5c3a; padding:25px 30px;">
+                                            <h1 style="margin:0; color:#ffffff; font-size:24px;">
+                                                Booking Assistance Request
+                                            </h1>
+
+                                            <p style="margin:8px 0 0; color:#dcefe3; font-size:14px;">
+                                                Cedro Adventures
+                                            </p>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="padding:30px;">
+
+                                            <p style="margin:0 0 25px; font-size:16px; line-height:1.6;">
+                                                A visitor needs help creating a booking through the Cedro Adventures website.
+                                            </p>
+
+                                            <div style="background-color:#f0f4f1; padding:20px; border-radius:6px; margin-bottom:20px;">
+                                                <p style="margin:0 0 8px; font-size:13px; color:#777777;">
+                                                    REQUEST DETAILS
+                                                </p>
+
+                                                <p style="margin:0; font-size:18px; font-weight:bold; color:#1f5c3a;">
+                                                    Booking support requested
+                                                </p>
+                                            </div>
+
+                                            <div style="padding:20px; border:1px solid #eeeeee; border-radius:6px;">
+
+                                                <h2 style="margin:0 0 18px; font-size:18px; color:#1f5c3a;">
+                                                    Interested Party Details
+                                                </h2>
+
+                                                <p style="margin:0 0 12px; font-size:15px;">
+                                                    <strong>Name:</strong> ${name}
+                                                </p>
+
+                                                <p style="margin:0; font-size:15px;">
+                                                    <strong>Email:</strong>
+                                                    <a href="mailto:${email}"
+                                                        style="color:#1f5c3a; text-decoration:none;">
+                                                        ${email}
+                                                    </a>
+                                                </p>
+
+                                            </div>
+
+                                            <p style="margin:25px 0 0; font-size:13px; color:#777777;">
+                                                Please follow up with the interested party to assist with creating their booking request.
+                                            </p>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="background-color:#f0f4f1; padding:20px 30px; text-align:center;">
+                                            <p style="margin:0; font-size:12px; color:#888888;">
+                                                Cedro Adventures · Kenya
+                                            </p>
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+                            </td>
+                        </tr>
+
+                    </table>
+
+                </body>
+                </html>
+                `,
+            });
+        }
 
         return booking;
     }
