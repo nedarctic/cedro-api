@@ -1,0 +1,22 @@
+services:
+
+  backend:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.development.local
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: cedroadv_ad
+      POSTGRES_PASSWORD: cedropass123
+      POSTGRES_DB: cedroadv_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  
+volumes:
+  postgres_data:
