@@ -1511,6 +1511,7 @@ export const TourScalarFieldEnum = {
   dates: 'dates',
   duration: 'duration',
   groupSize: 'groupSize',
+  tourType: 'tourType',
   price: 'price',
   title: 'title',
   intro: 'intro',
@@ -1762,6 +1763,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TourType'
+ */
+export type EnumTourTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TourType'>
+    
+
+
+/**
+ * Reference to a field of type 'TourType[]'
+ */
+export type ListEnumTourTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TourType[]'>
     
 
 

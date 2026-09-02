@@ -1,5 +1,6 @@
 import { Type } from "class-transformer";
-import { IsArray, IsInt, IsOptional, IsString, IsUUID, ValidateNested } from "class-validator";
+import { IsArray, IsEnum, IsInt, IsOptional, IsString, IsUUID, ValidateNested } from "class-validator";
+import { TourType } from "../../generated/prisma/browser";
 
 export class ItineraryDto {
     @IsUUID()    
@@ -63,4 +64,8 @@ export class UpdateTourDto {
     @ValidateNested({each: true})
     @Type(() => ItineraryDto)
     itineraries!: ItineraryDto[];
+
+    @IsEnum(TourType)
+    @IsOptional()
+    tourType!: TourType;
 }

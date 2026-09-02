@@ -102,6 +102,7 @@ export const TourScalarFieldEnum = {
   dates: 'dates',
   duration: 'duration',
   groupSize: 'groupSize',
+  tourType: 'tourType',
   price: 'price',
   title: 'title',
   intro: 'intro',

@@ -24,7 +24,8 @@ model Tour {
   destination   Destination? @relation(fields: [destinationId], references: [id])
   dates         String
   duration      String
-  groupSize     Int
+  groupSize     Int?
+  tourType      TourType @default(GROUP)
   price         Int
   title         String
   intro         String
@@ -168,4 +169,9 @@ model Message {
 enum UserRole {
   ADMIN
   SUPER_ADMIN
+}
+
+enum TourType {
+  PRIVATE
+  GROUP
 }

@@ -15,3 +15,11 @@ export const UserRole = {
 } as const
 
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+
+export const TourType = {
+  PRIVATE: 'PRIVATE',
+  GROUP: 'GROUP'
+} as const
+
+export type TourType = (typeof TourType)[keyof typeof TourType]

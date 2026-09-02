@@ -29,7 +29,6 @@ export class DestinationsService {
                         tours: true
                     }
                 })
-                    .then(destinations => destinations.filter((destination) => destination.tours.length))
                     .then(destinations => destinations.map(({ tours, ...destination }) => ({
                         ...destination,
                         totalTours: tours.length,
@@ -169,7 +168,6 @@ export class DestinationsService {
                 tours: true,
             }
         })
-            .then(destinations => destinations.filter(destination => destination.tours.length))
             .then((destinations) => destinations.map(({ id, name }) => ({
                 id,
                 name: name[0].toUpperCase() + name.slice(1),

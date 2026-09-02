@@ -1,9 +1,10 @@
 import { Type } from "class-transformer";
-import { IsArray, IsInt, IsOptional, IsString, IsUUID, ValidateNested } from "class-validator";
+import { IsArray, IsEnum, IsInt, IsOptional, IsString, IsUUID, ValidateNested } from "class-validator";
+import { TourType } from "../../generated/prisma/enums";
 
 export class ItineraryDto {
     @IsOptional()
-    @IsUUID()    
+    @IsUUID()
     id?: string;
 
     @Type(() => String)
@@ -14,35 +15,35 @@ export class ItineraryDto {
     title!: string;
 
     @IsArray()
-    @IsString({each: true})
+    @IsString({ each: true })
     activities!: string[];
 }
 
 export class CreateTourDto {
     @IsString()
     dates!: string;
-    
+
     @IsString()
     duration!: string;
-    
+
     @Type(() => Number)
     groupSize!: number;
-    
+
     @Type(() => Number)
     price!: number;
-    
+
     @IsString()
     title!: string;
-    
+
     @IsString()
     intro!: string;
-    
+
     @IsArray()
     included!: string[];
-    
+
     @IsArray()
     excluded!: string[];
-    
+
     @IsArray()
     activities!: string[];
 
@@ -50,7 +51,10 @@ export class CreateTourDto {
     destinationId!: string;
 
     @IsArray()
-    @ValidateNested({each: true})
+    @ValidateNested({ each: true })
     @Type(() => ItineraryDto)
     itineraries!: ItineraryDto[];
+
+    @IsEnum(TourType)
+    tourType!: TourType;
 }
