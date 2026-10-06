@@ -1522,7 +1522,8 @@ export const TourScalarFieldEnum = {
   activities: 'activities',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  destinationId: 'destinationId'
+  destinationId: 'destinationId',
+  status: 'status'
 } as const
 
 export type TourScalarFieldEnum = (typeof TourScalarFieldEnum)[keyof typeof TourScalarFieldEnum]
@@ -1587,6 +1588,7 @@ export const BlogScalarFieldEnum = {
   blogImage: 'blogImage',
   imageKey: 'imageKey',
   excerpt: 'excerpt',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1777,6 +1779,20 @@ export type EnumTourTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
  * Reference to a field of type 'TourType[]'
  */
 export type ListEnumTourTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TourType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PostStatus'
+ */
+export type EnumPostStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PostStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'PostStatus[]'
+ */
+export type ListEnumPostStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PostStatus[]'>
     
 
 

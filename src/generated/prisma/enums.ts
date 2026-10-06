@@ -23,3 +23,11 @@ export const TourType = {
 } as const
 
 export type TourType = (typeof TourType)[keyof typeof TourType]
+
+
+export const PostStatus = {
+  DRAFT: 'DRAFT',
+  PUBLISHED: 'PUBLISHED'
+} as const
+
+export type PostStatus = (typeof PostStatus)[keyof typeof PostStatus]

@@ -112,6 +112,9 @@ export class ToursService {
             take: 3,
             include: {
                 destination: true
+            },
+            where: {
+                status: "PUBLISHED"
             }
         });
 

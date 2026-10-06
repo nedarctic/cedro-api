@@ -1,6 +1,6 @@
 import { Type } from "class-transformer";
-import { IsArray, IsEnum, IsInt, IsOptional, IsString, IsUUID, ValidateNested } from "class-validator";
-import { TourType } from "../../generated/prisma/browser";
+import { IsArray, IsBoolean, IsEnum, IsInt, IsOptional, IsString, IsUUID, ValidateNested } from "class-validator";
+import { PostStatus, TourType } from "../../generated/prisma/browser";
 
 export class ItineraryDto {
     @IsUUID()    
@@ -68,4 +68,8 @@ export class UpdateTourDto {
     @IsEnum(TourType)
     @IsOptional()
     tourType!: TourType;
+
+    @IsEnum(PostStatus)
+    @IsOptional()
+    status!: PostStatus;
 }

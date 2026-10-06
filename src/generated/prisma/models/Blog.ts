@@ -31,6 +31,7 @@ export type BlogMinAggregateOutputType = {
   blogImage: string | null
   imageKey: string | null
   excerpt: string | null
+  status: $Enums.PostStatus | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -42,6 +43,7 @@ export type BlogMaxAggregateOutputType = {
   blogImage: string | null
   imageKey: string | null
   excerpt: string | null
+  status: $Enums.PostStatus | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -53,6 +55,7 @@ export type BlogCountAggregateOutputType = {
   blogImage: number
   imageKey: number
   excerpt: number
+  status: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -66,6 +69,7 @@ export type BlogMinAggregateInputType = {
   blogImage?: true
   imageKey?: true
   excerpt?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -77,6 +81,7 @@ export type BlogMaxAggregateInputType = {
   blogImage?: true
   imageKey?: true
   excerpt?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -88,6 +93,7 @@ export type BlogCountAggregateInputType = {
   blogImage?: true
   imageKey?: true
   excerpt?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -172,6 +178,7 @@ export type BlogGroupByOutputType = {
   blogImage: string
   imageKey: string | null
   excerpt: string
+  status: $Enums.PostStatus
   createdAt: Date
   updatedAt: Date
   _count: BlogCountAggregateOutputType | null
@@ -204,6 +211,7 @@ export type BlogWhereInput = {
   blogImage?: Prisma.StringFilter<"Blog"> | string
   imageKey?: Prisma.StringNullableFilter<"Blog"> | string | null
   excerpt?: Prisma.StringFilter<"Blog"> | string
+  status?: Prisma.EnumPostStatusFilter<"Blog"> | $Enums.PostStatus
   createdAt?: Prisma.DateTimeFilter<"Blog"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Blog"> | Date | string
   story?: Prisma.XOR<Prisma.StoryNullableScalarRelationFilter, Prisma.StoryWhereInput> | null
@@ -216,6 +224,7 @@ export type BlogOrderByWithRelationInput = {
   blogImage?: Prisma.SortOrder
   imageKey?: Prisma.SortOrderInput | Prisma.SortOrder
   excerpt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   story?: Prisma.StoryOrderByWithRelationInput
@@ -231,6 +240,7 @@ export type BlogWhereUniqueInput = Prisma.AtLeast<{
   blogImage?: Prisma.StringFilter<"Blog"> | string
   imageKey?: Prisma.StringNullableFilter<"Blog"> | string | null
   excerpt?: Prisma.StringFilter<"Blog"> | string
+  status?: Prisma.EnumPostStatusFilter<"Blog"> | $Enums.PostStatus
   createdAt?: Prisma.DateTimeFilter<"Blog"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Blog"> | Date | string
   story?: Prisma.XOR<Prisma.StoryNullableScalarRelationFilter, Prisma.StoryWhereInput> | null
@@ -243,6 +253,7 @@ export type BlogOrderByWithAggregationInput = {
   blogImage?: Prisma.SortOrder
   imageKey?: Prisma.SortOrderInput | Prisma.SortOrder
   excerpt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.BlogCountOrderByAggregateInput
@@ -260,6 +271,7 @@ export type BlogScalarWhereWithAggregatesInput = {
   blogImage?: Prisma.StringWithAggregatesFilter<"Blog"> | string
   imageKey?: Prisma.StringNullableWithAggregatesFilter<"Blog"> | string | null
   excerpt?: Prisma.StringWithAggregatesFilter<"Blog"> | string
+  status?: Prisma.EnumPostStatusWithAggregatesFilter<"Blog"> | $Enums.PostStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Blog"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Blog"> | Date | string
 }
@@ -271,6 +283,7 @@ export type BlogCreateInput = {
   blogImage: string
   imageKey?: string | null
   excerpt: string
+  status?: $Enums.PostStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   story?: Prisma.StoryCreateNestedOneWithoutBlogInput
@@ -283,6 +296,7 @@ export type BlogUncheckedCreateInput = {
   blogImage: string
   imageKey?: string | null
   excerpt: string
+  status?: $Enums.PostStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   story?: Prisma.StoryUncheckedCreateNestedOneWithoutBlogInput
@@ -295,6 +309,7 @@ export type BlogUpdateInput = {
   blogImage?: Prisma.StringFieldUpdateOperationsInput | string
   imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   excerpt?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   story?: Prisma.StoryUpdateOneWithoutBlogNestedInput
@@ -307,6 +322,7 @@ export type BlogUncheckedUpdateInput = {
   blogImage?: Prisma.StringFieldUpdateOperationsInput | string
   imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   excerpt?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   story?: Prisma.StoryUncheckedUpdateOneWithoutBlogNestedInput
@@ -319,6 +335,7 @@ export type BlogCreateManyInput = {
   blogImage: string
   imageKey?: string | null
   excerpt: string
+  status?: $Enums.PostStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -330,6 +347,7 @@ export type BlogUpdateManyMutationInput = {
   blogImage?: Prisma.StringFieldUpdateOperationsInput | string
   imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   excerpt?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -341,6 +359,7 @@ export type BlogUncheckedUpdateManyInput = {
   blogImage?: Prisma.StringFieldUpdateOperationsInput | string
   imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   excerpt?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -352,6 +371,7 @@ export type BlogCountOrderByAggregateInput = {
   blogImage?: Prisma.SortOrder
   imageKey?: Prisma.SortOrder
   excerpt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -363,6 +383,7 @@ export type BlogMaxOrderByAggregateInput = {
   blogImage?: Prisma.SortOrder
   imageKey?: Prisma.SortOrder
   excerpt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -374,6 +395,7 @@ export type BlogMinOrderByAggregateInput = {
   blogImage?: Prisma.SortOrder
   imageKey?: Prisma.SortOrder
   excerpt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -404,6 +426,7 @@ export type BlogCreateWithoutStoryInput = {
   blogImage: string
   imageKey?: string | null
   excerpt: string
+  status?: $Enums.PostStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -415,6 +438,7 @@ export type BlogUncheckedCreateWithoutStoryInput = {
   blogImage: string
   imageKey?: string | null
   excerpt: string
+  status?: $Enums.PostStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -442,6 +466,7 @@ export type BlogUpdateWithoutStoryInput = {
   blogImage?: Prisma.StringFieldUpdateOperationsInput | string
   imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   excerpt?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -453,6 +478,7 @@ export type BlogUncheckedUpdateWithoutStoryInput = {
   blogImage?: Prisma.StringFieldUpdateOperationsInput | string
   imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   excerpt?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -466,6 +492,7 @@ export type BlogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   blogImage?: boolean
   imageKey?: boolean
   excerpt?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   story?: boolean | Prisma.Blog$storyArgs<ExtArgs>
@@ -478,6 +505,7 @@ export type BlogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   blogImage?: boolean
   imageKey?: boolean
   excerpt?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["blog"]>
@@ -489,6 +517,7 @@ export type BlogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   blogImage?: boolean
   imageKey?: boolean
   excerpt?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["blog"]>
@@ -500,11 +529,12 @@ export type BlogSelectScalar = {
   blogImage?: boolean
   imageKey?: boolean
   excerpt?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type BlogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "date" | "blogImage" | "imageKey" | "excerpt" | "createdAt" | "updatedAt", ExtArgs["result"]["blog"]>
+export type BlogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "date" | "blogImage" | "imageKey" | "excerpt" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["blog"]>
 export type BlogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   story?: boolean | Prisma.Blog$storyArgs<ExtArgs>
 }
@@ -523,6 +553,7 @@ export type $BlogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     blogImage: string
     imageKey: string | null
     excerpt: string
+    status: $Enums.PostStatus
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["blog"]>
@@ -955,6 +986,7 @@ export interface BlogFieldRefs {
   readonly blogImage: Prisma.FieldRef<"Blog", 'String'>
   readonly imageKey: Prisma.FieldRef<"Blog", 'String'>
   readonly excerpt: Prisma.FieldRef<"Blog", 'String'>
+  readonly status: Prisma.FieldRef<"Blog", 'PostStatus'>
   readonly createdAt: Prisma.FieldRef<"Blog", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Blog", 'DateTime'>
 }
