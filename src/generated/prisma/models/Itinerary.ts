@@ -172,7 +172,7 @@ export type ItineraryGroupByOutputType = {
   day: string
   title: string
   activities: string[]
-  dayImage: string
+  dayImage: string | null
   imageKey: string | null
   tourId: string
   createdAt: Date
@@ -205,7 +205,7 @@ export type ItineraryWhereInput = {
   day?: Prisma.StringFilter<"Itinerary"> | string
   title?: Prisma.StringFilter<"Itinerary"> | string
   activities?: Prisma.StringNullableListFilter<"Itinerary">
-  dayImage?: Prisma.StringFilter<"Itinerary"> | string
+  dayImage?: Prisma.StringNullableFilter<"Itinerary"> | string | null
   imageKey?: Prisma.StringNullableFilter<"Itinerary"> | string | null
   tourId?: Prisma.UuidFilter<"Itinerary"> | string
   createdAt?: Prisma.DateTimeFilter<"Itinerary"> | Date | string
@@ -218,7 +218,7 @@ export type ItineraryOrderByWithRelationInput = {
   day?: Prisma.SortOrder
   title?: Prisma.SortOrder
   activities?: Prisma.SortOrder
-  dayImage?: Prisma.SortOrder
+  dayImage?: Prisma.SortOrderInput | Prisma.SortOrder
   imageKey?: Prisma.SortOrderInput | Prisma.SortOrder
   tourId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -234,7 +234,7 @@ export type ItineraryWhereUniqueInput = Prisma.AtLeast<{
   day?: Prisma.StringFilter<"Itinerary"> | string
   title?: Prisma.StringFilter<"Itinerary"> | string
   activities?: Prisma.StringNullableListFilter<"Itinerary">
-  dayImage?: Prisma.StringFilter<"Itinerary"> | string
+  dayImage?: Prisma.StringNullableFilter<"Itinerary"> | string | null
   imageKey?: Prisma.StringNullableFilter<"Itinerary"> | string | null
   tourId?: Prisma.UuidFilter<"Itinerary"> | string
   createdAt?: Prisma.DateTimeFilter<"Itinerary"> | Date | string
@@ -247,7 +247,7 @@ export type ItineraryOrderByWithAggregationInput = {
   day?: Prisma.SortOrder
   title?: Prisma.SortOrder
   activities?: Prisma.SortOrder
-  dayImage?: Prisma.SortOrder
+  dayImage?: Prisma.SortOrderInput | Prisma.SortOrder
   imageKey?: Prisma.SortOrderInput | Prisma.SortOrder
   tourId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -265,7 +265,7 @@ export type ItineraryScalarWhereWithAggregatesInput = {
   day?: Prisma.StringWithAggregatesFilter<"Itinerary"> | string
   title?: Prisma.StringWithAggregatesFilter<"Itinerary"> | string
   activities?: Prisma.StringNullableListFilter<"Itinerary">
-  dayImage?: Prisma.StringWithAggregatesFilter<"Itinerary"> | string
+  dayImage?: Prisma.StringNullableWithAggregatesFilter<"Itinerary"> | string | null
   imageKey?: Prisma.StringNullableWithAggregatesFilter<"Itinerary"> | string | null
   tourId?: Prisma.UuidWithAggregatesFilter<"Itinerary"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Itinerary"> | Date | string
@@ -277,7 +277,7 @@ export type ItineraryCreateInput = {
   day: string
   title: string
   activities?: Prisma.ItineraryCreateactivitiesInput | string[]
-  dayImage: string
+  dayImage?: string | null
   imageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -289,7 +289,7 @@ export type ItineraryUncheckedCreateInput = {
   day: string
   title: string
   activities?: Prisma.ItineraryCreateactivitiesInput | string[]
-  dayImage: string
+  dayImage?: string | null
   imageKey?: string | null
   tourId: string
   createdAt?: Date | string
@@ -301,7 +301,7 @@ export type ItineraryUpdateInput = {
   day?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   activities?: Prisma.ItineraryUpdateactivitiesInput | string[]
-  dayImage?: Prisma.StringFieldUpdateOperationsInput | string
+  dayImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -313,7 +313,7 @@ export type ItineraryUncheckedUpdateInput = {
   day?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   activities?: Prisma.ItineraryUpdateactivitiesInput | string[]
-  dayImage?: Prisma.StringFieldUpdateOperationsInput | string
+  dayImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tourId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -325,7 +325,7 @@ export type ItineraryCreateManyInput = {
   day: string
   title: string
   activities?: Prisma.ItineraryCreateactivitiesInput | string[]
-  dayImage: string
+  dayImage?: string | null
   imageKey?: string | null
   tourId: string
   createdAt?: Date | string
@@ -337,7 +337,7 @@ export type ItineraryUpdateManyMutationInput = {
   day?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   activities?: Prisma.ItineraryUpdateactivitiesInput | string[]
-  dayImage?: Prisma.StringFieldUpdateOperationsInput | string
+  dayImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -348,7 +348,7 @@ export type ItineraryUncheckedUpdateManyInput = {
   day?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   activities?: Prisma.ItineraryUpdateactivitiesInput | string[]
-  dayImage?: Prisma.StringFieldUpdateOperationsInput | string
+  dayImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tourId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -455,7 +455,7 @@ export type ItineraryCreateWithoutTourInput = {
   day: string
   title: string
   activities?: Prisma.ItineraryCreateactivitiesInput | string[]
-  dayImage: string
+  dayImage?: string | null
   imageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -466,7 +466,7 @@ export type ItineraryUncheckedCreateWithoutTourInput = {
   day: string
   title: string
   activities?: Prisma.ItineraryCreateactivitiesInput | string[]
-  dayImage: string
+  dayImage?: string | null
   imageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -506,7 +506,7 @@ export type ItineraryScalarWhereInput = {
   day?: Prisma.StringFilter<"Itinerary"> | string
   title?: Prisma.StringFilter<"Itinerary"> | string
   activities?: Prisma.StringNullableListFilter<"Itinerary">
-  dayImage?: Prisma.StringFilter<"Itinerary"> | string
+  dayImage?: Prisma.StringNullableFilter<"Itinerary"> | string | null
   imageKey?: Prisma.StringNullableFilter<"Itinerary"> | string | null
   tourId?: Prisma.UuidFilter<"Itinerary"> | string
   createdAt?: Prisma.DateTimeFilter<"Itinerary"> | Date | string
@@ -518,7 +518,7 @@ export type ItineraryCreateManyTourInput = {
   day: string
   title: string
   activities?: Prisma.ItineraryCreateactivitiesInput | string[]
-  dayImage: string
+  dayImage?: string | null
   imageKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -529,7 +529,7 @@ export type ItineraryUpdateWithoutTourInput = {
   day?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   activities?: Prisma.ItineraryUpdateactivitiesInput | string[]
-  dayImage?: Prisma.StringFieldUpdateOperationsInput | string
+  dayImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -540,7 +540,7 @@ export type ItineraryUncheckedUpdateWithoutTourInput = {
   day?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   activities?: Prisma.ItineraryUpdateactivitiesInput | string[]
-  dayImage?: Prisma.StringFieldUpdateOperationsInput | string
+  dayImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -551,7 +551,7 @@ export type ItineraryUncheckedUpdateManyWithoutTourInput = {
   day?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   activities?: Prisma.ItineraryUpdateactivitiesInput | string[]
-  dayImage?: Prisma.StringFieldUpdateOperationsInput | string
+  dayImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -631,7 +631,7 @@ export type $ItineraryPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     day: string
     title: string
     activities: string[]
-    dayImage: string
+    dayImage: string | null
     imageKey: string | null
     tourId: string
     createdAt: Date

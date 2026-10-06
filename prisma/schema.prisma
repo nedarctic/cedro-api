@@ -22,14 +22,14 @@ model User {
 model Tour {
   id            String       @id @default(uuid()) @db.Uuid
   destination   Destination? @relation(fields: [destinationId], references: [id])
-  dates         String
-  duration      String
+  dates         String?
+  duration      String?
   groupSize     Int?
-  tourType      TourType     @default(GROUP)
-  price         Int
-  title         String
-  intro         String
-  tourImage     String
+  tourType      TourType?     @default(GROUP)
+  price         Int?
+  title         String?
+  intro         String?
+  tourImage     String?
   imageKey      String?
   included      String[]
   excluded      String[]
@@ -69,7 +69,7 @@ model Itinerary {
   day        String
   title      String
   activities String[]
-  dayImage   String
+  dayImage   String?
   imageKey   String?
   tourId     String   @db.Uuid
   tour       Tour     @relation(fields: [tourId], references: [id], onDelete: Cascade)

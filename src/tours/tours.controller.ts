@@ -32,7 +32,7 @@ export class ToursController {
 
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
-    @Post()
+    @Post('create-tour')
     @UseInterceptors(FileFieldsInterceptor([
         { name: 'tourImage', maxCount: 1 },
         { name: 'itineraryImage', maxCount: 50 }
@@ -56,18 +56,33 @@ export class ToursController {
     }
 
     @Get("popular-tours")
-    async getPopularTours () {
+    async getPopularTours() {
         return await this.toursService.getPopularTours();
     }
 
     @Get(':id')
     async getTourById(@Param('id') id: string) {
         return this.toursService.getTourById(id);
-    }    
+    }
 
     @Get(":tourId/other-tours")
-    async getOtherTours (@Param("tourId") tourId: string) {
+    async getOtherTours(@Param("tourId") tourId: string) {
         return await this.toursService.getOtherTours(tourId);
+    }
+
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
+    @Post('save-draft')
+    @UseInterceptors(FileFieldsInterceptor([
+        { name: 'tourImage', maxCount: 1 },
+        { name: 'itineraryImage', maxCount: 50 }
+    ]))
+    async saveDraft(
+        @Body() dto: { tour: string },
+        @UploadedFiles() files: { tourImage?: Express.Multer.File[], itineraryImage?: Express.Multer.File[] }
+    ) {
+        const tour: CreateTourDto = JSON.parse(dto.tour);
+        return this.toursService.saveDraft(tour, files.tourImage?.[0], files.itineraryImage);
     }
 
     @UseGuards(JwtAuthGuard, RolesGuard)
@@ -83,7 +98,7 @@ export class ToursController {
     ) {
         const tourData = plainToInstance(UpdateTourDto, JSON.parse(dto.tour));
         await validateOrReject(tourData);
-        
+
         const itinerariesImagesRels: string[] = JSON.parse(dto.imageRels);
         return this.toursService.updateTour(id, tourData, itinerariesImagesRels, files.tourImage?.[0], files.itineraryImage);
     }

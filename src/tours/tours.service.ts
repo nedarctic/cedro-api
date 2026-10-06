@@ -29,12 +29,12 @@ export class ToursService {
 
         const skip = (page - 1) * limit;
         const searchTerm = search ? search.trim() : '';
-        
+
         const filterTerm = filter ? filter.trim() : "";
         const filterClause: TourWhereInput = filterTerm ? {
             destination: {
                 name: {
-                    contains: filterTerm, 
+                    contains: filterTerm,
                     mode: "insensitive"
                 }
             }
@@ -121,9 +121,73 @@ export class ToursService {
         return popularTours;
     }
 
-    async getOtherTours (tourId: string) {
+    async getOtherTours(tourId: string) {
         return await this.prisma.tour.findMany()
-        .then(tours => tours.filter(({id}) => id !== tourId));
+            .then(tours => tours.filter(({ id }) => id !== tourId));
+    }
+
+    async saveDraft(
+        tourData: UpdateTourDto,
+        tourImage?: Express.Multer.File,
+        itinieraryImages?: Express.Multer.File[]
+    ) {
+
+        const {
+            activities,
+            dates,
+            duration,
+            groupSize,
+            price,
+            title,
+            intro,
+            included,
+            excluded,
+            destinationId,
+            itineraries
+        } = tourData;
+
+        const { key: tourImageKey, publicUrl: tourImagePublicUrl } = tourImage ? await this.r2Service.uploadFile(tourImage, 'tours') : {};
+        const tour = await this.prisma.tour.create({
+            data: {
+                activities,
+                dates,
+                duration,
+                groupSize,
+                price,
+                title,
+                intro,
+                included,
+                excluded,
+                destinationId: destinationId || null,
+                tourImage: tourImagePublicUrl,
+                imageKey: tourImageKey,
+            },
+        });
+
+        for (let i = 0; i < itineraries.length; i++) {
+            const { title, activities, day } = itineraries[i];
+            const itineraryImage = itinieraryImages?.length && itinieraryImages[i];
+            const { key: itineraryImageKey, publicUrl: itineraryImagePublicUrl } = itineraryImage ? await this.r2Service.uploadFile(itineraryImage, 'itineraries') : {};
+
+            await this.prisma.itinerary.create({
+                data: {
+                    title,
+                    activities,
+                    day,
+                    tourId: tour.id,
+                    dayImage: itineraryImagePublicUrl,
+                    imageKey: itineraryImageKey
+                },
+            });
+        }
+
+        return this.prisma.tour.findUnique({
+            where: { id: tour.id },
+            include: {
+                destination: true,
+                itinerary: true
+            },
+        });
     }
 
     async createTour(
