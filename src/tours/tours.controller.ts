@@ -17,7 +17,7 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
-import { UserRole } from '../generated/prisma/enums';
+import { PostStatus, UserRole } from '../generated/prisma/enums';
 import { CreateTourDto } from './dto/create-tour.dto';
 import { ToursService } from './tours.service';
 import { PaginationDto } from '../common/dto/pagination.dto';
@@ -46,8 +46,8 @@ export class ToursController {
     }
 
     @Get()
-    async getAllTours() {
-        return this.toursService.getAllTours();
+    async getAllTours(@Query() status?: PostStatus) {
+        return this.toursService.getAllTours(status);
     }
 
     @Get("paginated-tours")

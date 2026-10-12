@@ -1,5 +1,6 @@
 import { Type } from "class-transformer";
-import { IsInt, IsNumber, IsOptional, IsString, Max, Min } from "class-validator";
+import { IsEnum, IsInt, IsNumber, IsOptional, IsString, Max, Min } from "class-validator";
+import { PostStatus } from "../../generated/prisma/enums";
 
 export class PaginationDto {
 
@@ -23,4 +24,8 @@ export class PaginationDto {
     @IsOptional()
     @IsString()
     filter?: string;
+
+    @IsOptional()
+    @IsEnum(PostStatus)
+    status?: PostStatus
 }

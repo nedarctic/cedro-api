@@ -7,6 +7,7 @@ import { CreateTourDto } from './dto/create-tour.dto';
 import { UpdateTourDto } from './dto/update-tour.dto';
 import { DestinationNotFoundException } from './exceptions/destination-not-found.exception';
 import { TourNotFoundException } from './exceptions/tour-not-found.exception';
+import { PostStatus } from '../generated/prisma/enums';
 
 @Injectable()
 export class ToursService {
@@ -15,8 +16,15 @@ export class ToursService {
         private readonly r2Service: R2Service,
     ) { }
 
-    async getAllTours() {
-        return this.prisma.tour.findMany();
+    async getAllTours(status?: PostStatus) {
+
+        const statusTerm: TourWhereInput = status ? {
+            status: status
+        } : {};
+
+        return this.prisma.tour.findMany({
+            where: statusTerm
+        });
     }
 
     async getPaginatedTours(pagination: PaginationDto) {
@@ -24,7 +32,8 @@ export class ToursService {
             limit = 10,
             page = 1,
             search,
-            filter
+            filter,
+            status
         } = pagination;
 
         const skip = (page - 1) * limit;
@@ -56,9 +65,13 @@ export class ToursService {
             }
             : {};
 
+        const statusTerm: TourWhereInput = status ? {
+            status: status
+        } : {};
+
         const [tours, total] = await Promise.all([
             this.prisma.tour.findMany({
-                where: whereClause && filterClause,
+                where: whereClause && filterClause && statusTerm,
                 skip,
                 take: limit,
                 include: {
