@@ -15,7 +15,7 @@ export class BookingsService {
         private readonly config: ConfigService
     ) { }
 
-    async createBooking(email: string, name: string, tourId?: string) {
+    async createBooking(email: string, name: string, phone: string, message: string, tourId?: string) {
 
         let booking;
         if (tourId) {
@@ -38,6 +38,8 @@ export class BookingsService {
                     tourId,
                     email,
                     name,
+                    phone,
+                    message
                 },
             });
 
@@ -149,7 +151,9 @@ export class BookingsService {
             booking = await this.prisma.booking.create({
                 data: {
                     name,
-                    email
+                    email,
+                    phone,
+                    message
                 }
             });
 

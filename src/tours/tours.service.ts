@@ -238,13 +238,14 @@ export class ToursService {
                 destinationId,
                 tourImage: tourImagePublicUrl,
                 imageKey: tourImageKey,
+                status: "PUBLISHED"
             },
         });
 
         for (let i = 0; i < itineraries.length; i++) {
             const { title, activities, day } = itineraries[i];
-            const itineraryImage = itinieraryImages[i];
-            const { key: itineraryImageKey, publicUrl: itineraryImagePublicUrl } = await this.r2Service.uploadFile(itineraryImage, 'itineraries');
+            const itineraryImage = itinieraryImages?.length && itinieraryImages[i];
+            const { key: itineraryImageKey, publicUrl: itineraryImagePublicUrl } = itineraryImage ? await this.r2Service.uploadFile(itineraryImage, 'itineraries') : {};
 
             await this.prisma.itinerary.create({
                 data: {
@@ -403,16 +404,24 @@ export class ToursService {
     }
 
     async deleteTour(id: string) {
-        const tour = await this.prisma.tour.findUnique({
-            where: { id },
-        });
-        if (!tour) {
-            throw new TourNotFoundException();
-        }
 
-        await this.r2Service.deleteFile(tour.imageKey!);
-        return this.prisma.tour.delete({
-            where: { id },
-        });
+        try {
+            const tour = await this.prisma.tour.findUnique({
+                where: { id },
+            });
+
+            if (!tour) {
+                throw new TourNotFoundException();
+            }
+
+            tour.imageKey && await this.r2Service.deleteFile(tour.imageKey!);
+            
+            return this.prisma.tour.delete({
+                where: { id },
+            });
+        } catch (error) {
+            console.log("An error occurred deleting tour with ID", id);
+            throw new Error(String(error));
+        }
     }
 }
