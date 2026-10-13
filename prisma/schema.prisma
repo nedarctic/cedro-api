@@ -81,8 +81,8 @@ model Booking {
   id        String   @id @default(uuid()) @db.Uuid
   email     String
   name      String
-  phone     String
-  message   String
+  phone     String?
+  message   String?
   tourId    String?  @db.Uuid
   tour      Tour?    @relation(fields: [tourId], references: [id])
   createdAt DateTime @default(now())
@@ -167,6 +167,7 @@ model Message {
   name      String
   email     String
   content   String
+  phone     String?
   createdAt DateTime @default(now())
 }
 

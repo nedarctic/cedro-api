@@ -15,8 +15,9 @@ export class MessagesService {
         name: string;
         email: string;
         content: string;
+        phone: string;
     }) {
-        const { name, email, content } = options;
+        const { name, email, content, phone } = options;
 
         await this.mail.sendMail({
             toEmail: this.config.get("SMTP_USER")!,
@@ -61,11 +62,15 @@ export class MessagesService {
                                                     <strong>Name:</strong> ${name}
                                                 </p>
 
-                                                <p style="margin:0;">
+                                                <p style="margin:0 0 10px;">
                                                     <strong>Email:</strong>
                                                     <a href="mailto:${email}" style="color:#1f5c3a;">
                                                         ${email}
                                                     </a>
+                                                </p>
+
+                                                <p style="margin:0;">
+                                                    <strong>Phone:</strong> ${phone || 'Not provided'}
                                                 </p>
                                             </div>
 
@@ -110,6 +115,7 @@ export class MessagesService {
                 name,
                 email,
                 content,
+                phone: phone || null,
             },
         });
     }

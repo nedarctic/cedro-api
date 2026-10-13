@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Booking" ALTER COLUMN "message" DROP NOT NULL,
+ALTER COLUMN "phone" DROP NOT NULL;

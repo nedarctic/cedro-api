@@ -169,8 +169,8 @@ export type BookingGroupByOutputType = {
   id: string
   email: string
   name: string
-  phone: string
-  message: string
+  phone: string | null
+  message: string | null
   tourId: string | null
   createdAt: Date
   updatedAt: Date
@@ -201,8 +201,8 @@ export type BookingWhereInput = {
   id?: Prisma.UuidFilter<"Booking"> | string
   email?: Prisma.StringFilter<"Booking"> | string
   name?: Prisma.StringFilter<"Booking"> | string
-  phone?: Prisma.StringFilter<"Booking"> | string
-  message?: Prisma.StringFilter<"Booking"> | string
+  phone?: Prisma.StringNullableFilter<"Booking"> | string | null
+  message?: Prisma.StringNullableFilter<"Booking"> | string | null
   tourId?: Prisma.UuidNullableFilter<"Booking"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Booking"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Booking"> | Date | string
@@ -213,8 +213,8 @@ export type BookingOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
-  message?: Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  message?: Prisma.SortOrderInput | Prisma.SortOrder
   tourId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -228,8 +228,8 @@ export type BookingWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.BookingWhereInput | Prisma.BookingWhereInput[]
   email?: Prisma.StringFilter<"Booking"> | string
   name?: Prisma.StringFilter<"Booking"> | string
-  phone?: Prisma.StringFilter<"Booking"> | string
-  message?: Prisma.StringFilter<"Booking"> | string
+  phone?: Prisma.StringNullableFilter<"Booking"> | string | null
+  message?: Prisma.StringNullableFilter<"Booking"> | string | null
   tourId?: Prisma.UuidNullableFilter<"Booking"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Booking"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Booking"> | Date | string
@@ -240,8 +240,8 @@ export type BookingOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
-  message?: Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  message?: Prisma.SortOrderInput | Prisma.SortOrder
   tourId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -257,8 +257,8 @@ export type BookingScalarWhereWithAggregatesInput = {
   id?: Prisma.UuidWithAggregatesFilter<"Booking"> | string
   email?: Prisma.StringWithAggregatesFilter<"Booking"> | string
   name?: Prisma.StringWithAggregatesFilter<"Booking"> | string
-  phone?: Prisma.StringWithAggregatesFilter<"Booking"> | string
-  message?: Prisma.StringWithAggregatesFilter<"Booking"> | string
+  phone?: Prisma.StringNullableWithAggregatesFilter<"Booking"> | string | null
+  message?: Prisma.StringNullableWithAggregatesFilter<"Booking"> | string | null
   tourId?: Prisma.UuidNullableWithAggregatesFilter<"Booking"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Booking"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Booking"> | Date | string
@@ -268,8 +268,8 @@ export type BookingCreateInput = {
   id?: string
   email: string
   name: string
-  phone: string
-  message: string
+  phone?: string | null
+  message?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   tour?: Prisma.TourCreateNestedOneWithoutBookingsInput
@@ -279,8 +279,8 @@ export type BookingUncheckedCreateInput = {
   id?: string
   email: string
   name: string
-  phone: string
-  message: string
+  phone?: string | null
+  message?: string | null
   tourId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -290,8 +290,8 @@ export type BookingUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  message?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tour?: Prisma.TourUpdateOneWithoutBookingsNestedInput
@@ -301,8 +301,8 @@ export type BookingUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  message?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tourId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -312,8 +312,8 @@ export type BookingCreateManyInput = {
   id?: string
   email: string
   name: string
-  phone: string
-  message: string
+  phone?: string | null
+  message?: string | null
   tourId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -323,8 +323,8 @@ export type BookingUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  message?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -333,8 +333,8 @@ export type BookingUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  message?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tourId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -429,8 +429,8 @@ export type BookingCreateWithoutTourInput = {
   id?: string
   email: string
   name: string
-  phone: string
-  message: string
+  phone?: string | null
+  message?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -439,8 +439,8 @@ export type BookingUncheckedCreateWithoutTourInput = {
   id?: string
   email: string
   name: string
-  phone: string
-  message: string
+  phone?: string | null
+  message?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -478,8 +478,8 @@ export type BookingScalarWhereInput = {
   id?: Prisma.UuidFilter<"Booking"> | string
   email?: Prisma.StringFilter<"Booking"> | string
   name?: Prisma.StringFilter<"Booking"> | string
-  phone?: Prisma.StringFilter<"Booking"> | string
-  message?: Prisma.StringFilter<"Booking"> | string
+  phone?: Prisma.StringNullableFilter<"Booking"> | string | null
+  message?: Prisma.StringNullableFilter<"Booking"> | string | null
   tourId?: Prisma.UuidNullableFilter<"Booking"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Booking"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Booking"> | Date | string
@@ -489,8 +489,8 @@ export type BookingCreateManyTourInput = {
   id?: string
   email: string
   name: string
-  phone: string
-  message: string
+  phone?: string | null
+  message?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -499,8 +499,8 @@ export type BookingUpdateWithoutTourInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  message?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -509,8 +509,8 @@ export type BookingUncheckedUpdateWithoutTourInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  message?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -519,8 +519,8 @@ export type BookingUncheckedUpdateManyWithoutTourInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  message?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -594,8 +594,8 @@ export type $BookingPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id: string
     email: string
     name: string
-    phone: string
-    message: string
+    phone: string | null
+    message: string | null
     tourId: string | null
     createdAt: Date
     updatedAt: Date

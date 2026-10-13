@@ -1678,6 +1678,7 @@ export const MessageScalarFieldEnum = {
   name: 'name',
   email: 'email',
   content: 'content',
+  phone: 'phone',
   createdAt: 'createdAt'
 } as const
 

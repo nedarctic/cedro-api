@@ -12,7 +12,8 @@ export class MessagesController {
         @Body() dto: {
             name: string,
             email: string;
-            content: string
+            content: string;
+            phone: string;
         }
     ) {
         return await this.messages.createMessage({...dto});
